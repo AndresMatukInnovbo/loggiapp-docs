@@ -1,0 +1,9 @@
+:root {
+    --loggi-purple: #5C18AB;
+    --loggi-green: #44C98B;
+    --loggi-border: #ECECEC;
+}
+
+[data-md-color-scheme="slate"] {
+    --loggi-border: #333;
+}
