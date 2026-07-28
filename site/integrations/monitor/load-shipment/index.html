@@ -1,0 +1,2364 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../arquitectura/">
+      
+      
+        <link rel="next" href="../event/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/LoggiApp---ICON.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>loadShipment - LoggiApp Integration Hub</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/styles/variables.css">
+    
+      <link rel="stylesheet" href="../../../assets/styles/layout.css">
+    
+      <link rel="stylesheet" href="../../../assets/styles/components.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#servicio-loadshipment" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="LoggiApp Integration Hub" class="md-header__button md-logo" aria-label="LoggiApp Integration Hub" data-md-component="logo">
+      
+  <img src="../../../assets/images/LoggiApp---ICON.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoggiApp Integration Hub
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              loadShipment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Integraciones
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Arquitectura
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="LoggiApp Integration Hub" class="md-nav__button md-logo" aria-label="LoggiApp Integration Hub" data-md-component="logo">
+      
+  <img src="../../../assets/images/LoggiApp---ICON.png" alt="logo">
+
+    </a>
+    LoggiApp Integration Hub
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integraciones
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Integraciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Monitor
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    loadShipment
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    loadShipment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-nombre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Nombre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cuando-se-ejecuta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Cuándo se ejecuta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flujo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flujo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-lugares-donde-se-llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Lugares donde se llama
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-datos-enviados-a-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Datos enviados a Monitor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Datos enviados a Monitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manifest-datos-del-manifiesto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest (Datos del manifiesto)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generator-generador-dueno-de-la-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generator (Generador / Dueño de la carga)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transporter-transportador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transporter (Transportador)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routeplane-plan-de-ruta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RoutePlane (Plan de ruta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-vehiculo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vehicle (Vehículo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-conductor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver (Conductor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loadingorders-remittances-ordenes-de-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LoadingOrders / Remittances (Órdenes de carga)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-campos-de-monitor-no-utilizados-por-loggiapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Campos de Monitor NO utilizados por LoggiApp
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-transformaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Transformaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-request-construido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Request construido
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-respuesta-esperada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Respuesta esperada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-observaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Observaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    event
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update-shipment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    updateShipment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upsert-cargo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    upsertCargo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cancel-cargo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cancelCargo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cancel-shipment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cancelShipment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../finalize-shipment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    finalizeShipment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logistic-time/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    logisticTime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update-submitted-manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    updateSubmittedManifest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../rndc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNDC
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RNDC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../architecture/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquitectura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-nombre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Nombre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cuando-se-ejecuta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Cuándo se ejecuta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flujo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flujo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-lugares-donde-se-llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Lugares donde se llama
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-datos-enviados-a-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Datos enviados a Monitor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Datos enviados a Monitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manifest-datos-del-manifiesto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest (Datos del manifiesto)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generator-generador-dueno-de-la-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generator (Generador / Dueño de la carga)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transporter-transportador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transporter (Transportador)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routeplane-plan-de-ruta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RoutePlane (Plan de ruta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-vehiculo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vehicle (Vehículo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-conductor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver (Conductor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loadingorders-remittances-ordenes-de-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LoadingOrders / Remittances (Órdenes de carga)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-campos-de-monitor-no-utilizados-por-loggiapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Campos de Monitor NO utilizados por LoggiApp
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-transformaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Transformaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-request-construido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Request construido
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-respuesta-esperada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Respuesta esperada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-observaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Observaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="servicio-loadshipment">Servicio: loadShipment<a class="headerlink" href="#servicio-loadshipment" title="Permanent link">&para;</a></h1>
+<h2 id="1-nombre">1. Nombre<a class="headerlink" href="#1-nombre" title="Permanent link">&para;</a></h2>
+<p><code>loadShipment</code></p>
+<h2 id="2-objetivo">2. Objetivo<a class="headerlink" href="#2-objetivo" title="Permanent link">&para;</a></h2>
+<p>Este servicio <strong>crea un despacho (shipment) en la plataforma Monitor</strong> utilizando la información de una carga existente en LoggiApp.</p>
+<p>El despacho incluye los datos del manifiesto de transporte, la ruta planificada, el vehículo asignado, el conductor, y las órdenes de carga (remesas) asociadas. Una vez creado en Monitor, el despacho comienza a ser monitoreado satelitalmente.</p>
+<h2 id="3-cuando-se-ejecuta">3. Cuándo se ejecuta<a class="headerlink" href="#3-cuando-se-ejecuta" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Detalle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Evento</strong></td>
+<td>La carga cambia al estado <code>START_TRIP</code> (inicio de viaje)</td>
+</tr>
+<tr>
+<td><strong>Actor</strong></td>
+<td>Conductor (desde la app móvil) o usuario web que actualiza el tracking</td>
+</tr>
+<tr>
+<td><strong>Condición 1</strong></td>
+<td>El <code>holderId</code> debe ser <code>Companies.TECLOGI</code></td>
+</tr>
+<tr>
+<td><strong>Condición 2</strong></td>
+<td>El <code>idCompany</code> de la carga debe estar en <code>MonitorCargoCompanies</code> (actualmente solo Maersk Logistics)</td>
+</tr>
+<tr>
+<td><strong>Condición 3</strong></td>
+<td>La carga NO debe haber sido registrada previamente en Monitor (<code>monitorState.loadShipmentResponse.transmited == false</code>)</td>
+</tr>
+<tr>
+<td><strong>Condición 4</strong></td>
+<td>La carga debe tener un número de manifiesto asignado (<code>cargo.manifest</code> no vacío)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Endpoint REST manual:</strong> <code>POST /monitor/{cargoId}/load-shipment</code><br />
+Permite re-ejecutar el registro de forma manual desde la interfaz web.</p>
+</blockquote>
+<h2 id="4-flujo">4. Flujo<a class="headerlink" href="#4-flujo" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Conductor inicia viaje (START_TRIP)
+        ↓
+CargoBusinessImpl.tracking(action, imagesCargoRequest)
+        ↓
+CargoBusinessImpl.reportToMonitorCargo(&quot;START_TRIP&quot;, cargo, holderId, ...)
+        ↓
+MonitorCargoBusinessImpl.registerMonitorLoadShipmentAndLoadzoneEvent(...)
+        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+MonitorCargoBusinessImpl.registerMonitorLoadShipmentSync(...)
+        ↓
+¿La carga ya fue registrada en Monitor?
+        ↓ NO
+validateLoadShipmentBuild(cargo, user, holderId)
+        ↓
+¿Errores de validación?
+        ↓ NO
+buildLoadShipmentRequest(cargo, user, holderId, validator)
+        ↓
+MonitorServiceImpl.loadShipment(request, holderId)
+        ↓
+Se construye el SOAP envelope y se envía por HTTP POST
+        ↓
+Monitor procesa y responde (código 000 = éxito, 006 = ya existe)
+        ↓
+Se almacena el resultado en cargo.monitorState.loadShipmentResponse
+</code></pre></div>
+<h2 id="5-lugares-donde-se-llama">5. Lugares donde se llama<a class="headerlink" href="#5-lugares-donde-se-llama" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th>Método</th>
+<th>Motivo</th>
+<th>Condición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CargoBusinessImpl</code></td>
+<td><code>tracking(...)</code> → <code>reportToMonitorCargo(...)</code></td>
+<td>Registrar automáticamente el despacho cuando el conductor inicia el viaje</td>
+<td><code>action == StateCargo.START_TRIP</code></td>
+</tr>
+<tr>
+<td><code>CargoServiceImpl</code> (REST)</td>
+<td><code>registerMonitorLoadShipment(cargoId)</code></td>
+<td>Endpoint REST para registrar manualmente un despacho en Monitor</td>
+<td>Invocación directa: <code>POST /monitor/{cargoId}/load-shipment</code></td>
+</tr>
+<tr>
+<td><code>MonitorCargoBusinessImpl</code></td>
+<td><code>registerMonitorLoadShipmentAndLoadzoneEvent(...)</code></td>
+<td>Método compuesto: loadShipment + evento zona de carga secuencialmente</td>
+<td>Llamado desde <code>reportToMonitorCargo</code> con <code>START_TRIP</code></td>
+</tr>
+<tr>
+<td><code>MonitorCargoBusinessImpl</code></td>
+<td><code>registerMonitorLoadShipment(...)</code></td>
+<td>Versión independiente que solo ejecuta loadShipment</td>
+<td>Llamado desde el endpoint REST manual</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-datos-enviados-a-monitor">6. Datos enviados a Monitor<a class="headerlink" href="#6-datos-enviados-a-monitor" title="Permanent link">&para;</a></h2>
+<h3 id="manifest-datos-del-manifiesto">Manifest (Datos del manifiesto)<a class="headerlink" href="#manifest-datos-del-manifiesto" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cargo.manifest</code></td>
+<td><code>idManifest</code></td>
+<td>Número del manifiesto de transporte</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.manifest</code></td>
+</tr>
+<tr>
+<td><code>cargo.expeditionManifest</code></td>
+<td><code>createmanifestdate</code></td>
+<td>Fecha de creación/expedición del manifiesto</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.expeditionManifest</code> → formato <code>yyyy-MM-dd HH:mm:ss</code></td>
+</tr>
+<tr>
+<td><code>cargo.startTripDate</code></td>
+<td><code>departureTime</code></td>
+<td>Fecha de salida del vehículo</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.startTripDate</code> → hora colombiana <code>yyyy-MM-dd HH:mm:ss</code></td>
+</tr>
+<tr>
+<td><code>cargo.cargoModel.operationType.description</code></td>
+<td><code>operationType</code></td>
+<td>Tipo de operación (NACIONAL, URBANO, etc.)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.cargoModel.operationType.description</code></td>
+</tr>
+<tr>
+<td><code>cargo.observation</code></td>
+<td><code>observation</code></td>
+<td>Observaciones de la carga</td>
+<td style="text-align: center;">No</td>
+<td><code>Cargo.observation</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="generator-generador-dueno-de-la-carga">Generator (Generador / Dueño de la carga)<a class="headerlink" href="#generator-generador-dueno-de-la-carga" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cargo.cargoOwner.documentNumber</code></td>
+<td><code>idGenerator</code></td>
+<td>NIT del generador (sin dígito de verificación si es NIT)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.cargoOwner.documentNumber</code></td>
+</tr>
+<tr>
+<td><code>cargo.cargoOwner.name</code></td>
+<td><code>nameGenerator</code></td>
+<td>Nombre del generador de la carga</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.cargoOwner.name</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="transporter-transportador">Transporter (Transportador)<a class="headerlink" href="#transporter-transportador" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>companySaas.transportCompanyId</code></td>
+<td><code>idTransporter</code></td>
+<td>NIT de la empresa transportadora (sin dígito de verificación)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>CompanySAAS.transportCompanyId</code></td>
+</tr>
+<tr>
+<td><code>companySaas.name</code></td>
+<td><code>nameTransporter</code></td>
+<td>Nombre de la empresa transportadora</td>
+<td style="text-align: center;">Sí</td>
+<td><code>CompanySAAS.name</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="routeplane-plan-de-ruta">RoutePlane (Plan de ruta)<a class="headerlink" href="#routeplane-plan-de-ruta" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>itinerary.name</code></td>
+<td><code>routeName</code></td>
+<td>Nombre de la ruta (itinerario)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Itinerary.name</code></td>
+</tr>
+<tr>
+<td><code>itinerary.name</code></td>
+<td><code>via</code></td>
+<td>Vía (mismo nombre del itinerario)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Itinerary.name</code></td>
+</tr>
+<tr>
+<td><code>itinerary.originPoint.id</code></td>
+<td><code>origin.idOrigen</code></td>
+<td>Código DANE del municipio origen</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Itinerary.originPoint.id</code></td>
+</tr>
+<tr>
+<td><code>itinerary.destinationPoint.id</code></td>
+<td><code>destination.idDestination</code></td>
+<td>Código DANE del municipio destino</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Itinerary.destinationPoint.id</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vehicle-vehiculo">Vehicle (Vehículo)<a class="headerlink" href="#vehicle-vehiculo" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cargo.licensePlate</code></td>
+<td><code>licensePlate</code></td>
+<td>Placa del vehículo</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.licensePlate</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="driver-conductor">Driver (Conductor)<a class="headerlink" href="#driver-conductor" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user.information.document</code></td>
+<td><code>id</code></td>
+<td>Cédula/documento del conductor</td>
+<td style="text-align: center;">Sí</td>
+<td><code>User.information.document</code></td>
+</tr>
+<tr>
+<td><code>user.information.name</code> (primer nombre)</td>
+<td><code>name</code></td>
+<td>Primer nombre del conductor</td>
+<td style="text-align: center;">Sí</td>
+<td><code>User.information.name</code> → <code>Utils.returnNames()</code></td>
+</tr>
+<tr>
+<td><code>user.information.name</code> (primer apellido)</td>
+<td><code>surname</code></td>
+<td>Primer apellido del conductor</td>
+<td style="text-align: center;">Sí</td>
+<td><code>User.information.name</code> → <code>Utils.returnNames()</code></td>
+</tr>
+<tr>
+<td><code>user.phone</code></td>
+<td><code>mobilNumber</code></td>
+<td>Celular del conductor</td>
+<td style="text-align: center;">Sí</td>
+<td><code>User.phone</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="loadingorders-remittances-ordenes-de-carga">LoadingOrders / Remittances (Órdenes de carga)<a class="headerlink" href="#loadingorders-remittances-ordenes-de-carga" title="Permanent link">&para;</a></h3>
+<p>Se envía una remesa por cada <code>Consignment</code> asociado a la carga (en estado <code>CREATED</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Campo LoggiApp</th>
+<th>Campo Monitor</th>
+<th>Descripción</th>
+<th style="text-align: center;">Obligatorio</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cargo.consecutive</code> + <code>"_"</code> + <code>consignment.id</code></td>
+<td><code>idCargo</code></td>
+<td>Identificador único de la orden de carga</td>
+<td style="text-align: center;">Sí</td>
+<td>Concatenación <code>Cargo.consecutive</code> + "_" + <code>Consignment.id</code></td>
+</tr>
+<tr>
+<td><code>consignment.id</code></td>
+<td><code>remittancenumber</code></td>
+<td>Número de la remesa</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.id</code></td>
+</tr>
+<tr>
+<td><code>consignment.load.date</code> + <code>consignment.load.appointmentTime</code></td>
+<td><code>appointment</code></td>
+<td>Cita de carga (fecha + hora combinadas)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.load.date</code> + <code>.appointmentTime</code></td>
+</tr>
+<tr>
+<td><code>consignment.unload.date</code> + <code>consignment.unload.appointmentTime</code></td>
+<td><code>estimatedDeliveryDate</code></td>
+<td>Cita de descarga (fecha + hora combinadas)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.unload.date</code> + <code>.appointmentTime</code></td>
+</tr>
+<tr>
+<td><code>cargo.cargoOwner.documentNumber</code></td>
+<td><code>generador.idGenerator</code></td>
+<td>NIT del generador (mismo del manifest)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.cargoOwner.documentNumber</code></td>
+</tr>
+<tr>
+<td><code>cargo.cargoOwner.name</code></td>
+<td><code>generador.nameGenerator</code></td>
+<td>Nombre del generador (mismo del manifest)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.cargoOwner.name</code></td>
+</tr>
+<tr>
+<td><code>consignment.sender.documentNumber</code></td>
+<td><code>sender.idSender</code></td>
+<td>NIT del remitente (sin dígito si es NIT)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.sender.documentNumber</code></td>
+</tr>
+<tr>
+<td><code>consignment.sender.name</code></td>
+<td><code>sender.nameSender</code></td>
+<td>Nombre del remitente</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.sender.name</code></td>
+</tr>
+<tr>
+<td><code>consignment.recipient.documentNumber</code></td>
+<td><code>receiver.idReceiver</code></td>
+<td>NIT del destinatario (sin dígito si es NIT)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.recipient.documentNumber</code></td>
+</tr>
+<tr>
+<td><code>consignment.recipient.name</code></td>
+<td><code>receiver.nameReceiver</code></td>
+<td>Nombre del destinatario</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.recipient.name</code></td>
+</tr>
+<tr>
+<td><code>consignment.sender.municipalityCode</code></td>
+<td><code>origin.idOrigen</code></td>
+<td>Código DANE del municipio de cargue</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.sender.municipalityCode</code></td>
+</tr>
+<tr>
+<td><code>consignment.sender.address</code></td>
+<td><code>origin.originAddress</code></td>
+<td>Dirección del punto de cargue</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.sender.address</code></td>
+</tr>
+<tr>
+<td><code>consignment.recipient.municipalityCode</code></td>
+<td><code>destination.idDestination</code></td>
+<td>Código DANE del municipio de descargue</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.recipient.municipalityCode</code></td>
+</tr>
+<tr>
+<td><code>consignment.recipient.address</code></td>
+<td><code>destination.destinationAddress</code></td>
+<td>Dirección del punto de descargue</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.recipient.address</code></td>
+</tr>
+<tr>
+<td><em>(fijo: "INLAND")</em></td>
+<td><code>referenceNumber</code></td>
+<td>Número de referencia</td>
+<td style="text-align: center;">Sí</td>
+<td>Valor fijo hardcodeado</td>
+</tr>
+<tr>
+<td><code>cargo.container</code></td>
+<td><code>container</code></td>
+<td>Número de contenedor</td>
+<td style="text-align: center;">No</td>
+<td><code>Cargo.container</code> (null si está vacío)</td>
+</tr>
+<tr>
+<td><code>cargo.riskProfile.id</code> <em>(transformado)</em></td>
+<td><code>merchandise.category</code></td>
+<td>Categoría de la carga (A, B, C, D)</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Cargo.riskProfile.id</code> → 1=A, 2=B, 3=C, default=A</td>
+</tr>
+<tr>
+<td><code>consignment.merchandise.description</code></td>
+<td><code>merchandise.productName</code></td>
+<td>Nombre del producto de carga</td>
+<td style="text-align: center;">Sí</td>
+<td><code>Consignment.merchandise.description</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-campos-de-monitor-no-utilizados-por-loggiapp">7. Campos de Monitor NO utilizados por LoggiApp<a class="headerlink" href="#7-campos-de-monitor-no-utilizados-por-loggiapp" title="Permanent link">&para;</a></h2>
+<p>Los siguientes campos existen en el contrato oficial de Monitor pero LoggiApp <strong>actualmente NO los envía</strong>:</p>
+<details class="info">
+<summary>Manifest</summary>
+<ul>
+<li><code>submittedmanifest</code> (radicado RNDC)</li>
+<li><code>dispatcher.id</code>, <code>dispatcher.name</code>, <code>dispatcher.email</code> (datos del despachador)</li>
+<li><code>agency.id</code>, <code>agency.name</code> (agencia que despacha)</li>
+<li><code>generador.emailGenerator</code>, <code>generador.phoneNumberGenerator</code></li>
+<li><code>transporter.emailTransporter</code>, <code>transporter.phoneNumberTransporter</code></li>
+<li><code>vehicleOwner.id</code>, <code>vehicleOwner.typeId</code>, <code>vehicleOwner.email</code>, <code>vehicleOwner.name</code>, <code>vehicleOwner.phoneNumber</code></li>
+</ul>
+</details>
+<details class="info">
+<summary>RoutePlane</summary>
+<ul>
+<li><code>origin.originCity</code>, <code>origin.originDepartment</code>, <code>origin.origenLatitude</code>, <code>origin.origenLongitude</code>, <code>origin.originAddress</code> (a nivel ruta)</li>
+<li><code>destination.destinationCity</code>, <code>destination.destinationDepartment</code>, <code>destination.destinationLatitude</code>, <code>destination.destinationLongitude</code>, <code>destination.destinationAddress</code> (a nivel ruta)</li>
+<li><code>extraPoints</code> (puntos intermedios / zonas de control)</li>
+</ul>
+</details>
+<details class="info">
+<summary>Vehicle</summary>
+<ul>
+<li><code>color</code>, <code>model</code>, <code>vehicleMake</code>, <code>vehicleBody</code>, <code>ownerType</code>, <code>trailerNumber</code></li>
+<li><code>vehicleClass</code>, <code>capacity</code>, <code>length</code>, <code>width</code>, <code>height</code>, <code>emptyWeight</code>, <code>maximumWeight</code></li>
+<li><code>image</code> (imagen del vehículo)</li>
+</ul>
+</details>
+<details class="info">
+<summary>Driver</summary>
+<ul>
+<li><code>phoneNumber</code> (teléfono fijo)</li>
+<li><code>address</code></li>
+<li><code>emailDriver</code></li>
+<li><code>image</code> (foto del conductor)</li>
+</ul>
+</details>
+<details class="info">
+<summary>GPS Provider</summary>
+<ul>
+<li><code>gpsProvider.id</code>, <code>gpsProvider.user</code>, <code>gpsProvider.password</code>, <code>gpsProvider.idCompany</code> (proveedor satelital principal)</li>
+<li>Toda la sección de <code>gpsSecuntaryProviders</code> (candados, escolta, termocupla)</li>
+</ul>
+</details>
+<details class="info">
+<summary>Remittance (Órdenes de carga)</summary>
+<ul>
+<li><code>orderNumber</code> (número del pedido)</li>
+<li><code>shippingGuide</code> (guía de envío)</li>
+<li><code>bl</code> (bill of lading)</li>
+<li><code>shippingline</code>, <code>containerowner</code>, <code>containertype</code>, <code>containersize</code></li>
+<li><code>sector</code>, <code>dtaformdate</code>, <code>dtaexpirationdate</code></li>
+<li><code>generador.emailGenerator</code>, <code>generador.phoneNumberGenerator</code></li>
+<li><code>sender.emailSender</code>, <code>sender.phoneNumberSender</code></li>
+<li><code>receiver.emailReceiver</code>, <code>receiver.phoneNumberReceiver</code></li>
+<li><code>origin.originCity</code>, <code>origin.originDepartment</code>, <code>origin.originLatidude</code>, <code>origin.originLongitude</code></li>
+<li><code>destination.destinationCity</code>, <code>destination.destinationDepartment</code>, <code>destination.destinationLatidude</code>, <code>destination.destinationLongitude</code></li>
+<li>Tiempos logísticos en la remesa (<code>arrivaldownloadsitetime</code>, <code>arrivalloadsite</code>, <code>enddownloadtime</code>, <code>endloadtime</code>)</li>
+<li><code>merchandise.observations</code>, <code>merchandise.merchandisevalue</code>, <code>merchandise.merchandisetype</code></li>
+<li><code>documents</code> (lista de documentos solicitados al conductor)</li>
+</ul>
+</details>
+<h2 id="8-transformaciones">8. Transformaciones<a class="headerlink" href="#8-transformaciones" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Transformación</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NIT sin dígito de verificación</strong></td>
+<td>Si el tipo de documento es NIT, se remueve el dígito de verificación usando <code>Utils.nitWithoutDigit()</code>. Aplica a: generador, transportador, remitente y destinatario.</td>
+</tr>
+<tr>
+<td><strong>Nombre del conductor</strong></td>
+<td>El nombre completo del conductor se descompone usando <code>Utils.returnNames()</code> para extraer <code>firstName</code> y <code>firstSurname</code> por separado.</td>
+</tr>
+<tr>
+<td><strong>Fecha de expedición del manifiesto</strong></td>
+<td>Se convierte del formato interno <code>yyyy-MM-dd HH:mm</code> al formato requerido <code>yyyy-MM-dd HH:mm:ss</code>.</td>
+</tr>
+<tr>
+<td><strong>Fecha de salida</strong></td>
+<td>Se convierte de <code>Date</code> a String en zona horaria colombiana con formato <code>yyyy-MM-dd HH:mm:ss</code>.</td>
+</tr>
+<tr>
+<td><strong>Citas de carga y descarga</strong></td>
+<td>Se combinan <code>date</code> + <code>appointmentTime</code> del consignment en un solo String con formato <code>yyyy-MM-dd HH:mm:ss</code>.</td>
+</tr>
+<tr>
+<td><strong>idCargo de la remesa</strong></td>
+<td>Se construye como: <code>cargo.consecutive</code> + "_" + <code>consignment.id</code> (ej: <code>1234_CON001</code>).</td>
+</tr>
+<tr>
+<td><strong>routeName y via</strong></td>
+<td>Ambos campos se asignan con el mismo valor: <code>itinerary.name</code>.</td>
+</tr>
+<tr>
+<td><strong>referenceNumber</strong></td>
+<td>Siempre se envía el valor fijo <code>"INLAND"</code>.</td>
+</tr>
+<tr>
+<td><strong>Categoría de mercancía</strong></td>
+<td>Se mapea el <code>riskProfile.id</code> del cargo: <code>1</code> → <code>A</code>, <code>2</code> → <code>B</code>, <code>3</code> → <code>C</code>, cualquier otro o null → <code>A</code>.</td>
+</tr>
+<tr>
+<td><strong>Contenedor</strong></td>
+<td>Si <code>cargo.container</code> está vacío o nulo, se envía <code>null</code> (no se incluye en el XML).</td>
+</tr>
+<tr>
+<td><strong>CDATA wrapping</strong></td>
+<td>Después de la conversión a XML, los campos de texto (<code>operationType</code>, <code>nameGenerator</code>, <code>nameTransporter</code>, <code>routeName</code>, <code>via</code>, <code>name</code>, <code>surname</code>, <code>nameSender</code>, <code>nameReceiver</code>, <code>originAddress</code>, <code>destinationAddress</code>, <code>productName</code>, <code>observation</code>) se envuelven en <code>&lt;![CDATA[...]]&gt;</code> para prevenir problemas con caracteres especiales.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-request-construido">9. Request construido<a class="headerlink" href="#9-request-construido" title="Permanent link">&para;</a></h2>
+<p>Ejemplo del request SOAP que genera LoggiApp (con datos ficticios respetando la estructura real del código):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;http://service.soap.soapexposer.mayasoft.com/&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ser:loadShipment&gt;</span>
+<span class="w">      </span><span class="nt">&lt;authToken&gt;</span>
+<span class="w">        </span><span class="nt">&lt;authUser&gt;</span>USUARIO_MONITOR<span class="nt">&lt;/authUser&gt;</span>
+<span class="w">        </span><span class="nt">&lt;authPassword&gt;</span>PASSWORD_MONITOR<span class="nt">&lt;/authPassword&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/authToken&gt;</span>
+<span class="w">      </span><span class="nt">&lt;manifest&gt;</span>
+<span class="w">        </span><span class="nt">&lt;idManifest&gt;</span>MAN-2025-001234<span class="nt">&lt;/idManifest&gt;</span>
+<span class="w">        </span><span class="nt">&lt;createmanifestdate&gt;</span>2025-07-28<span class="w"> </span>08:30:00<span class="nt">&lt;/createmanifestdate&gt;</span>
+<span class="w">        </span><span class="nt">&lt;departureTime&gt;</span>2025-07-28<span class="w"> </span>09:00:00<span class="nt">&lt;/departureTime&gt;</span>
+<span class="w">        </span><span class="nt">&lt;operationType&gt;</span><span class="cp">&lt;![CDATA[NACIONAL]]&gt;</span><span class="nt">&lt;/operationType&gt;</span>
+<span class="w">        </span><span class="nt">&lt;observation&gt;</span>Carga<span class="w"> </span>refrigerada<span class="w"> </span>-<span class="w"> </span>manejar<span class="w"> </span>con<span class="w"> </span>cuidado<span class="nt">&lt;/observation&gt;</span>
+<span class="w">        </span><span class="nt">&lt;generador&gt;</span>
+<span class="w">          </span><span class="nt">&lt;idGenerator&gt;</span>900123456<span class="nt">&lt;/idGenerator&gt;</span>
+<span class="w">          </span><span class="nt">&lt;nameGenerator&gt;</span><span class="cp">&lt;![CDATA[EMPRESA GENERADORA S.A.S]]&gt;</span><span class="nt">&lt;/nameGenerator&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/generador&gt;</span>
+<span class="w">        </span><span class="nt">&lt;transporter&gt;</span>
+<span class="w">          </span><span class="nt">&lt;idTransporter&gt;</span>800987654<span class="nt">&lt;/idTransporter&gt;</span>
+<span class="w">          </span><span class="nt">&lt;nameTransporter&gt;</span><span class="cp">&lt;![CDATA[TRANSPORTES EJEMPLO S.A]]&gt;</span><span class="nt">&lt;/nameTransporter&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/transporter&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/manifest&gt;</span>
+<span class="w">      </span><span class="nt">&lt;routePlane&gt;</span>
+<span class="w">        </span><span class="nt">&lt;routeName&gt;</span><span class="cp">&lt;![CDATA[Bogotá - Cartagena Nacional]]&gt;</span><span class="nt">&lt;/routeName&gt;</span>
+<span class="w">        </span><span class="nt">&lt;via&gt;</span><span class="cp">&lt;![CDATA[Bogotá - Cartagena Nacional]]&gt;</span><span class="nt">&lt;/via&gt;</span>
+<span class="w">        </span><span class="nt">&lt;origin&gt;</span>
+<span class="w">          </span><span class="nt">&lt;idOrigen&gt;</span>11001000<span class="nt">&lt;/idOrigen&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/origin&gt;</span>
+<span class="w">        </span><span class="nt">&lt;destination&gt;</span>
+<span class="w">          </span><span class="nt">&lt;idDestination&gt;</span>13001000<span class="nt">&lt;/idDestination&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/destination&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/routePlane&gt;</span>
+<span class="w">      </span><span class="nt">&lt;vehicle&gt;</span>
+<span class="w">        </span><span class="nt">&lt;licensePlate&gt;</span>ABC123<span class="nt">&lt;/licensePlate&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/vehicle&gt;</span>
+<span class="w">      </span><span class="nt">&lt;driver&gt;</span>
+<span class="w">        </span><span class="nt">&lt;id&gt;</span>1098765432<span class="nt">&lt;/id&gt;</span>
+<span class="w">        </span><span class="nt">&lt;name&gt;</span><span class="cp">&lt;![CDATA[CARLOS]]&gt;</span><span class="nt">&lt;/name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;surname&gt;</span><span class="cp">&lt;![CDATA[RODRIGUEZ PEREZ]]&gt;</span><span class="nt">&lt;/surname&gt;</span>
+<span class="w">        </span><span class="nt">&lt;mobilNumber&gt;</span>3101234567<span class="nt">&lt;/mobilNumber&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/driver&gt;</span>
+<span class="w">      </span><span class="nt">&lt;loadingOrders&gt;</span>
+<span class="w">        </span><span class="nt">&lt;remittance&gt;</span>
+<span class="w">          </span><span class="nt">&lt;idCargo&gt;</span>5678_CON-001<span class="nt">&lt;/idCargo&gt;</span>
+<span class="w">          </span><span class="nt">&lt;remittancenumber&gt;</span>CON-001<span class="nt">&lt;/remittancenumber&gt;</span>
+<span class="w">          </span><span class="nt">&lt;referenceNumber&gt;</span>INLAND<span class="nt">&lt;/referenceNumber&gt;</span>
+<span class="w">          </span><span class="nt">&lt;appointment&gt;</span>2025-07-28<span class="w"> </span>10:00:00<span class="nt">&lt;/appointment&gt;</span>
+<span class="w">          </span><span class="nt">&lt;estimatedDeliveryDate&gt;</span>2025-07-30<span class="w"> </span>14:00:00<span class="nt">&lt;/estimatedDeliveryDate&gt;</span>
+<span class="w">          </span><span class="nt">&lt;container&gt;</span>MSKU1234567<span class="nt">&lt;/container&gt;</span>
+<span class="w">          </span><span class="nt">&lt;generador&gt;</span>
+<span class="w">            </span><span class="nt">&lt;idGenerator&gt;</span>900123456<span class="nt">&lt;/idGenerator&gt;</span>
+<span class="w">            </span><span class="nt">&lt;nameGenerator&gt;</span><span class="cp">&lt;![CDATA[EMPRESA GENERADORA S.A.S]]&gt;</span><span class="nt">&lt;/nameGenerator&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/generador&gt;</span>
+<span class="w">          </span><span class="nt">&lt;sender&gt;</span>
+<span class="w">            </span><span class="nt">&lt;idSender&gt;</span>800111222<span class="nt">&lt;/idSender&gt;</span>
+<span class="w">            </span><span class="nt">&lt;nameSender&gt;</span><span class="cp">&lt;![CDATA[BODEGA ORIGEN LTDA]]&gt;</span><span class="nt">&lt;/nameSender&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/sender&gt;</span>
+<span class="w">          </span><span class="nt">&lt;receiver&gt;</span>
+<span class="w">            </span><span class="nt">&lt;idReceiver&gt;</span>800333444<span class="nt">&lt;/idReceiver&gt;</span>
+<span class="w">            </span><span class="nt">&lt;nameReceiver&gt;</span><span class="cp">&lt;![CDATA[ALMACEN DESTINO S.A]]&gt;</span><span class="nt">&lt;/nameReceiver&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/receiver&gt;</span>
+<span class="w">          </span><span class="nt">&lt;origin&gt;</span>
+<span class="w">            </span><span class="nt">&lt;idOrigen&gt;</span>11001000<span class="nt">&lt;/idOrigen&gt;</span>
+<span class="w">            </span><span class="nt">&lt;originAddress&gt;</span><span class="cp">&lt;![CDATA[Calle 80 #45-23 Bodega 5]]&gt;</span><span class="nt">&lt;/originAddress&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/origin&gt;</span>
+<span class="w">          </span><span class="nt">&lt;destination&gt;</span>
+<span class="w">            </span><span class="nt">&lt;idDestination&gt;</span>13001000<span class="nt">&lt;/idDestination&gt;</span>
+<span class="w">            </span><span class="nt">&lt;destinationAddress&gt;</span><span class="cp">&lt;![CDATA[Km 3 Via Mamonal Zona Industrial]]&gt;</span><span class="nt">&lt;/destinationAddress&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/destination&gt;</span>
+<span class="w">          </span><span class="nt">&lt;merchandise&gt;</span>
+<span class="w">            </span><span class="nt">&lt;category&gt;</span>A<span class="nt">&lt;/category&gt;</span>
+<span class="w">            </span><span class="nt">&lt;productName&gt;</span><span class="cp">&lt;![CDATA[QUIMICOS INDUSTRIALES]]&gt;</span><span class="nt">&lt;/productName&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/merchandise&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/remittance&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/loadingOrders&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/ser:loadShipment&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/soapenv:Body&gt;</span>
+<span class="nt">&lt;/soapenv:Envelope&gt;</span>
+</code></pre></div>
+<h2 id="10-respuesta-esperada">10. Respuesta esperada<a class="headerlink" href="#10-respuesta-esperada" title="Permanent link">&para;</a></h2>
+<p>Monitor devuelve un XML SOAP con un elemento <code>&lt;return&gt;</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;return&gt;</span>
+<span class="w">  </span><span class="nt">&lt;code&gt;</span>000<span class="nt">&lt;/code&gt;</span>
+<span class="w">  </span><span class="nt">&lt;description&gt;</span>TRANSACCION<span class="w"> </span>EXITOSA<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/return&gt;</span>
+</code></pre></div>
+<p><strong>Interpretación por LoggiApp:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Acción de LoggiApp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>000</code> (éxito)</td>
+<td>Marca <code>monitorState.loadShipmentResponse.transmited = true</code>. La carga se considera registrada.</td>
+</tr>
+<tr>
+<td><code>006</code> (ya existe)</td>
+<td>También se considera como registro exitoso (<code>transmited = true</code>). No genera error.</td>
+</tr>
+<tr>
+<td><code>001</code> (error interno)</td>
+<td>Se reintenta <strong>una vez</strong> más. Si falla nuevamente, se guarda como no transmitido.</td>
+</tr>
+<tr>
+<td>Otros códigos</td>
+<td>Se almacena el código y descripción como respuesta fallida (<code>transmited = false</code>).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Persistencia del resultado:</strong></p>
+<p>El resultado se almacena en <code>cargo.monitorState.loadShipmentResponse</code>:</p>
+<ul>
+<li><code>code</code>: Código de respuesta de Monitor</li>
+<li><code>description</code>: Descripción de la respuesta</li>
+<li><code>transmited</code>: <code>true</code> si fue exitoso (código 000 o 006), <code>false</code> en cualquier otro caso</li>
+<li><code>errors</code>: Lista de errores de validación (si los hubo antes de enviar)</li>
+</ul>
+<h2 id="11-observaciones">11. Observaciones<a class="headerlink" href="#11-observaciones" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Observación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Solo se ejecuta si existe manifiesto.</strong> La validación verifica que <code>cargo.manifest</code> no sea vacío antes de intentar el envío.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Idempotencia.</strong> Si la carga ya fue registrada (<code>monitorState.loadShipmentResponse.transmited == true</code>), la operación se aborta sin enviar.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Reintento automático.</strong> Si Monitor responde con error interno (código <code>001</code>), se reintenta una vez más antes de guardar el fallo.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Solo Maersk Logistics.</strong> Actualmente la integración está habilitada exclusivamente para la empresa con NIT <code>83008063410</code> (Maersk Logistics).</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Solo holder Teclogi.</strong> El <code>holderId</code> debe ser el valor de <code>Companies.TECLOGI</code>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Ejecución asíncrona.</strong> El envío se realiza en un thread separado (<code>monitorCargoExecutor</code>). No bloquea la respuesta al usuario.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Validación previa exhaustiva.</strong> Antes de construir el request, se validan todos los campos requeridos. Si falla la validación, se almacena el error sin intentar la conexión a Monitor.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Solo remesas en estado CREATED.</strong> Se envían únicamente los consignments cuyo estado sea <code>CREATED</code>.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Se ejecuta junto con el evento de zona de carga.</strong> Cuando se invoca desde <code>START_TRIP</code>, inmediatamente después del loadShipment se ejecuta también el registro del evento de zona de carga (loadzone event).</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>No se envían datos del GPS ni proveedor satelital.</strong> A pesar de que el contrato de Monitor lo permite, LoggiApp no envía información del proveedor GPS.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Solo se envía la placa del vehículo.</strong> No se envían marca, color, modelo, carrocería ni demás datos del vehículo que Monitor acepta.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../arquitectura/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Arquitectura">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Arquitectura
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../event/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: event">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                event
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.footer", "navigation.expand", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link", "content.tooltips", "content.code.annotate", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

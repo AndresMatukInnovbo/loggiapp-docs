@@ -1,0 +1,74 @@
+.md-header {
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+.md-main__inner {
+    max-width: 1600px;
+}
+
+.md-content {
+    padding-top: 2rem;
+}
+
+.md-typeset h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.md-typeset h2 {
+    margin-top: 3rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: .5rem;
+}
+
+.md-typeset table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.md-typeset pre {
+    border-radius: 12px;
+}
+
+.md-typeset .admonition {
+    border-radius: 12px;
+}
+
+.md-sidebar {
+    border-right: 1px solid rgba(0,0,0,.08);
+}
+
+:root{
+
+    /* Colores corporativos */
+
+    --loggi-purple:#5C18AB;
+
+    --loggi-purple-dark:#461181;
+
+    --loggi-purple-light:#7B39CC;
+
+    --loggi-green:#44C98B;
+
+    --loggi-green-dark:#2FA66F;
+
+    --loggi-gray:#6B7280;
+
+    --loggi-border:#E5E7EB;
+
+    --loggi-background:#F8FAFC;
+
+    --loggi-card:#FFFFFF;
+
+    /* Material */
+
+    --md-primary-fg-color:var(--loggi-purple);
+
+    --md-primary-fg-color--light:var(--loggi-purple-light);
+
+    --md-primary-fg-color--dark:var(--loggi-purple-dark);
+
+    --md-accent-fg-color:var(--loggi-green);
+
+}

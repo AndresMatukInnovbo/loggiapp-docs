@@ -1,0 +1,97 @@
+site_name: LoggiApp Integration Hub
+
+theme:
+  name: material
+  language: es
+
+  logo: assets/images/LoggiApp---ICON.png
+  favicon: assets/images/LoggiApp---ICON.png
+
+  palette:
+
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+    - navigation.expand
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    - content.code.annotate
+    - navigation.indexes
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.blocks.caption
+
+
+nav:
+  - Inicio: index.md
+
+  - Integraciones:
+      - Monitor:
+          - Introducción: integrations/monitor/index.md
+          - Arquitectura: integrations/monitor/arquitectura.md
+          - loadShipment: integrations/monitor/load-shipment.md
+          - event: integrations/monitor/event.md
+          - updateShipment: integrations/monitor/update-shipment.md
+          - upsertCargo: integrations/monitor/upsert-cargo.md
+          - cancelCargo: integrations/monitor/cancel-cargo.md
+          - cancelShipment: integrations/monitor/cancel-shipment.md
+          - finalizeShipment: integrations/monitor/finalize-shipment.md
+          - logisticTime: integrations/monitor/logistic-time.md
+          - image: integrations/monitor/image.md
+          - updateSubmittedManifest: integrations/monitor/update-submitted-manifest.md
+          - FAQ: integrations/monitor/faq.md
+
+      - RNDC:
+          - Introducción: integrations/rndc/index.md
+
+  - Arquitectura:
+      - General: architecture/index.md
+
+
+extra_css:
+  - assets/styles/variables.css
+  - assets/styles/layout.css
+  - assets/styles/components.css
