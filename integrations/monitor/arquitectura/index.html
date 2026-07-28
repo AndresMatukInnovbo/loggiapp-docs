@@ -592,17 +592,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#autenticacion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Autenticación
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#ejecucion-asincrona" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -614,10 +603,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#restriccion-de-empresas" class="md-nav__link">
+  <a href="#restriccion-de-activacion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restricción de empresas
+        Restricción de activación
       
     </span>
   </a>
@@ -1162,17 +1151,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#autenticacion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Autenticación
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#ejecucion-asincrona" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1184,10 +1162,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#restriccion-de-empresas" class="md-nav__link">
+  <a href="#restriccion-de-activacion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restricción de empresas
+        Restricción de activación
       
     </span>
   </a>
@@ -1246,15 +1224,11 @@
 </tr>
 <tr>
 <td>Namespace SOAP</td>
-<td><code>http://service.soap.soapexposer.mayasoft.com/</code></td>
+<td>Definido por el contrato oficial de Monitor</td>
 </tr>
 <tr>
-<td>URL Producción</td>
-<td>Configurada en <code>monitor.soap.prod</code> (properties)</td>
-</tr>
-<tr>
-<td>URL Desarrollo</td>
-<td><code>https://monitorpiloto.mayasoft.ai/soap/ws/LoadShipment?wsdl</code></td>
+<td>URL del servicio</td>
+<td>Configurada por ambiente (desarrollo / producción)</td>
 </tr>
 </tbody>
 </table>
@@ -1262,45 +1236,24 @@
 <h2 id="componentes-principales">Componentes principales<a class="headerlink" href="#componentes-principales" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>┌─────────────────────┐         SOAP/HTTP          ┌──────────────────┐
 │     LoggiApp        │ ─────────────────────────►  │     Monitor      │
-│                     │                             │   (MayaSoft)     │
-│  MonitorCargoBusi-  │  LoadShipmentRequest        │                  │
-│  nessImpl           │  EventRequest               │  Recibe y        │
-│       ↓             │  FinalizeShipmentRequest    │  monitorea       │
-│  MonitorServiceImpl │  CancelShipmentRequest      │  despachos       │
-│       ↓             │  ImageRequest               │                  │
-│  HTTP Connection    │ ◄───────────────────────── │  MonitorResponse │
+│                     │                             │                  │
+│  Capa de negocio    │  LoadShipmentRequest        │  Recibe y        │
+│       ↓             │  EventRequest               │  monitorea       │
+│  Cliente SOAP       │  FinalizeShipmentRequest    │  despachos       │
+│       ↓             │  CancelShipmentRequest      │                  │
+│  Conexión HTTP      │  ImageRequest               │                  │
+│                     │ ◄───────────────────────── │  MonitorResponse │
 └─────────────────────┘                             └──────────────────┘
 </code></pre></div>
 <hr />
-<h2 id="autenticacion">Autenticación<a class="headerlink" href="#autenticacion" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Ambiente</th>
-<th>Mecanismo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Producción</td>
-<td>Credenciales almacenadas en base de datos (<code>CompanySAAS.integrationCredentials</code>) por empresa (holder), canal <code>MONITOR_CARGO</code>.</td>
-</tr>
-<tr>
-<td>Desarrollo</td>
-<td>Credenciales hardcodeadas: usuario <code>PILOTO</code>, contraseña <code>PILOTO</code>.</td>
-</tr>
-</tbody>
-</table>
-<hr />
 <h2 id="ejecucion-asincrona">Ejecución asíncrona<a class="headerlink" href="#ejecucion-asincrona" title="Permanent link">&para;</a></h2>
-<p>Todas las operaciones de integración con Monitor se ejecutan de forma <strong>asíncrona</strong> usando un thread pool dedicado (<code>monitorCargoExecutor</code>) mediante la anotación <code>@Async</code>. Esto garantiza que una falla en Monitor no bloquee el flujo principal de la aplicación.</p>
+<p>Todas las operaciones de integración con Monitor se ejecutan de forma <strong>asíncrona</strong> usando un thread pool dedicado. Esto garantiza que una falla en Monitor no bloquee el flujo principal de la aplicación.</p>
 <hr />
-<h2 id="restriccion-de-empresas">Restricción de empresas<a class="headerlink" href="#restriccion-de-empresas" title="Permanent link">&para;</a></h2>
-<p>La integración <strong>solo se activa</strong> para empresas que cumplan ambas condiciones:</p>
-<ol>
-<li>El <code>holderId</code> sea igual a <code>Companies.TECLOGI</code> (la plataforma Teclogi).</li>
-<li>El <code>idCompany</code> de la carga esté registrado en <code>MonitorCargoCompanies</code> (actualmente solo <strong>Maersk Logistics</strong> — NIT: <code>83008063410</code>).</li>
-</ol>
+<h2 id="restriccion-de-activacion">Restricción de activación<a class="headerlink" href="#restriccion-de-activacion" title="Permanent link">&para;</a></h2>
+<p>Actualmente existe una <strong>condicional en el código</strong> que limita la activación de la integración: solo una empresa específica configurada en el sistema puede superar esta validación y enviar información a Monitor. El resto de empresas no dispara la integración, aunque el código de los servicios exista.</p>
+<blockquote>
+<p>La habilitación para nuevas empresas es un cambio de configuración/código, no un cambio de contrato con Monitor.</p>
+</blockquote>
 <hr />
 <h2 id="respuesta-estandar-de-monitor">Respuesta estándar de Monitor<a class="headerlink" href="#respuesta-estandar-de-monitor" title="Permanent link">&para;</a></h2>
 <table>

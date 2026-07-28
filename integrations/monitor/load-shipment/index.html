@@ -1523,18 +1523,14 @@
 </tr>
 <tr>
 <td><strong>Condición 1</strong></td>
-<td>El <code>holderId</code> debe ser <code>Companies.TECLOGI</code></td>
+<td>La empresa de la carga debe estar habilitada para la integración con Monitor (actualmente solo una empresa específica supera esta validación)</td>
 </tr>
 <tr>
 <td><strong>Condición 2</strong></td>
-<td>El <code>idCompany</code> de la carga debe estar en <code>MonitorCargoCompanies</code> (actualmente solo Maersk Logistics)</td>
-</tr>
-<tr>
-<td><strong>Condición 3</strong></td>
 <td>La carga NO debe haber sido registrada previamente en Monitor (<code>monitorState.loadShipmentResponse.transmited == false</code>)</td>
 </tr>
 <tr>
-<td><strong>Condición 4</strong></td>
+<td><strong>Condición 3</strong></td>
 <td>La carga debe tener un número de manifiesto asignado (<code>cargo.manifest</code> no vacío)</td>
 </tr>
 </tbody>
@@ -1551,7 +1547,7 @@ CargoBusinessImpl.tracking(action, imagesCargoRequest)
 CargoBusinessImpl.reportToMonitorCargo(&quot;START_TRIP&quot;, cargo, holderId, ...)
         ↓
 MonitorCargoBusinessImpl.registerMonitorLoadShipmentAndLoadzoneEvent(...)
-        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+        ↓  [Ejecutado en thread asíncrono]
 MonitorCargoBusinessImpl.registerMonitorLoadShipmentSync(...)
         ↓
 ¿La carga ya fue registrada en Monitor?
@@ -2080,14 +2076,11 @@ Se almacena el resultado en cargo.monitorState.loadShipmentResponse
 <h2 id="9-request-construido">9. Request construido<a class="headerlink" href="#9-request-construido" title="Permanent link">&para;</a></h2>
 <p>Ejemplo del request SOAP que genera LoggiApp (con datos ficticios respetando la estructura real del código):</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;http://service.soap.soapexposer.mayasoft.com/&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:loadShipment&gt;</span>
-<span class="w">      </span><span class="nt">&lt;authToken&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authUser&gt;</span>USUARIO_MONITOR<span class="nt">&lt;/authUser&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authPassword&gt;</span>PASSWORD_MONITOR<span class="nt">&lt;/authPassword&gt;</span>
-<span class="w">      </span><span class="nt">&lt;/authToken&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- authToken omitido: la autenticación se gestiona internamente por la plataforma --&gt;</span>
 <span class="w">      </span><span class="nt">&lt;manifest&gt;</span>
 <span class="w">        </span><span class="nt">&lt;idManifest&gt;</span>MAN-2025-001234<span class="nt">&lt;/idManifest&gt;</span>
 <span class="w">        </span><span class="nt">&lt;createmanifestdate&gt;</span>2025-07-28<span class="w"> </span>08:30:00<span class="nt">&lt;/createmanifestdate&gt;</span>
@@ -2225,34 +2218,30 @@ Se almacena el resultado en cargo.monitorState.loadShipmentResponse
 </tr>
 <tr>
 <td>4</td>
-<td><strong>Solo Maersk Logistics.</strong> Actualmente la integración está habilitada exclusivamente para la empresa con NIT <code>83008063410</code> (Maersk Logistics).</td>
+<td><strong>Restricción de empresa.</strong> Existe una condicional que actualmente permite el envío solo para una empresa específica habilitada en el sistema.</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>Solo holder Teclogi.</strong> El <code>holderId</code> debe ser el valor de <code>Companies.TECLOGI</code>.</td>
+<td><strong>Ejecución asíncrona.</strong> El envío se realiza en un thread separado. No bloquea la respuesta al usuario.</td>
 </tr>
 <tr>
 <td>6</td>
-<td><strong>Ejecución asíncrona.</strong> El envío se realiza en un thread separado (<code>monitorCargoExecutor</code>). No bloquea la respuesta al usuario.</td>
-</tr>
-<tr>
-<td>7</td>
 <td><strong>Validación previa exhaustiva.</strong> Antes de construir el request, se validan todos los campos requeridos. Si falla la validación, se almacena el error sin intentar la conexión a Monitor.</td>
 </tr>
 <tr>
-<td>8</td>
+<td>7</td>
 <td><strong>Solo remesas en estado CREATED.</strong> Se envían únicamente los consignments cuyo estado sea <code>CREATED</code>.</td>
 </tr>
 <tr>
-<td>9</td>
+<td>8</td>
 <td><strong>Se ejecuta junto con el evento de zona de carga.</strong> Cuando se invoca desde <code>START_TRIP</code>, inmediatamente después del loadShipment se ejecuta también el registro del evento de zona de carga (loadzone event).</td>
 </tr>
 <tr>
-<td>10</td>
+<td>9</td>
 <td><strong>No se envían datos del GPS ni proveedor satelital.</strong> A pesar de que el contrato de Monitor lo permite, LoggiApp no envía información del proveedor GPS.</td>
 </tr>
 <tr>
-<td>11</td>
+<td>10</td>
 <td><strong>Solo se envía la placa del vehículo.</strong> No se envían marca, color, modelo, carrocería ni demás datos del vehículo que Monitor acepta.</td>
 </tr>
 </tbody>
