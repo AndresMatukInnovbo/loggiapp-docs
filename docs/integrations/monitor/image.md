@@ -59,14 +59,11 @@ No se genera ningún request actualmente. Basado en el DTO y la estructura SOAP,
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:image>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <image>
         <idManifest>MAN-2025-001234</idManifest>
         <path>https://storage.loggiapp.com/evidencias/foto-cargue-001.jpg</path>

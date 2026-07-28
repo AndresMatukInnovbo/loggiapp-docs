@@ -14,10 +14,9 @@ Este servicio **cancela un despacho en la plataforma Monitor**, indicando que el
 | ----------------- | ------- |
 | **Evento**        | Una carga es **eliminada** (marcada como `DELETED`) en LoggiApp |
 | **Actor**         | Usuario (controlador, despachador, administrador) que elimina la carga desde la interfaz web |
-| **Condición 1**   | El `holderId` debe ser `Companies.TECLOGI` |
-| **Condición 2**   | El `idCompany` de la carga debe estar en `MonitorCargoCompanies` (Maersk Logistics) |
-| **Condición 3**   | La carga NO debe haber sido cancelada previamente en Monitor (`monitorState.cancelShipmentResponse.transmited == false`) |
-| **Condición 4**   | La carga debe tener un número de manifiesto (`cargo.manifest` no vacío) |
+| **Condición 1**   | La empresa de la carga debe estar habilitada para la integración con Monitor (actualmente solo una empresa específica supera esta validación) |
+| **Condición 2**   | La carga NO debe haber sido cancelada previamente en Monitor (`monitorState.cancelShipmentResponse.transmited == false`) |
+| **Condición 3**   | La carga debe tener un número de manifiesto (`cargo.manifest` no vacío) |
 
 > **Endpoint REST manual:** `POST /monitor/{cargoId}/cancel`
 
@@ -31,7 +30,7 @@ CargoBusinessImpl.markCargoAsDeleted(cargo, deletedFingerPrint, holderId)
 Se actualiza el estado a DELETED en la base de datos
         ↓
 MonitorCargoBusinessImpl.cancelMonitorShipment(cargoId, idCompany, holderId)
-        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+        ↓  [Ejecutado en thread asíncrono]
 ¿La carga ya fue cancelada en Monitor?
         ↓ NO
 ¿El manifiesto está vacío?
@@ -74,14 +73,11 @@ No aplica. El único dato enviado es `cargo.manifest` directamente, sin ninguna 
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:cancelShipment>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <cancel>
         <idManifest>MAN-2025-001234</idManifest>
       </cancel>
@@ -124,5 +120,5 @@ El resultado se almacena en `cargo.monitorState.cancelShipmentResponse`:
 | 3  | **Idempotencia.** Si `monitorState.cancelShipmentResponse.transmited == true`, la operación se aborta sin reenviar. |
 | 4  | **No cancela órdenes individuales.** LoggiApp NO implementa el servicio `cancelCargo` del contrato oficial. Solo cancela el despacho completo (`cancelShipment`). |
 | 5  | **No requiere fecha de cancelación.** A diferencia de `finalizeShipment`, la cancelación no incluye fecha. Monitor registra la fecha de cancelación internamente. |
-| 6  | **Ejecución asíncrona.** Se ejecuta en el thread pool `monitorCargoExecutor`. La eliminación de la carga no espera la respuesta de Monitor. |
+| 6  | **Ejecución asíncrona.** Se ejecuta en un thread pool dedicado. La eliminación de la carga no espera la respuesta de Monitor. |
 | 7  | **Reintento automático.** Si Monitor responde con error interno (código `001`), se reintenta una vez más. |

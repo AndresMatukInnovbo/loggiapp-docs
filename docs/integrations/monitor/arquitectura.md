@@ -7,9 +7,8 @@
 | Protocolo        | SOAP sobre HTTP/HTTPS                                           |
 | Método HTTP      | POST                                                            |
 | Content-Type     | `text/xml; charset=utf-8`                                       |
-| Namespace SOAP   | `http://service.soap.soapexposer.mayasoft.com/`                 |
-| URL Producción   | Configurada en `monitor.soap.prod` (properties)                 |
-| URL Desarrollo   | `https://monitorpiloto.mayasoft.ai/soap/ws/LoadShipment?wsdl`   |
+| Namespace SOAP   | Definido por el contrato oficial de Monitor                     |
+| URL del servicio | Configurada por ambiente (desarrollo / producción)              |
 
 ---
 
@@ -18,39 +17,29 @@
 ```
 ┌─────────────────────┐         SOAP/HTTP          ┌──────────────────┐
 │     LoggiApp        │ ─────────────────────────►  │     Monitor      │
-│                     │                             │   (MayaSoft)     │
-│  MonitorCargoBusi-  │  LoadShipmentRequest        │                  │
-│  nessImpl           │  EventRequest               │  Recibe y        │
-│       ↓             │  FinalizeShipmentRequest    │  monitorea       │
-│  MonitorServiceImpl │  CancelShipmentRequest      │  despachos       │
-│       ↓             │  ImageRequest               │                  │
-│  HTTP Connection    │ ◄───────────────────────── │  MonitorResponse │
+│                     │                             │                  │
+│  Capa de negocio    │  LoadShipmentRequest        │  Recibe y        │
+│       ↓             │  EventRequest               │  monitorea       │
+│  Cliente SOAP       │  FinalizeShipmentRequest    │  despachos       │
+│       ↓             │  CancelShipmentRequest      │                  │
+│  Conexión HTTP      │  ImageRequest               │                  │
+│                     │ ◄───────────────────────── │  MonitorResponse │
 └─────────────────────┘                             └──────────────────┘
 ```
 
 ---
 
-## Autenticación
-
-| Ambiente     | Mecanismo                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| Producción   | Credenciales almacenadas en base de datos (`CompanySAAS.integrationCredentials`) por empresa (holder), canal `MONITOR_CARGO`. |
-| Desarrollo   | Credenciales hardcodeadas: usuario `PILOTO`, contraseña `PILOTO`.                                 |
-
----
-
 ## Ejecución asíncrona
 
-Todas las operaciones de integración con Monitor se ejecutan de forma **asíncrona** usando un thread pool dedicado (`monitorCargoExecutor`) mediante la anotación `@Async`. Esto garantiza que una falla en Monitor no bloquee el flujo principal de la aplicación.
+Todas las operaciones de integración con Monitor se ejecutan de forma **asíncrona** usando un thread pool dedicado. Esto garantiza que una falla en Monitor no bloquee el flujo principal de la aplicación.
 
 ---
 
-## Restricción de empresas
+## Restricción de activación
 
-La integración **solo se activa** para empresas que cumplan ambas condiciones:
+Actualmente existe una **condicional en el código** que limita la activación de la integración: solo una empresa específica configurada en el sistema puede superar esta validación y enviar información a Monitor. El resto de empresas no dispara la integración, aunque el código de los servicios exista.
 
-1. El `holderId` sea igual a `Companies.TECLOGI` (la plataforma Teclogi).
-2. El `idCompany` de la carga esté registrado en `MonitorCargoCompanies` (actualmente solo **Maersk Logistics** — NIT: `83008063410`).
+> La habilitación para nuevas empresas es un cambio de configuración/código, no un cambio de contrato con Monitor.
 
 ---
 

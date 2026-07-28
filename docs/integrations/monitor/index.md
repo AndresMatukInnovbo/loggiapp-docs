@@ -9,7 +9,7 @@
 
 ## Introducción
 
-Este documento describe la integración técnica y funcional entre **LoggiApp** (plataforma TMS de Teclogi) y **Monitor** (plataforma de monitoreo satelital de MayaSoft).
+Este documento describe la integración técnica y funcional entre **LoggiApp** (plataforma TMS) y **Monitor** (plataforma de monitoreo satelital).
 
 La integración se realiza mediante servicios web SOAP expuestos por Monitor. LoggiApp actúa como **consumidor** de estos servicios, enviando información sobre despachos, eventos de rastreo, y cambios de estado de las cargas en tiempo real.
 

@@ -2,16 +2,15 @@
 
 ## ¿Para qué empresas está habilitada la integración?
 
-Actualmente la integración **solo se activa** para empresas que cumplan ambas condiciones:
+Actualmente existe una condicional en el código que permite activar la integración solo para una empresa específica configurada en el sistema. El resto de empresas no dispara el envío a Monitor.
 
-1. El `holderId` sea igual a `Companies.TECLOGI` (la plataforma Teclogi).
-2. El `idCompany` de la carga esté registrado en `MonitorCargoCompanies` (actualmente solo **Maersk Logistics** — NIT: `83008063410`).
+> La habilitación para nuevas empresas es un cambio de configuración/código, no un cambio de contrato con Monitor.
 
 ---
 
 ## ¿Qué pasa si Monitor no responde o falla?
 
-Todas las operaciones se ejecutan de forma **asíncrona** usando un thread pool dedicado (`monitorCargoExecutor`). Una falla en Monitor **no bloquea** el flujo principal de la aplicación.
+Todas las operaciones se ejecutan de forma **asíncrona** usando un thread pool dedicado. Una falla en Monitor **no bloquea** el flujo principal de la aplicación.
 
 Si Monitor responde con error interno (código `001`), se **reintenta una vez** más automáticamente. Si falla de nuevo, se guarda como no transmitido.
 
@@ -72,12 +71,9 @@ No. La infraestructura está lista (DTOs + método SOAP) pero **no se utiliza** 
 
 ---
 
-## ¿Cómo se manejan las credenciales?
+## ¿Cómo se maneja la autenticación?
 
-| Ambiente     | Mecanismo                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| Producción   | Credenciales almacenadas en base de datos (`CompanySAAS.integrationCredentials`) por empresa (holder), canal `MONITOR_CARGO`. |
-| Desarrollo   | Credenciales hardcodeadas: usuario `PILOTO`, contraseña `PILOTO`.                                 |
+La autenticación hacia Monitor se gestiona internamente por la plataforma. No se documentan credenciales ni tokens en esta guía.
 
 ---
 

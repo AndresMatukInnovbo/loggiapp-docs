@@ -955,10 +955,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#como-se-manejan-las-credenciales" class="md-nav__link">
+  <a href="#como-se-maneja-la-autenticacion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ¿Cómo se manejan las credenciales?
+        ¿Cómo se maneja la autenticación?
       
     </span>
   </a>
@@ -1250,10 +1250,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#como-se-manejan-las-credenciales" class="md-nav__link">
+  <a href="#como-se-maneja-la-autenticacion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ¿Cómo se manejan las credenciales?
+        ¿Cómo se maneja la autenticación?
       
     </span>
   </a>
@@ -1290,14 +1290,13 @@
 
 <h1 id="faq-preguntas-frecuentes">FAQ — Preguntas frecuentes<a class="headerlink" href="#faq-preguntas-frecuentes" title="Permanent link">&para;</a></h1>
 <h2 id="para-que-empresas-esta-habilitada-la-integracion">¿Para qué empresas está habilitada la integración?<a class="headerlink" href="#para-que-empresas-esta-habilitada-la-integracion" title="Permanent link">&para;</a></h2>
-<p>Actualmente la integración <strong>solo se activa</strong> para empresas que cumplan ambas condiciones:</p>
-<ol>
-<li>El <code>holderId</code> sea igual a <code>Companies.TECLOGI</code> (la plataforma Teclogi).</li>
-<li>El <code>idCompany</code> de la carga esté registrado en <code>MonitorCargoCompanies</code> (actualmente solo <strong>Maersk Logistics</strong> — NIT: <code>83008063410</code>).</li>
-</ol>
+<p>Actualmente existe una condicional en el código que permite activar la integración solo para una empresa específica configurada en el sistema. El resto de empresas no dispara el envío a Monitor.</p>
+<blockquote>
+<p>La habilitación para nuevas empresas es un cambio de configuración/código, no un cambio de contrato con Monitor.</p>
+</blockquote>
 <hr />
 <h2 id="que-pasa-si-monitor-no-responde-o-falla">¿Qué pasa si Monitor no responde o falla?<a class="headerlink" href="#que-pasa-si-monitor-no-responde-o-falla" title="Permanent link">&para;</a></h2>
-<p>Todas las operaciones se ejecutan de forma <strong>asíncrona</strong> usando un thread pool dedicado (<code>monitorCargoExecutor</code>). Una falla en Monitor <strong>no bloquea</strong> el flujo principal de la aplicación.</p>
+<p>Todas las operaciones se ejecutan de forma <strong>asíncrona</strong> usando un thread pool dedicado. Una falla en Monitor <strong>no bloquea</strong> el flujo principal de la aplicación.</p>
 <p>Si Monitor responde con error interno (código <code>001</code>), se <strong>reintenta una vez</strong> más automáticamente. Si falla de nuevo, se guarda como no transmitido.</p>
 <hr />
 <h2 id="se-puede-re-ejecutar-un-servicio-manualmente">¿Se puede re-ejecutar un servicio manualmente?<a class="headerlink" href="#se-puede-re-ejecutar-un-servicio-manualmente" title="Permanent link">&para;</a></h2>
@@ -1424,25 +1423,8 @@
 <h2 id="el-servicio-image-esta-activo">¿El servicio <code>image</code> está activo?<a class="headerlink" href="#el-servicio-image-esta-activo" title="Permanent link">&para;</a></h2>
 <p>No. La infraestructura está lista (DTOs + método SOAP) pero <strong>no se utiliza</strong> en ningún flujo de negocio. No existe ningún caller que invoque este servicio. Para más detalles, consulta la <a href="../image/">documentación del servicio image</a>.</p>
 <hr />
-<h2 id="como-se-manejan-las-credenciales">¿Cómo se manejan las credenciales?<a class="headerlink" href="#como-se-manejan-las-credenciales" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Ambiente</th>
-<th>Mecanismo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Producción</td>
-<td>Credenciales almacenadas en base de datos (<code>CompanySAAS.integrationCredentials</code>) por empresa (holder), canal <code>MONITOR_CARGO</code>.</td>
-</tr>
-<tr>
-<td>Desarrollo</td>
-<td>Credenciales hardcodeadas: usuario <code>PILOTO</code>, contraseña <code>PILOTO</code>.</td>
-</tr>
-</tbody>
-</table>
+<h2 id="como-se-maneja-la-autenticacion">¿Cómo se maneja la autenticación?<a class="headerlink" href="#como-se-maneja-la-autenticacion" title="Permanent link">&para;</a></h2>
+<p>La autenticación hacia Monitor se gestiona internamente por la plataforma. No se documentan credenciales ni tokens en esta guía.</p>
 <hr />
 <h2 id="cual-es-el-ciclo-de-vida-completo-de-un-despacho-en-monitor">¿Cuál es el ciclo de vida completo de un despacho en Monitor?<a class="headerlink" href="#cual-es-el-ciclo-de-vida-completo-de-un-despacho-en-monitor" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>loadShipment (crea el despacho)

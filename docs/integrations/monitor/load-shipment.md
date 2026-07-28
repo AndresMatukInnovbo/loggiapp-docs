@@ -16,10 +16,9 @@ El despacho incluye los datos del manifiesto de transporte, la ruta planificada,
 | ----------------- | ------- |
 | **Evento**        | La carga cambia al estado `START_TRIP` (inicio de viaje) |
 | **Actor**         | Conductor (desde la app móvil) o usuario web que actualiza el tracking |
-| **Condición 1**   | El `holderId` debe ser `Companies.TECLOGI` |
-| **Condición 2**   | El `idCompany` de la carga debe estar en `MonitorCargoCompanies` (actualmente solo Maersk Logistics) |
-| **Condición 3**   | La carga NO debe haber sido registrada previamente en Monitor (`monitorState.loadShipmentResponse.transmited == false`) |
-| **Condición 4**   | La carga debe tener un número de manifiesto asignado (`cargo.manifest` no vacío) |
+| **Condición 1**   | La empresa de la carga debe estar habilitada para la integración con Monitor (actualmente solo una empresa específica supera esta validación) |
+| **Condición 2**   | La carga NO debe haber sido registrada previamente en Monitor (`monitorState.loadShipmentResponse.transmited == false`) |
+| **Condición 3**   | La carga debe tener un número de manifiesto asignado (`cargo.manifest` no vacío) |
 
 > **Endpoint REST manual:** `POST /monitor/{cargoId}/load-shipment`  
 > Permite re-ejecutar el registro de forma manual desde la interfaz web.
@@ -34,7 +33,7 @@ CargoBusinessImpl.tracking(action, imagesCargoRequest)
 CargoBusinessImpl.reportToMonitorCargo("START_TRIP", cargo, holderId, ...)
         ↓
 MonitorCargoBusinessImpl.registerMonitorLoadShipmentAndLoadzoneEvent(...)
-        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+        ↓  [Ejecutado en thread asíncrono]
 MonitorCargoBusinessImpl.registerMonitorLoadShipmentSync(...)
         ↓
 ¿La carga ya fue registrada en Monitor?
@@ -213,14 +212,11 @@ Ejemplo del request SOAP que genera LoggiApp (con datos ficticios respetando la 
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:loadShipment>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <manifest>
         <idManifest>MAN-2025-001234</idManifest>
         <createmanifestdate>2025-07-28 08:30:00</createmanifestdate>
@@ -330,11 +326,10 @@ El resultado se almacena en `cargo.monitorState.loadShipmentResponse`:
 | 1  | **Solo se ejecuta si existe manifiesto.** La validación verifica que `cargo.manifest` no sea vacío antes de intentar el envío. |
 | 2  | **Idempotencia.** Si la carga ya fue registrada (`monitorState.loadShipmentResponse.transmited == true`), la operación se aborta sin enviar. |
 | 3  | **Reintento automático.** Si Monitor responde con error interno (código `001`), se reintenta una vez más antes de guardar el fallo. |
-| 4  | **Solo Maersk Logistics.** Actualmente la integración está habilitada exclusivamente para la empresa con NIT `83008063410` (Maersk Logistics). |
-| 5  | **Solo holder Teclogi.** El `holderId` debe ser el valor de `Companies.TECLOGI`. |
-| 6  | **Ejecución asíncrona.** El envío se realiza en un thread separado (`monitorCargoExecutor`). No bloquea la respuesta al usuario. |
-| 7  | **Validación previa exhaustiva.** Antes de construir el request, se validan todos los campos requeridos. Si falla la validación, se almacena el error sin intentar la conexión a Monitor. |
-| 8  | **Solo remesas en estado CREATED.** Se envían únicamente los consignments cuyo estado sea `CREATED`. |
-| 9  | **Se ejecuta junto con el evento de zona de carga.** Cuando se invoca desde `START_TRIP`, inmediatamente después del loadShipment se ejecuta también el registro del evento de zona de carga (loadzone event). |
-| 10 | **No se envían datos del GPS ni proveedor satelital.** A pesar de que el contrato de Monitor lo permite, LoggiApp no envía información del proveedor GPS. |
-| 11 | **Solo se envía la placa del vehículo.** No se envían marca, color, modelo, carrocería ni demás datos del vehículo que Monitor acepta. |
+| 4  | **Restricción de empresa.** Existe una condicional que actualmente permite el envío solo para una empresa específica habilitada en el sistema. |
+| 5  | **Ejecución asíncrona.** El envío se realiza en un thread separado. No bloquea la respuesta al usuario. |
+| 6  | **Validación previa exhaustiva.** Antes de construir el request, se validan todos los campos requeridos. Si falla la validación, se almacena el error sin intentar la conexión a Monitor. |
+| 7  | **Solo remesas en estado CREATED.** Se envían únicamente los consignments cuyo estado sea `CREATED`. |
+| 8  | **Se ejecuta junto con el evento de zona de carga.** Cuando se invoca desde `START_TRIP`, inmediatamente después del loadShipment se ejecuta también el registro del evento de zona de carga (loadzone event). |
+| 9  | **No se envían datos del GPS ni proveedor satelital.** A pesar de que el contrato de Monitor lo permite, LoggiApp no envía información del proveedor GPS. |
+| 10 | **Solo se envía la placa del vehículo.** No se envían marca, color, modelo, carrocería ni demás datos del vehículo que Monitor acepta. |

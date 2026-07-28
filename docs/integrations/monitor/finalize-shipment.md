@@ -14,11 +14,10 @@ Este servicio **finaliza un despacho en la plataforma Monitor**, indicando que e
 | ----------------- | ------- |
 | **Evento**        | La carga cambia al estado `END_SERVICE` (fin del servicio / entrega completada) |
 | **Actor**         | Conductor (desde la app móvil) o usuario web que actualiza el tracking |
-| **Condición 1**   | El `holderId` debe ser `Companies.TECLOGI` |
-| **Condición 2**   | El `idCompany` de la carga debe estar en `MonitorCargoCompanies` (Maersk Logistics) |
-| **Condición 3**   | La carga NO debe haber sido finalizada previamente en Monitor (`monitorState.finalizeShipmentResponse.transmited == false`) |
-| **Condición 4**   | La carga debe tener un número de manifiesto (`cargo.manifest` no vacío) |
-| **Condición 5**   | La carga debe tener una fecha de fin de viaje (`cargo.durationTime.endDate` no null) |
+| **Condición 1**   | La empresa de la carga debe estar habilitada para la integración con Monitor (actualmente solo una empresa específica supera esta validación) |
+| **Condición 2**   | La carga NO debe haber sido finalizada previamente en Monitor (`monitorState.finalizeShipmentResponse.transmited == false`) |
+| **Condición 3**   | La carga debe tener un número de manifiesto (`cargo.manifest` no vacío) |
+| **Condición 4**   | La carga debe tener una fecha de fin de viaje (`cargo.durationTime.endDate` no null) |
 
 > **Endpoint REST manual:** `POST /monitor/{cargoId}/finalize`
 
@@ -32,7 +31,7 @@ CargoBusinessImpl.tracking(action, imagesCargoRequest)
 CargoBusinessImpl.reportToMonitorCargo("END_SERVICE", cargo, holderId, ...)
         ↓
 MonitorCargoBusinessImpl.finalizeMonitorShipment(cargoId, idCompany, holderId)
-        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+        ↓  [Ejecutado en thread asíncrono]
 ¿La carga ya fue finalizada en Monitor?
         ↓ NO
 validateFinalizeShipment(cargo)
@@ -76,14 +75,11 @@ El contrato oficial de Monitor define exactamente los mismos campos que LoggiApp
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:finalizeShipment>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <finalize>
         <idManifest>MAN-2025-001234</idManifest>
         <finalizeDate>2025-07-30 16:45:00</finalizeDate>
@@ -126,5 +122,5 @@ El resultado se almacena en `cargo.monitorState.finalizeShipmentResponse`:
 | 2  | **Idempotencia.** Si `monitorState.finalizeShipmentResponse.transmited == true`, la operación se aborta sin reenviar. |
 | 3  | **Reintento automático.** Si Monitor responde con error interno (código `001`), se reintenta una vez más. |
 | 4  | **Requiere fecha de fin de viaje.** La validación verifica que `cargo.durationTime.endDate` no sea null. Si no existe, se almacena error de validación sin intentar la conexión. |
-| 5  | **Ejecución asíncrona.** Se ejecuta en el thread pool `monitorCargoExecutor`. No bloquea la respuesta al usuario. |
+| 5  | **Ejecución asíncrona.** Se ejecuta en un thread pool dedicado. No bloquea la respuesta al usuario. |
 | 6  | **Complemento del flujo completo.** Este servicio cierra el ciclo de vida del despacho en Monitor: `loadShipment` (crea) → `event` (monitorea) → `finalizeShipment` (cierra). |

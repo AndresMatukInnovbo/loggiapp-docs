@@ -1356,18 +1356,14 @@
 </tr>
 <tr>
 <td><strong>Condición 1</strong></td>
-<td>El <code>holderId</code> debe ser <code>Companies.TECLOGI</code></td>
+<td>La empresa de la carga debe estar habilitada para la integración con Monitor (actualmente solo una empresa específica supera esta validación)</td>
 </tr>
 <tr>
 <td><strong>Condición 2</strong></td>
-<td>El <code>idCompany</code> de la carga debe estar en <code>MonitorCargoCompanies</code> (Maersk Logistics)</td>
-</tr>
-<tr>
-<td><strong>Condición 3</strong></td>
 <td>La carga NO debe haber sido cancelada previamente en Monitor (<code>monitorState.cancelShipmentResponse.transmited == false</code>)</td>
 </tr>
 <tr>
-<td><strong>Condición 4</strong></td>
+<td><strong>Condición 3</strong></td>
 <td>La carga debe tener un número de manifiesto (<code>cargo.manifest</code> no vacío)</td>
 </tr>
 </tbody>
@@ -1383,7 +1379,7 @@ CargoBusinessImpl.markCargoAsDeleted(cargo, deletedFingerPrint, holderId)
 Se actualiza el estado a DELETED en la base de datos
         ↓
 MonitorCargoBusinessImpl.cancelMonitorShipment(cargoId, idCompany, holderId)
-        ↓  [Ejecutado en thread asíncrono: monitorCargoExecutor]
+        ↓  [Ejecutado en thread asíncrono]
 ¿La carga ya fue cancelada en Monitor?
         ↓ NO
 ¿El manifiesto está vacío?
@@ -1452,14 +1448,11 @@ Se almacena resultado en cargo.monitorState.cancelShipmentResponse
 <p>No aplica. El único dato enviado es <code>cargo.manifest</code> directamente, sin ninguna transformación.</p>
 <h2 id="9-request-construido">9. Request construido<a class="headerlink" href="#9-request-construido" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;http://service.soap.soapexposer.mayasoft.com/&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:cancelShipment&gt;</span>
-<span class="w">      </span><span class="nt">&lt;authToken&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authUser&gt;</span>USUARIO_MONITOR<span class="nt">&lt;/authUser&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authPassword&gt;</span>PASSWORD_MONITOR<span class="nt">&lt;/authPassword&gt;</span>
-<span class="w">      </span><span class="nt">&lt;/authToken&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- authToken omitido: la autenticación se gestiona internamente por la plataforma --&gt;</span>
 <span class="w">      </span><span class="nt">&lt;cancel&gt;</span>
 <span class="w">        </span><span class="nt">&lt;idManifest&gt;</span>MAN-2025-001234<span class="nt">&lt;/idManifest&gt;</span>
 <span class="w">      </span><span class="nt">&lt;/cancel&gt;</span>
@@ -1534,7 +1527,7 @@ Se almacena resultado en cargo.monitorState.cancelShipmentResponse
 </tr>
 <tr>
 <td>6</td>
-<td><strong>Ejecución asíncrona.</strong> Se ejecuta en el thread pool <code>monitorCargoExecutor</code>. La eliminación de la carga no espera la respuesta de Monitor.</td>
+<td><strong>Ejecución asíncrona.</strong> Se ejecuta en un thread pool dedicado. La eliminación de la carga no espera la respuesta de Monitor.</td>
 </tr>
 <tr>
 <td>7</td>

@@ -248,14 +248,11 @@ El servicio `event` de Monitor no está documentado como un servicio independien
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:event>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <event>
         <eventCode>loadzone</eventCode>
         <eventDate>2025-07-28 09:15:00</eventDate>
@@ -277,14 +274,11 @@ El servicio `event` de Monitor no está documentado como un servicio independien
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:event>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <event>
         <eventCode>downloadzone</eventCode>
         <eventDate>2025-07-30 14:30:00</eventDate>
@@ -306,14 +300,11 @@ El servicio `event` de Monitor no está documentado como un servicio independien
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:event>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <event>
         <eventCode>speeding</eventCode>
         <eventDate>2025-07-29T15:43:46</eventDate>
@@ -335,14 +326,11 @@ El servicio `event` de Monitor no está documentado como un servicio independien
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:ser="http://service.soap.soapexposer.mayasoft.com/">
+                  xmlns:ser="[NAMESPACE_SOAP_MONITOR]">
   <soapenv:Header/>
   <soapenv:Body>
     <ser:event>
-      <authToken>
-        <authUser>USUARIO_MONITOR</authUser>
-        <authPassword>PASSWORD_MONITOR</authPassword>
-      </authToken>
+      <!-- authToken omitido: la autenticación se gestiona internamente por la plataforma -->
       <event>
         <eventCode>lasttracking</eventCode>
         <eventDate>2025-07-29 11:20:00</eventDate>
@@ -399,6 +387,6 @@ Idéntica a todos los servicios de Monitor:
 | 5  | **Los eventos Satrack sobreponen el lastTrackingEventResponse.** Cada nuevo evento Satrack o Last Tracking sobreescribe el campo `lastTrackingEventResponse`, pero se mantiene un historial separado en `lastTrackingMonitor`. |
 | 6  | **Velocidad > 75 km/h siempre genera código `speeding`.** Independientemente del tipo de evento Satrack original, si la velocidad supera 75 km/h se clasifica como exceso de velocidad. |
 | 7  | **Requiere manifiesto.** Todos los tipos de evento validan que `cargo.manifest` no esté vacío antes de intentar el envío. |
-| 8  | **Ejecución asíncrona.** Todos los tipos de evento se ejecutan en el thread pool `monitorCargoExecutor`. |
+| 8  | **Ejecución asíncrona.** Todos los tipos de evento se ejecutan en un thread pool dedicado. |
 | 9  | **El evento loadzone se ejecuta secuencialmente después del loadShipment.** Ambos comparten el mismo hilo asíncrono cuando se invocan desde `START_TRIP`, garantizando que el despacho exista en Monitor antes de enviar el evento. |
 | 10 | **Los campos `state`, `velocity` y `temperature` solo se llenan para eventos Satrack.** Para los demás tipos, se envían como cadenas vacías. |

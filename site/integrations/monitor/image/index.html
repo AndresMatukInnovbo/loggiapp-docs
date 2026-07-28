@@ -1411,14 +1411,11 @@
 <h2 id="9-request-construido">9. Request construido<a class="headerlink" href="#9-request-construido" title="Permanent link">&para;</a></h2>
 <p>No se genera ningún request actualmente. Basado en el DTO y la estructura SOAP, el request <strong>teórico</strong> sería:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;http://service.soap.soapexposer.mayasoft.com/&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:image&gt;</span>
-<span class="w">      </span><span class="nt">&lt;authToken&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authUser&gt;</span>USUARIO_MONITOR<span class="nt">&lt;/authUser&gt;</span>
-<span class="w">        </span><span class="nt">&lt;authPassword&gt;</span>PASSWORD_MONITOR<span class="nt">&lt;/authPassword&gt;</span>
-<span class="w">      </span><span class="nt">&lt;/authToken&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- authToken omitido: la autenticación se gestiona internamente por la plataforma --&gt;</span>
 <span class="w">      </span><span class="nt">&lt;image&gt;</span>
 <span class="w">        </span><span class="nt">&lt;idManifest&gt;</span>MAN-2025-001234<span class="nt">&lt;/idManifest&gt;</span>
 <span class="w">        </span><span class="nt">&lt;path&gt;</span>https://storage.loggiapp.com/evidencias/foto-cargue-001.jpg<span class="nt">&lt;/path&gt;</span>
