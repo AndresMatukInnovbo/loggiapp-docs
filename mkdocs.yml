@@ -2,6 +2,7 @@ site_name: LoggiApp Integration Hub
 
 theme:
   name: material
+  custom_dir: overrides
   language: es
 
   logo: assets/images/LoggiApp---ICON.png

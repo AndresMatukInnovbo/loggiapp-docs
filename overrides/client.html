@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoggiApp Monitor &mdash; Guía de Integración</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ 'assets/images/LoggiApp---ICON.png' | url }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="{{ 'assets/styles/client.css' | url }}">
+</head>
+<body>
+    <!-- Animated Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="#" class="header-brand" onclick="event.preventDefault()">
+            <div class="header-logo">
+                <img src="{{ 'assets/images/LoggiApp---ICON.png' | url }}" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Monitor</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-label">Navegación</div>
+        <ul class="sidebar-nav" id="sidebarNav">
+            <li><a href="#que-es" class="active"><span class="material-icons-round">info</span> ¿Qué es Monitor?</a></li>
+            <li><a href="#integracion"><span class="material-icons-round">link</span> Integración</a></li>
+            <li><a href="#funcionalidades"><span class="material-icons-round">checklist</span> Funcionalidades</a></li>
+            <li><a href="#ciclo-de-vida"><span class="material-icons-round">timeline</span> Ciclo de vida</a></li>
+            <li><a href="#datos-despacho"><span class="material-icons-round">description</span> Datos del despacho</a></li>
+            <li><a href="#datos-rastreo"><span class="material-icons-round">gps_fixed</span> Eventos de rastreo</a></li>
+            <li><a href="#alertas"><span class="material-icons-round">warning</span> Alertas</a></li>
+            <li><a href="#automatico"><span class="material-icons-round">smart_toy</span> Comportamiento automático</a></li>
+            <li><a href="#restriccion"><span class="material-icons-round">lock</span> Restricción</a></li>
+            <li><a href="#fallos"><span class="material-icons-round">error_outline</span> Manejo de fallos</a></li>
+            <li><a href="#pendientes"><span class="material-icons-round">pending_actions</span> Pendientes</a></li>
+            <li><a href="#cobertura"><span class="material-icons-round">assessment</span> Cobertura</a></li>
+        </ul>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-version">
+            <small>Versión del documento</small><br>
+            <span class="ver">v1.0 &mdash; Julio 2026</span>
+        </div>
+    </aside>
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main class="main">
+        {{ page.content }}
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <p><span class="footer-brand">LoggiApp</span> &mdash; Guía de integración Monitor &bull; v1.0 &bull; Julio 2026</p>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        /* ═══════════════════════════════════════
+           THEME TOGGLE
+        ═══════════════════════════════════════ */
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const root = document.documentElement;
+
+        const savedTheme = localStorage.getItem('loggiapp-client-theme');
+        if (savedTheme === 'dark') {
+            root.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = 'light_mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            themeIcon.textContent = isDark ? 'dark_mode' : 'light_mode';
+            localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark');
+        });
+
+        /* ═══════════════════════════════════════
+           SIDEBAR ACTIVE LINK
+        ═══════════════════════════════════════ */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        /* ═══════════════════════════════════════
+           SCROLL ANIMATIONS
+        ═══════════════════════════════════════ */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.setAttribute('data-visible', 'true');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(s => animObserver.observe(s));
+
+        /* ═══════════════════════════════════════
+           SCROLL PROGRESS BAR
+        ═══════════════════════════════════════ */
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        /* ═══════════════════════════════════════
+           BACK TO TOP
+        ═══════════════════════════════════════ */
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ═══════════════════════════════════════
+           MOBILE SIDEBAR
+        ═══════════════════════════════════════ */
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('visible');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('visible');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('visible');
+                }
+            });
+        });
+
+        /* ═══════════════════════════════════════
+           PREVENT EXTERNAL NAVIGATION
+        ═══════════════════════════════════════ */
+        document.addEventListener('click', (e) => {
+            const anchor = e.target.closest('a');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href');
+            if (href && !href.startsWith('#')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

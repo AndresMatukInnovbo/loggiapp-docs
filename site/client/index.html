@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoggiApp Monitor &mdash; Guía de Integración</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/LoggiApp---ICON.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles/client.css">
+</head>
+<body>
+    <!-- Animated Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="#" class="header-brand" onclick="event.preventDefault()">
+            <div class="header-logo">
+                <img src="../assets/images/LoggiApp---ICON.png" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Monitor</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-label">Navegación</div>
+        <ul class="sidebar-nav" id="sidebarNav">
+            <li><a href="#que-es" class="active"><span class="material-icons-round">info</span> ¿Qué es Monitor?</a></li>
+            <li><a href="#integracion"><span class="material-icons-round">link</span> Integración</a></li>
+            <li><a href="#funcionalidades"><span class="material-icons-round">checklist</span> Funcionalidades</a></li>
+            <li><a href="#ciclo-de-vida"><span class="material-icons-round">timeline</span> Ciclo de vida</a></li>
+            <li><a href="#datos-despacho"><span class="material-icons-round">description</span> Datos del despacho</a></li>
+            <li><a href="#datos-rastreo"><span class="material-icons-round">gps_fixed</span> Eventos de rastreo</a></li>
+            <li><a href="#alertas"><span class="material-icons-round">warning</span> Alertas</a></li>
+            <li><a href="#automatico"><span class="material-icons-round">smart_toy</span> Comportamiento automático</a></li>
+            <li><a href="#restriccion"><span class="material-icons-round">lock</span> Restricción</a></li>
+            <li><a href="#fallos"><span class="material-icons-round">error_outline</span> Manejo de fallos</a></li>
+            <li><a href="#pendientes"><span class="material-icons-round">pending_actions</span> Pendientes</a></li>
+            <li><a href="#cobertura"><span class="material-icons-round">assessment</span> Cobertura</a></li>
+        </ul>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-version">
+            <small>Versión del documento</small><br>
+            <span class="ver">v1.0 &mdash; Julio 2026</span>
+        </div>
+    </aside>
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main class="main">
+        <!-- HERO -->
+<div class="hero">
+    <div class="hero-content">
+        <img src="../assets/images/LoggiApp---ICON.png" alt="LoggiApp" style="width:80px;height:80px;object-fit:contain;margin-bottom:16px;filter:brightness(0) invert(1);opacity:.9;">
+        <div class="hero-eyebrow">
+            <span class="material-icons-round" style="font-size:14px">satellite_alt</span>
+            Plataforma de monitoreo satelital
+        </div>
+        <h1>Integración LoggiApp &mdash; Monitor</h1>
+        <p>Seguimiento en tiempo real de despachos de carga en carretera. Visibilidad total del vehículo, alertas inteligentes y trazabilidad completa del viaje.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-number">8</div>
+                <div class="hero-stat-label">Servicios activos</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">3</div>
+                <div class="hero-stat-label">Tipos de alertas</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">100%</div>
+                <div class="hero-stat-label">Automático</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ QUÉ ES MONITOR ═══ -->
+<section class="section" id="que-es">
+    <div class="section-header">
+        <div class="section-icon">
+            <span class="material-icons-round">satellite_alt</span>
+        </div>
+        <h2 class="section-title">¿Qué es Monitor?</h2>
+    </div>
+    <div class="card">
+        <p><strong>Monitor</strong> es una plataforma de monitoreo satelital que permite hacer seguimiento en tiempo real a los despachos de carga en carretera. Proporciona visibilidad sobre la ubicación del vehículo, alertas de velocidad, llegadas a puntos de cargue/descargue, y el estado general del viaje.</p>
+    </div>
+</section>
+
+<!-- ═══ INTEGRACIÓN ═══ -->
+<section class="section" id="integracion">
+    <div class="section-header">
+        <div class="section-icon green">
+            <span class="material-icons-round">sync_alt</span>
+        </div>
+        <h2 class="section-title">¿LoggiApp tiene integración con Monitor?</h2>
+    </div>
+    <div class="info-card">
+        <span class="material-icons-round">check_circle</span>
+        <div>
+            <p><strong>Sí.</strong> LoggiApp se conecta automáticamente con Monitor para enviar información de los despachos durante todo su ciclo de vida: desde que el conductor inicia el viaje, hasta que se completa la entrega o se cancela la carga.</p>
+            <p style="margin-top:10px;">La comunicación es <strong>unidireccional en su mayoría</strong>: LoggiApp envía información a Monitor. Monitor la recibe, la procesa y responde con una confirmación.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FUNCIONALIDADES ═══ -->
+<section class="section" id="funcionalidades">
+    <div class="section-header">
+        <div class="section-icon">
+            <span class="material-icons-round">checklist</span>
+        </div>
+        <h2 class="section-title">¿Qué hace esta integración?</h2>
+    </div>
+    <p class="section-description">LoggiApp envía a Monitor los siguientes datos de forma automática:</p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Acción</th>
+                    <th>Cuándo ocurre</th>
+                    <th>Qué información envía</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Crear despacho</strong></td>
+                    <td>Cuando el conductor inicia el viaje</td>
+                    <td>Manifiesto, ruta, vehículo (placa), conductor, órdenes de carga (remesas) con origen, destino, remitente, destinatario y mercancía</td>
+                </tr>
+                <tr>
+                    <td><strong>Reportar llegada al cargue</strong></td>
+                    <td>Inmediatamente después de crear el despacho</td>
+                    <td>Fecha, coordenadas y dirección del sitio de cargue</td>
+                </tr>
+                <tr>
+                    <td><strong>Reportar llegada al descargue</strong></td>
+                    <td>Cuando el conductor confirma la llegada a un destino</td>
+                    <td>Fecha, coordenadas y dirección del sitio de descargue</td>
+                </tr>
+                <tr>
+                    <td><strong>Enviar ubicación GPS</strong></td>
+                    <td>Cuando el proveedor GPS (Satrack) detecta un cambio de estado del vehículo</td>
+                    <td>Coordenadas, velocidad, estado del motor (encendido/apagado/detenido), temperatura</td>
+                </tr>
+                <tr>
+                    <td><strong>Enviar alertas</strong></td>
+                    <td>Cuando se detecta exceso de velocidad, desconexión de antena GPS o desviación de ruta</td>
+                    <td>Tipo de alerta, ubicación y velocidad</td>
+                </tr>
+                <tr>
+                    <td><strong>Reportar novedades</strong></td>
+                    <td>Cuando un conductor o controlador registra un punto de trazabilidad</td>
+                    <td>Descripción, coordenadas y dirección</td>
+                </tr>
+                <tr>
+                    <td><strong>Finalizar despacho</strong></td>
+                    <td>Cuando el conductor completa la entrega</td>
+                    <td>Número de manifiesto y fecha de finalización</td>
+                </tr>
+                <tr>
+                    <td><strong>Cancelar despacho</strong></td>
+                    <td>Cuando un usuario elimina la carga en LoggiApp</td>
+                    <td>Número de manifiesto</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══ CICLO DE VIDA ═══ -->
+<section class="section" id="ciclo-de-vida">
+    <div class="section-header">
+        <div class="section-icon green">
+            <span class="material-icons-round">timeline</span>
+        </div>
+        <h2 class="section-title">Ciclo de vida del despacho</h2>
+    </div>
+    <p class="section-description">En cada momento del viaje se activan servicios diferentes. Así funciona la secuencia completa:</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-icons-round">play_arrow</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 1 &mdash; Inicio del viaje</div>
+                <div class="timeline-title">Crear despacho en Monitor</div>
+                <div class="timeline-desc">Se crea el despacho con toda la información del manifiesto, ruta, vehículo, conductor y remesas.</div>
+                <span class="timeline-code">loadShipment</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-icons-round">local_shipping</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 1 &mdash; Inicio del viaje</div>
+                <div class="timeline-title">Reportar llegada al cargue</div>
+                <div class="timeline-desc">Se envía la ubicación y hora de llegada al punto de cargue.</div>
+                <span class="timeline-code">event: loadzone</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot green"><span class="material-icons-round">gps_fixed</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 2 &mdash; Durante el viaje</div>
+                <div class="timeline-title">Ubicación GPS automática</div>
+                <div class="timeline-desc">Envío continuo de posición, velocidad, estado del motor y temperatura.</div>
+                <span class="timeline-code">event: lastgps</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot green"><span class="material-icons-round">warning</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 2 &mdash; Durante el viaje</div>
+                <div class="timeline-title">Alertas inteligentes</div>
+                <div class="timeline-desc">Exceso de velocidad, GPS desconectado, desviación de ruta.</div>
+                <span class="timeline-code">alerts</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot green"><span class="material-icons-round">edit_note</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 2 &mdash; Durante el viaje</div>
+                <div class="timeline-title">Novedades manuales</div>
+                <div class="timeline-desc">Puntos de trazabilidad registrados manualmente por el conductor o controlador.</div>
+                <span class="timeline-code">event: lasttracking</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-icons-round">pin_drop</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 3 &mdash; Llegada a destino</div>
+                <div class="timeline-title">Reportar llegada al descargue</div>
+                <div class="timeline-desc">Se registra la ubicación y hora de llegada al punto de descargue.</div>
+                <span class="timeline-code">event: downloadzone</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-icons-round">check_circle</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Fase 4 &mdash; Fin del viaje</div>
+                <div class="timeline-title">Finalizar despacho en Monitor</div>
+                <div class="timeline-desc">Se marca el despacho como completado exitosamente.</div>
+                <span class="timeline-code">finalizeShipment</span>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot red"><span class="material-icons-round">cancel</span></div>
+            <div class="timeline-content">
+                <div class="timeline-phase">Cancelación (si aplica)</div>
+                <div class="timeline-title">Cancelar despacho en Monitor</div>
+                <div class="timeline-desc">Se cancela el despacho si la carga es eliminada antes de completar el viaje.</div>
+                <span class="timeline-code">cancelShipment</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ DATOS DEL DESPACHO ═══ -->
+<section class="section" id="datos-despacho">
+    <div class="section-header">
+        <div class="section-icon">
+            <span class="material-icons-round">description</span>
+        </div>
+        <h2 class="section-title">Información enviada al crear el despacho</h2>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Datos enviados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Manifiesto</strong></td><td>Número de manifiesto, fecha de expedición, fecha de salida, tipo de operación (Nacional/Urbano), observaciones</td></tr>
+                <tr><td><strong>Generador</strong></td><td>NIT y nombre de la empresa dueña de la carga</td></tr>
+                <tr><td><strong>Transportador</strong></td><td>NIT y nombre de la empresa transportadora</td></tr>
+                <tr><td><strong>Ruta</strong></td><td>Nombre del itinerario, código DANE municipio origen, código DANE municipio destino</td></tr>
+                <tr><td><strong>Vehículo</strong></td><td>Placa</td></tr>
+                <tr><td><strong>Conductor</strong></td><td>Cédula, nombre, apellido, celular</td></tr>
+                <tr><td><strong>Por cada remesa</strong></td><td>ID de la orden, número de remesa, cita de carga, cita de descarga, contenedor (si aplica), categoría de la mercancía, nombre del producto, datos del remitente (NIT, nombre, municipio, dirección), datos del destinatario (NIT, nombre, municipio, dirección)</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══ DATOS DE RASTREO ═══ -->
+<section class="section" id="datos-rastreo">
+    <div class="section-header">
+        <div class="section-icon green">
+            <span class="material-icons-round">gps_fixed</span>
+        </div>
+        <h2 class="section-title">Datos en los eventos de rastreo</h2>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dato</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Número de manifiesto</strong></td><td>Identifica a qué despacho pertenece el evento</td></tr>
+                <tr><td><strong>Tipo de evento</strong></td><td>Llegada al cargue, llegada al descargue, posición GPS, alerta, novedad</td></tr>
+                <tr><td><strong>Fecha y hora</strong></td><td>Momento exacto del evento</td></tr>
+                <tr><td><strong>Coordenadas</strong></td><td>Latitud y longitud</td></tr>
+                <tr><td><strong>Dirección</strong></td><td>Descripción textual de la ubicación</td></tr>
+                <tr><td><strong>Velocidad</strong></td><td>Km/h del vehículo (solo en eventos GPS)</td></tr>
+                <tr><td><strong>Estado del motor</strong></td><td>Encendido / Apagado / Detenido (solo en eventos GPS)</td></tr>
+                <tr><td><strong>Temperatura</strong></td><td>Si el vehículo tiene sensor de temperatura</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══ ALERTAS ═══ -->
+<section class="section" id="alertas">
+    <div class="section-header">
+        <div class="section-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
+            <span class="material-icons-round">warning</span>
+        </div>
+        <h2 class="section-title">Alertas reportadas a Monitor</h2>
+    </div>
+
+    <div class="alert-cards stagger">
+        <div class="alert-card speed">
+            <div class="alert-icon"><span class="material-icons-round">speed</span></div>
+            <div class="alert-title">Exceso de velocidad</div>
+            <div class="alert-desc">Cuando el GPS reporta velocidad superior a 75 km/h, o cuando Satrack genera un evento de código 24.</div>
+        </div>
+        <div class="alert-card gps">
+            <div class="alert-icon"><span class="material-icons-round">gps_off</span></div>
+            <div class="alert-title">GPS desconectado</div>
+            <div class="alert-desc">Cuando Satrack detecta que la antena GPS fue desconectada (evento código 27).</div>
+        </div>
+        <div class="alert-card route">
+            <div class="alert-icon"><span class="material-icons-round">wrong_location</span></div>
+            <div class="alert-title">Desviación de ruta</div>
+            <div class="alert-desc">Cuando Satrack detecta un giro repentino o cambio brusco de dirección (evento código 600).</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ COMPORTAMIENTO AUTOMÁTICO ═══ -->
+<section class="section" id="automatico">
+    <div class="section-header">
+        <div class="section-icon green">
+            <span class="material-icons-round">smart_toy</span>
+        </div>
+        <h2 class="section-title">Comportamiento automático</h2>
+    </div>
+    <p class="section-description">La integración funciona de forma <strong>completamente automática</strong>. No requiere intervención del usuario para:</p>
+
+    <div class="chips stagger">
+        <div class="chip"><span class="material-icons-round">check_circle</span> Crear despacho en Monitor (al iniciar viaje)</div>
+        <div class="chip"><span class="material-icons-round">check_circle</span> Enviar eventos de ubicación (por sistema GPS)</div>
+        <div class="chip"><span class="material-icons-round">check_circle</span> Finalizar despacho (al completar entrega)</div>
+        <div class="chip"><span class="material-icons-round">check_circle</span> Cancelar despacho (al eliminar carga)</div>
+    </div>
+
+    <div class="info-card">
+        <span class="material-icons-round">replay</span>
+        <div>
+            <p>Adicionalmente, existe la posibilidad de <strong>re-ejecutar manualmente</strong> cualquier operación desde la interfaz web en caso de fallas o reintentos.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ RESTRICCIÓN ═══ -->
+<section class="section" id="restriccion">
+    <div class="section-header">
+        <div class="section-icon" style="background: linear-gradient(135deg, #FFB300, #FF8F00);">
+            <span class="material-icons-round">lock</span>
+        </div>
+        <h2 class="section-title">Restricción de activación</h2>
+    </div>
+
+    <div class="restriction-banner">
+        <span class="material-icons-round">info</span>
+        <div>
+            <p>Actualmente existe una condicional en el sistema que permite activar la integración con Monitor <strong>solo para una empresa específica configurada</strong>. El resto de empresas no dispara el envío automático a Monitor, aunque la funcionalidad exista en la plataforma.</p>
+            <em>La habilitación para nuevas empresas es un cambio de configuración, no un cambio de contrato con Monitor.</em>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MANEJO DE FALLOS ═══ -->
+<section class="section" id="fallos">
+    <div class="section-header">
+        <div class="section-icon">
+            <span class="material-icons-round">error_outline</span>
+        </div>
+        <h2 class="section-title">¿Qué pasa si Monitor falla?</h2>
+    </div>
+
+    <div class="failure-cards stagger">
+        <div class="failure-card">
+            <div class="failure-card-header ok">
+                <span class="material-icons-round">check_circle</span>
+                <div class="failure-card-title">Respuesta exitosa</div>
+            </div>
+            <p>Se marca como transmitido. No se reenvía.</p>
+        </div>
+        <div class="failure-card">
+            <div class="failure-card-header retry">
+                <span class="material-icons-round">replay</span>
+                <div class="failure-card-title">Error interno de Monitor</div>
+            </div>
+            <p>Se <strong>reintenta una vez</strong> automáticamente. Si falla de nuevo, se guarda como no transmitido.</p>
+        </div>
+        <div class="failure-card">
+            <div class="failure-card-header fail">
+                <span class="material-icons-round">cloud_off</span>
+                <div class="failure-card-title">Sin respuesta / Error de red</div>
+            </div>
+            <p>Se guarda como no transmitido. Se puede reintentar manualmente.</p>
+        </div>
+        <div class="failure-card">
+            <div class="failure-card-header dup">
+                <span class="material-icons-round">content_copy</span>
+                <div class="failure-card-title">Despacho ya existe</div>
+            </div>
+            <p>Se considera exitoso. No genera error.</p>
+        </div>
+    </div>
+
+    <div class="info-card" style="margin-top:24px;">
+        <span class="material-icons-round">shield</span>
+        <div>
+            <p>La integración <strong>nunca bloquea</strong> el flujo operativo de LoggiApp. Si Monitor está caído, el conductor puede seguir trabajando normalmente.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PENDIENTES ═══ -->
+<section class="section" id="pendientes">
+    <div class="section-header">
+        <div class="section-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
+            <span class="material-icons-round">pending_actions</span>
+        </div>
+        <h2 class="section-title">Funcionalidades no implementadas</h2>
+    </div>
+    <p class="section-description">Las siguientes funcionalidades están disponibles en Monitor pero LoggiApp <strong>aún no las usa</strong>:</p>
+
+    <div class="feature-list stagger">
+        <div class="feature-item">
+            <span class="material-icons-round">edit</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Actualizar despacho</div>
+                <div class="feature-item-desc">Modificar datos del viaje después de creado (ej: cambio de conductor o ruta).</div>
+            </div>
+            <span class="badge no"><span class="badge-dot"></span>No implementado</span>
+        </div>
+        <div class="feature-item">
+            <span class="material-icons-round">add_box</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Agregar/modificar remesas</div>
+                <div class="feature-item-desc">Añadir nuevas órdenes de carga a un despacho ya existente.</div>
+            </div>
+            <span class="badge no"><span class="badge-dot"></span>No implementado</span>
+        </div>
+        <div class="feature-item">
+            <span class="material-icons-round">remove_circle_outline</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Cancelar remesa individual</div>
+                <div class="feature-item-desc">Anular una remesa específica sin afectar el resto del despacho.</div>
+            </div>
+            <span class="badge no"><span class="badge-dot"></span>No implementado</span>
+        </div>
+        <div class="feature-item">
+            <span class="material-icons-round">schedule</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Tiempos logísticos detallados</div>
+                <div class="feature-item-desc">Enviar inicio/fin de cargue y descargue por separado.</div>
+            </div>
+            <span class="badge no"><span class="badge-dot"></span>No implementado</span>
+        </div>
+        <div class="feature-item">
+            <span class="material-icons-round">assignment</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Radicado RNDC</div>
+                <div class="feature-item-desc">Informar a Monitor el número de radicado del manifiesto.</div>
+            </div>
+            <span class="badge no"><span class="badge-dot"></span>No implementado</span>
+        </div>
+        <div class="feature-item">
+            <span class="material-icons-round">photo_camera</span>
+            <div class="feature-item-info">
+                <div class="feature-item-name">Subir imágenes</div>
+                <div class="feature-item-desc">Enviar evidencias fotográficas del viaje. Infraestructura lista.</div>
+            </div>
+            <span class="badge pending"><span class="badge-dot"></span>Pendiente de activación</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ COBERTURA ═══ -->
+<section class="section" id="cobertura">
+    <div class="section-header">
+        <div class="section-icon green">
+            <span class="material-icons-round">assessment</span>
+        </div>
+        <h2 class="section-title">Resumen de cobertura</h2>
+    </div>
+
+    <div class="coverage-grid stagger">
+        <div class="coverage-item"><span>Crear despacho</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Eventos de rastreo GPS</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Alertas (velocidad, GPS, desviación)</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Eventos de llegada (cargue/descargue)</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Novedades manuales</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Finalizar despacho</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Cancelar despacho</span> <span class="badge yes"><span class="badge-dot"></span>Activo</span></div>
+        <div class="coverage-item"><span>Actualizar despacho ya creado</span> <span class="badge no"><span class="badge-dot"></span>No disponible</span></div>
+        <div class="coverage-item"><span>Gestionar remesas individuales</span> <span class="badge no"><span class="badge-dot"></span>No disponible</span></div>
+        <div class="coverage-item"><span>Tiempos logísticos detallados</span> <span class="badge no"><span class="badge-dot"></span>No disponible</span></div>
+        <div class="coverage-item"><span>Radicado RNDC</span> <span class="badge no"><span class="badge-dot"></span>No disponible</span></div>
+        <div class="coverage-item"><span>Subir imágenes/evidencia</span> <span class="badge pending"><span class="badge-dot"></span>Pendiente</span></div>
+    </div>
+</section>
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <p><span class="footer-brand">LoggiApp</span> &mdash; Guía de integración Monitor &bull; v1.0 &bull; Julio 2026</p>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        /* ═══════════════════════════════════════
+           THEME TOGGLE
+        ═══════════════════════════════════════ */
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const root = document.documentElement;
+
+        const savedTheme = localStorage.getItem('loggiapp-client-theme');
+        if (savedTheme === 'dark') {
+            root.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = 'light_mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            themeIcon.textContent = isDark ? 'dark_mode' : 'light_mode';
+            localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark');
+        });
+
+        /* ═══════════════════════════════════════
+           SIDEBAR ACTIVE LINK
+        ═══════════════════════════════════════ */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        /* ═══════════════════════════════════════
+           SCROLL ANIMATIONS
+        ═══════════════════════════════════════ */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.setAttribute('data-visible', 'true');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(s => animObserver.observe(s));
+
+        /* ═══════════════════════════════════════
+           SCROLL PROGRESS BAR
+        ═══════════════════════════════════════ */
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        /* ═══════════════════════════════════════
+           BACK TO TOP
+        ═══════════════════════════════════════ */
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ═══════════════════════════════════════
+           MOBILE SIDEBAR
+        ═══════════════════════════════════════ */
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('visible');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('visible');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('visible');
+                }
+            });
+        });
+
+        /* ═══════════════════════════════════════
+           PREVENT EXTERNAL NAVIGATION
+        ═══════════════════════════════════════ */
+        document.addEventListener('click', (e) => {
+            const anchor = e.target.closest('a');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href');
+            if (href && !href.startsWith('#')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
