@@ -1772,9 +1772,9 @@ registerLoadzoneEventSync(...)
         ↓
 ¿El evento de loadzone ya fue registrado?
         ↓ NO
-validateEvent(cargo, &quot;loadzone&quot;)
+validateEvent(cargo, "loadzone")
         ↓
-buildEventRequest(cargo, &quot;loadzone&quot;, eventValidator)
+buildEventRequest(cargo, "loadzone", eventValidator)
         ↓
 MonitorServiceImpl.event(eventRequest, holderId)
         ↓
@@ -1785,15 +1785,15 @@ Se almacena resultado en cargo.monitorState.loadZoneEventResponse
         ↓
 CargoBusinessImpl.tracking(action, imagesCargoRequest)
         ↓
-reportToMonitorCargo(&quot;DESTINATION_ARRIVED&quot;, ...)
+reportToMonitorCargo("DESTINATION_ARRIVED", ...)
         ↓
 MonitorCargoBusinessImpl.registerDownloadzoneEvent(cargoId, holderId, addressId, destinationId, idCompany)
         ↓  [Ejecutado en thread asíncrono]
 ¿El evento para ese addressId + destinationId ya fue registrado?
         ↓ NO
-validateEvent(cargo, &quot;downloadzone&quot;, addressId, destinationId)
+validateEvent(cargo, "downloadzone", addressId, destinationId)
         ↓
-buildEventRequest(cargo, &quot;downloadzone&quot;, eventValidator, addressId, destinationId)
+buildEventRequest(cargo, "downloadzone", eventValidator, addressId, destinationId)
         ↓
 MonitorServiceImpl.event(eventRequest, holderId)
         ↓
@@ -2332,8 +2332,8 @@ Se crea registro en historial de lastTrackingMonitor
 </table>
 <h2 id="9-request-construido">9. Request construido<a class="headerlink" href="#9-request-construido" title="Permanent link">&para;</a></h2>
 <h3 id="ejemplo-evento-loadzone-llegada-al-cargue">Ejemplo: Evento Loadzone (llegada al cargue)<a class="headerlink" href="#ejemplo-evento-loadzone-llegada-al-cargue" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">"[NAMESPACE_SOAP_MONITOR]"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:event&gt;</span>
@@ -2355,8 +2355,8 @@ Se crea registro en historial de lastTrackingMonitor
 <span class="nt">&lt;/soapenv:Envelope&gt;</span>
 </code></pre></div>
 <h3 id="ejemplo-evento-downloadzone-llegada-al-descargue">Ejemplo: Evento Downloadzone (llegada al descargue)<a class="headerlink" href="#ejemplo-evento-downloadzone-llegada-al-descargue" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">"[NAMESPACE_SOAP_MONITOR]"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:event&gt;</span>
@@ -2378,8 +2378,8 @@ Se crea registro en historial de lastTrackingMonitor
 <span class="nt">&lt;/soapenv:Envelope&gt;</span>
 </code></pre></div>
 <h3 id="ejemplo-evento-satrack-gps-rastreo">Ejemplo: Evento Satrack GPS (rastreo)<a class="headerlink" href="#ejemplo-evento-satrack-gps-rastreo" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">"[NAMESPACE_SOAP_MONITOR]"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:event&gt;</span>
@@ -2401,8 +2401,8 @@ Se crea registro en historial de lastTrackingMonitor
 <span class="nt">&lt;/soapenv:Envelope&gt;</span>
 </code></pre></div>
 <h3 id="ejemplo-evento-last-tracking-reporte-manual">Ejemplo: Evento Last Tracking (reporte manual)<a class="headerlink" href="#ejemplo-evento-last-tracking-reporte-manual" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
-<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">&quot;[NAMESPACE_SOAP_MONITOR]&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;soapenv:Envelope</span><span class="w"> </span><span class="na">xmlns:soapenv=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+<span class="w">                  </span><span class="na">xmlns:ser=</span><span class="s">"[NAMESPACE_SOAP_MONITOR]"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Header/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;soapenv:Body&gt;</span>
 <span class="w">    </span><span class="nt">&lt;ser:event&gt;</span>

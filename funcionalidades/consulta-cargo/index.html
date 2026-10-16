@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de cargo &mdash; LoggiApp Integration Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/images/LoggiApp---ICON.png">
+    <link rel="stylesheet" href="../../assets/styles/client.css">
+    <link rel="stylesheet" href="../../assets/styles/docflow.css">
+    <script>
+        try {
+            if (localStorage.getItem('loggiapp-client-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="../../" class="header-brand">
+            <div class="header-logo">
+                <img src="../../assets/images/LoggiApp---ICON.png" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Docs</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        
+    <a class="back-link" href="../../">
+        <span class="material-icons-round">arrow_back</span> Todas las funcionalidades
+    </a>
+    
+    <div class="sidebar-label">Uso</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#resumen"><span class="material-icons-round">list_alt</span> Resumen</a>
+            
+        </li>
+        
+        <li>
+            <a href="#empezar-rapido"><span class="material-icons-round">rocket_launch</span> Empezar rápido</a>
+            
+        </li>
+        
+        <li>
+            <a href="#endpoints"><span class="material-icons-round">api</span> Endpoints</a>
+            
+            <ul class="sidebar-sub">
+                
+                <li><a href="#ep-get-consecutive-consecutive-consulta-de-cargo-por-consecutivo"><span class="method sm m-get">GET</span><span class="sub-label">Consulta de cargo por consecutivo</span></a></li>
+                
+                <li><a href="#ep-get-idcargo-consulta-de-cargo-por-id-de-documento"><span class="method sm m-get">GET</span><span class="sub-label">Consulta de cargo por ID de documento</span></a></li>
+                
+            </ul>
+            
+        </li>
+        
+        <li>
+            <a href="#respuestas-comunes"><span class="material-icons-round">reply_all</span> Respuestas comunes</a>
+            
+        </li>
+        
+        <li>
+            <a href="#modelos"><span class="material-icons-round">data_object</span> Modelos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-label">Funcionamiento</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#como-funciona"><span class="material-icons-round">account_tree</span> Cómo funciona</a>
+            
+        </li>
+        
+        <li>
+            <a href="#advertencias"><span class="material-icons-round">warning</span> Advertencias</a>
+            
+        </li>
+        
+        <li>
+            <a href="#fuentes-de-datos"><span class="material-icons-round">storage</span> Fuentes de datos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Documentación</div>
+    <ul class="sidebar-nav">
+        
+        <li><a class="doc-link current" href="./"><span class="material-icons-round">manage_search</span> Consulta de cargo</a></li>
+        
+        <li><a class="doc-link" href="../listado-cargo/"><span class="material-icons-round">manage_search</span> Listado de cargos</a></li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-version">
+        <small>Versión del documento</small><br>
+        <span class="ver">v2.0.0 &mdash; 2026-10-16</span>
+    </div>
+    
+
+    </aside>
+
+    <main class="main">
+        
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="material-icons-round" style="font-size:14px">manage_search</span>
+                Documentación técnica &middot; Lectura
+            </div>
+            <h1>Consulta de cargo</h1>
+            <p>Devuelve un cargo (flete) a partir de su número consecutivo o del ID de su documento en Firestore, enriquecido con sus viáticos activos y sus pagos confirmados (CargoMerged). Si el cargo no existe, responde 204.</p>
+            
+            <div class="meta-chips">
+                <span class="meta-chip"><span class="material-icons-round">category</span> Entidad <code>Cargo</code></span>
+                <span class="meta-chip"><span class="material-icons-round">event</span> Actualizada 2026-10-16</span>
+            </div>
+            
+            <div class="hero-stats">
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">2</div>
+                    <div class="hero-stat-label">Funcionalidades</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">86%</div>
+                    <div class="hero-stat-label">Confianza</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">v2.0.0</div>
+                    <div class="hero-stat-label">Versión</div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <section class="section" id="resumen"><div class="section-header"><div class="section-icon "><span class="material-icons-round">list_alt</span></div><h2 class="section-title">Resumen</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Funcionalidad</th><th>Qué hace</th><th>Cuándo usarla</th></tr></thead><tbody><tr><td><span class="method m-get">GET</span><code class="route">/consecutive/{consecutive}</code></td><td>Devuelve el cargo con ese consecutivo, enriquecido con viáticos activos y pagos confirmados.</td><td>Cuando se conoce el número consecutivo (el identificador de negocio). Consulta por el campo <code>consecutive</code>.</td></tr><tr><td><span class="method m-get">GET</span><code class="route">/{idCargo}</code></td><td>Devuelve el cargo con ese ID de documento, enriquecido con viáticos activos y pagos confirmados.</td><td>Cuando se conoce el ID del documento en Firestore. A diferencia de la consulta por consecutivo, lee el documento directo (no hace query por campo).</td></tr></tbody></table></div><div class="data-section"><div class="data-section-title"><span class="material-icons-round">block</span>Fuera de alcance</div><div class="feature-list"><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">Consulta en lote de consecutivos (es otra funcionalidad de <code>CargoService</code>).</div></div></div><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">Creación, actualización o eliminación de cargos.</div></div></div></div></div></div></section><section class="section" id="empezar-rapido"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">rocket_launch</span></div><h2 class="section-title">Empezar rápido</h2></div><div class="data-section"><div class="conn"><div class="conn-item"><span class="conn-label">Ruta base</span><code>/Teclogi/services/cargo</code></div></div><div class="table-container"><table><thead><tr><th>Header</th><th>Obligatorio</th><th>Ejemplo</th><th>Descripción</th></tr></thead><tbody><tr><td><code>tokenUser</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;token&gt;</code></td><td>Token del usuario. Si está ausente, vacío o es <code>NOT_FOUND</code> (sin distinguir mayúsculas), el interceptor responde 401.</td></tr><tr><td><code>companyId</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;nit&gt;</code></td><td>NIT de la empresa (tenant). El interceptor solo lo guarda en <code>headersDto.companyId</code> si no está vacío; las consultas lo usan para elegir la base de datos del tenant.</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">key</span><div><p><code>RequestFilters</code> (<code>@PreMatching</code>) carga por reflexión la clase configurada en la propiedad <code>com.teclogi.config.web.filter</code>, que es <code>HeadersAppImpl</code>. Ese filtro valida únicamente que <code>tokenUser</code> esté presente, no vacío y distinto de <code>NOT_FOUND</code>; no valida su firma ni su vigencia. Se omite para <code>health</code> y para las rutas <code>legal-documents/{id}/public/pdf</code>.</p></div></div></div></section><section class="section" id="como-funciona"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">account_tree</span></div><h2 class="section-title">Cómo funciona</h2></div><div class="data-section"><article class="service-card" id="flujo-get-consecutive-consecutive-consulta-de-cargo-por-consecutivo"><h3 class="service-title"><span class="method m-get">GET</span><code class="route">/consecutive/{consecutive}</code> — Consulta de cargo por consecutivo</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CargoServiceImpl.getCargoByConsecutive</code> pide el cargo ya enriquecido a <code>CargoBusinessImpl.getCargoMergedByConsecutive</code>, que lo busca en Firestore por <code>consecutive</code>, le añade los viáticos activos y fusiona sus pagos confirmados. Si el cargo no existe o no tiene <code>shippingCost</code>, responde 204.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de GET /consecutive/{consecutive}</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; Q["CargoDaoImpl.getCargoByConsecutive: query Cargo por consecutive"]
+  Q --&gt; N{"cargo es null"}
+  N -- Si --&gt; R204["204 sin cuerpo"]
+  N -- No --&gt; T["loadTravelExpensesSafely: TravelExpenses activos con su detalle"]
+  T --&gt; M["buildCargoMerged: validatedBankAccount false"]
+  M --&gt; P["applyMergedPayments: Payments CONFIRMED"]
+  P --&gt; SC{"shippingCost es null"}
+  SC -- Si --&gt; R204
+  SC -- No --&gt; R200["200 CargoMerged"]
+  Q -. excepcion .-&gt; R500["500"]
+  T -. excepcion .-&gt; R500
+  P -. excepcion .-&gt; R500</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor es el <code>holderId</code> que elige la base de datos del tenant en todas las consultas.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CargoServiceImpl.getCargoByConsecutive</code></div><div class="timeline-desc">Delega en <code>CargoBusinessImpl.getCargoMergedByConsecutive</code>. Si devuelve un <code>CargoMerged</code> responde 200; si devuelve null responde 204. Cualquier excepción se relanza.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.getCargoMergedByConsecutive</code></div><div class="timeline-desc">Toma <code>holderId</code> de <code>headersDto.getCompanyId()</code> y obtiene el cargo con <code>CargoBusinessImpl.getCargoByConsecutive</code>, que delega en el DAO y relanza cualquier excepción.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getCargoByConsecutive</code></div><div class="timeline-desc">Consulta la colección <code>Cargo</code> con <code>consecutive</code> igual al valor recibido y deserializa cada documento como <code>Cargo</code>. Si hubiera varios, devuelve el último iterado; si no hay ninguno, null. Si el cargo es null, el paso 3 devuelve null (204).</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">5</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.loadTravelExpensesSafely</code></div><div class="timeline-desc">Carga los viáticos activos del cargo. Si el id del cargo está vacío devuelve lista vacía; captura <code>IllegalArgumentException</code>, <code>NoSuchElementException</code>, <code>InterruptedException</code> y <code>ExecutionException</code> devolviendo null. Cualquier otra excepción (p. ej. <code>DbException</code>) se propaga.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">6</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getTravelExpensesByCargoId</code></div><div class="timeline-desc">Consulta <code>TravelExpenses</code> por <code>cargoId</code> y <code>state</code> = <code>true</code>; por cada viático con id consulta además su subcolección <code>TravelExpensesDetail</code> filtrada por <code>state</code> = <code>true</code>. Cualquier fallo interno se convierte en <code>DbException</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">7</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.buildCargoMerged</code></div><div class="timeline-desc">Construye el <code>CargoMerged</code> copiando las propiedades del <code>Cargo</code>, asigna <code>travelExpenses</code> (lista vacía si era null) y fija <code>validatedBankAccount</code> en <code>false</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">8</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.applyMergedPayments</code></div><div class="timeline-desc">Si el cargo tiene <code>shippingCost</code> y id, consulta los pagos confirmados y, por cada cargo, une los pagos de la subcolección con los ya existentes en <code>shippingCost.payments</code> ordenados por fecha. Si el cargo no tiene <code>shippingCost</code> no consulta nada.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">9</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getPaymentsFromCargoSubcollectionByStatus</code></div><div class="timeline-desc">Consulta el collectionGroup <code>Payments</code> con <code>cargoId</code> dentro de la lista de ids y <code>status</code> = <code>CONFIRMED</code>, en chunks de <code>BatchConstants.FIRESTORE_WHERE_IN_MAX</code> (30) cuyas consultas se lanzan todas antes de esperarlas; cada espera tiene un timeout de <code>BatchConstants.FIRESTORE_READ_TIMEOUT_SECONDS</code> (120 s). Agrupa los pagos por <code>cargoId</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">10</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.mergePaymentsForResponse</code></div><div class="timeline-desc">Concatena pagos de la subcolección y pagos existentes del cargo, descarta nulos y los ordena por <code>date</code> ascendente con nulos al final. Si no hay ninguno devuelve null y <code>shippingCost.payments</code> no se modifica.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">11</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.getCargoMergedByConsecutive</code></div><div class="timeline-desc">Si <code>shippingCost</code> es null devuelve null (204). Si <code>shippingCost.payments</code> es null lo reemplaza por una lista vacía y devuelve el <code>CargoMerged</code> (200).</div></div></div></div></article><article class="service-card" id="flujo-get-idcargo-consulta-de-cargo-por-id-de-documento"><h3 class="service-title"><span class="method m-get">GET</span><code class="route">/{idCargo}</code> — Consulta de cargo por ID de documento</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CargoServiceImpl.getCargoById</code> pide el cargo ya enriquecido a <code>CargoBusinessImpl.getCargoMergedById</code>, que lee el documento por su ID en Firestore, le añade los viáticos activos y fusiona sus pagos confirmados. Si el cargo no existe o no tiene <code>shippingCost</code>, responde 204.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de GET /{idCargo}</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; Q["CargoDaoImpl.getCargo: documento Cargo por ID"]
+  Q --&gt; N{"cargo es null"}
+  N -- Si --&gt; R204["204 sin cuerpo"]
+  N -- No --&gt; T["loadTravelExpensesSafely: TravelExpenses activos con su detalle"]
+  T --&gt; M["buildCargoMerged: validatedBankAccount false"]
+  M --&gt; P["applyMergedPayments: Payments CONFIRMED"]
+  P --&gt; SC{"shippingCost es null"}
+  SC -- Si --&gt; R204
+  SC -- No --&gt; R200["200 CargoMerged"]
+  Q -. excepcion .-&gt; R500["500"]
+  T -. excepcion .-&gt; R500
+  P -. excepcion .-&gt; R500</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor es el <code>holderId</code> que elige la base de datos del tenant en todas las consultas.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CargoServiceImpl.getCargoById</code></div><div class="timeline-desc">Delega en <code>CargoBusinessImpl.getCargoMergedById</code>. Si devuelve un <code>CargoMerged</code> responde 200; si devuelve null responde 204. Cualquier excepción se relanza.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.getCargoMergedById</code></div><div class="timeline-desc">Toma <code>holderId</code> de <code>headersDto.getCompanyId()</code> y obtiene el cargo con <code>CargoBusinessImpl.getCargoById</code>, que delega en <code>CargoDaoImpl.getCargo</code> y relanza cualquier excepción.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getCargo</code></div><div class="timeline-desc">Lee directo el documento con ese ID en la colección <code>Cargo</code>; si <code>documentSnapshot.exists()</code> es true lo deserializa como <code>Cargo</code>, si no devuelve null. Si el cargo es null, el paso 3 devuelve null (204).</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">5</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.loadTravelExpensesSafely</code></div><div class="timeline-desc">Carga los viáticos activos del cargo. Si el id del cargo está vacío devuelve lista vacía; captura <code>IllegalArgumentException</code>, <code>NoSuchElementException</code>, <code>InterruptedException</code> y <code>ExecutionException</code> devolviendo null. Cualquier otra excepción (p. ej. <code>DbException</code>) se propaga.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">6</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getTravelExpensesByCargoId</code></div><div class="timeline-desc">Consulta <code>TravelExpenses</code> por <code>cargoId</code> y <code>state</code> = <code>true</code>; por cada viático con id consulta además su subcolección <code>TravelExpensesDetail</code> filtrada por <code>state</code> = <code>true</code>. Cualquier fallo interno se convierte en <code>DbException</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">7</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.buildCargoMerged</code></div><div class="timeline-desc">Construye el <code>CargoMerged</code> copiando las propiedades del <code>Cargo</code>, asigna <code>travelExpenses</code> (lista vacía si era null) y fija <code>validatedBankAccount</code> en <code>false</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">8</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.applyMergedPayments</code></div><div class="timeline-desc">Si el cargo tiene <code>shippingCost</code> y id, consulta los pagos confirmados y, por cada cargo, une los pagos de la subcolección con los ya existentes en <code>shippingCost.payments</code> ordenados por fecha. Si el cargo no tiene <code>shippingCost</code> no consulta nada.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">9</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.getPaymentsFromCargoSubcollectionByStatus</code></div><div class="timeline-desc">Consulta el collectionGroup <code>Payments</code> con <code>cargoId</code> dentro de la lista de ids y <code>status</code> = <code>CONFIRMED</code>, en chunks de <code>BatchConstants.FIRESTORE_WHERE_IN_MAX</code> (30) cuyas consultas se lanzan todas antes de esperarlas; cada espera tiene un timeout de <code>BatchConstants.FIRESTORE_READ_TIMEOUT_SECONDS</code> (120 s). Agrupa los pagos por <code>cargoId</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">10</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.mergePaymentsForResponse</code></div><div class="timeline-desc">Concatena pagos de la subcolección y pagos existentes del cargo, descarta nulos y los ordena por <code>date</code> ascendente con nulos al final. Si no hay ninguno devuelve null y <code>shippingCost.payments</code> no se modifica.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">11</span></div><div class="timeline-content"><div class="step-component"><code>CargoBusinessImpl.getCargoMergedById</code></div><div class="timeline-desc">Si <code>shippingCost</code> es null devuelve null (204). Si <code>shippingCost.payments</code> es null lo reemplaza por una lista vacía y devuelve el <code>CargoMerged</code> (200).</div></div></div></div></article><div class="data-section"><div class="data-section-title"><span class="material-icons-round">gavel</span>Reglas a respetar</div><div class="feature-list"><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">El tenant sale del header <code>companyId</code></div><div class="feature-item-desc">Todas las consultas usan <code>headersDto.getCompanyId()</code> como <code>holderId</code>; el filtro no rechaza una petición sin <code>companyId</code>.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Cargo sin <code>shippingCost</code> equivale a no encontrado</div><div class="feature-item-desc">Si el cargo existe pero <code>shippingCost</code> es null, <code>getCargoMergedByConsecutive</code> y <code>getCargoMergedById</code> devuelven null y la respuesta es 204. Los viáticos se consultan igualmente antes de esa comprobación.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name"><code>validatedBankAccount</code> es siempre <code>false</code></div><div class="feature-item-desc"><code>getCargoMergedByConsecutive</code> y <code>getCargoMergedById</code> invocan <code>buildCargoMerged</code> con ese parámetro fijo en <code>false</code>.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Solo se fusionan pagos <code>CONFIRMED</code></div><div class="feature-item-desc">La consulta de la subcolección filtra por <code>status</code> = <code>CONFIRMED</code> (<code>PaymentSyncStatus.CONFIRMED.name()</code>); los pagos en otros estados solo aparecen si ya estaban en <code>shippingCost.payments</code>.</div></div></div></div></div></div></section><section class="section" id="endpoints"><div class="section-header"><div class="section-icon "><span class="material-icons-round">api</span></div><h2 class="section-title">Endpoints</h2></div><div class="data-section"><article class="endpoint-card" id="ep-get-consecutive-consecutive-consulta-de-cargo-por-consecutivo"><h3 class="endpoint-title"><span class="method m-get">GET</span><code class="route">/consecutive/{consecutive}</code> — Consulta de cargo por consecutivo</h3><div class="endpoint-text"><p>Devuelve el cargo con ese consecutivo, enriquecido con viáticos activos y pagos confirmados. Úsala cuando se conoce el número consecutivo (el identificador de negocio). Consulta por el campo <code>consecutive</code>.</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CargoServiceImpl.getCargoByConsecutive</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>consecutive</code></td><td>path</td><td><code>long</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>Número consecutivo del cargo (identificador de negocio, distinto del ID de documento de Firestore).</td></tr></tbody></table></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>Cargo encontrado y con <code>shippingCost</code> informado.</td><td><a href="#modelos"><code>CargoMerged</code></a></td></tr><tr><td><span class="badge yes"><span class="badge-dot"></span>204</span></td><td>No hay cargo con ese consecutivo, o el cargo existe pero su campo <code>shippingCost</code> es null.</td><td>Sin cuerpo</td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>Falla una consulta a Firestore (cargo, viáticos o pagos) o cualquier otra excepción durante el procesamiento.</td><td>Si la excepción es una <code>TeclogiBasicException</code> (p. ej. <code>DbException</code>, que trae httpCode 500), <code>TeclogiExceptionMapper</code> responde JSON con <code>code</code>, <code>httpCode</code>, <code>trackingId</code>, <code>message</code> y <code>additionalDetails</code>. Otras excepciones se relanzan sin tratamiento propio.</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X GET "https://&lt;host&gt;/Teclogi/services/cargo/consecutive/1042" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;"</code></pre></div></article><article class="endpoint-card" id="ep-get-idcargo-consulta-de-cargo-por-id-de-documento"><h3 class="endpoint-title"><span class="method m-get">GET</span><code class="route">/{idCargo}</code> — Consulta de cargo por ID de documento</h3><div class="endpoint-text"><p>Devuelve el cargo con ese ID de documento, enriquecido con viáticos activos y pagos confirmados. Úsala cuando se conoce el ID del documento en Firestore. A diferencia de la consulta por consecutivo, lee el documento directo (no hace query por campo).</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CargoServiceImpl.getCargoById</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>idCargo</code></td><td>path</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>ID del documento del cargo en la colección <code>Cargo</code>.</td></tr></tbody></table></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>Cargo encontrado y con <code>shippingCost</code> informado.</td><td><a href="#modelos"><code>CargoMerged</code></a></td></tr><tr><td><span class="badge yes"><span class="badge-dot"></span>204</span></td><td>No existe el documento con ese ID, o el cargo existe pero su campo <code>shippingCost</code> es null.</td><td>Sin cuerpo</td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>Falla una consulta a Firestore (cargo, viáticos o pagos) o cualquier otra excepción durante el procesamiento.</td><td>Si la excepción es una <code>TeclogiBasicException</code> (p. ej. <code>DbException</code>, que trae httpCode 500), <code>TeclogiExceptionMapper</code> responde JSON con <code>code</code>, <code>httpCode</code>, <code>trackingId</code>, <code>message</code> y <code>additionalDetails</code>. Otras excepciones se relanzan sin tratamiento propio.</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X GET "https://&lt;host&gt;/Teclogi/services/cargo/&lt;idCargo&gt;" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;"</code></pre></div></article></div></section><section class="section" id="respuestas-comunes"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">reply_all</span></div><h2 class="section-title">Respuestas comunes</h2></div><div class="data-section"><div class="card prose"><p>Aplican a todas las funcionalidades del tema.</p></div><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge pending"><span class="badge-dot"></span>401</span></td><td>El header <code>tokenUser</code> está ausente, vacío o es <code>NOT_FOUND</code>. El filtro aborta el request antes de ejecutar el servicio.</td><td><code>Debe enviar un tokenUser</code></td></tr></tbody></table></div></div></section><section class="section" id="modelos"><div class="section-header"><div class="section-icon "><span class="material-icons-round">data_object</span></div><h2 class="section-title">Modelos</h2></div><div class="data-section"><article class="model-card" id="modelo-cargomerged"><h3 class="model-title"><code>CargoMerged</code></h3><div class="endpoint-text"><p>Extiende <code>Cargo</code> (hereda todos sus campos, que no se enumeran aquí) y agrega los viáticos activos y el flag de cuenta bancaria.</p></div><div class="table-container"><table><thead><tr><th>Campo</th><th>Tipo</th><th>Nullable</th><th>Descripción</th></tr></thead><tbody><tr><td><code>travelExpenses</code></td><td><code>array&lt;TravelExpenses&gt;</code></td><td><span class="badge yes"><span class="badge-dot"></span>No</span></td><td>Viáticos activos del cargo (<code>state</code> = <code>true</code>), cada uno con su detalle activo cuando el viático tiene id. Lista vacía si no hay.</td></tr><tr><td><code>validatedBankAccount</code></td><td><code>boolean</code></td><td><span class="badge yes"><span class="badge-dot"></span>No</span></td><td>Siempre <code>false</code> en estas consultas: <code>getCargoMergedByConsecutive</code> y <code>getCargoMergedById</code> llaman a <code>buildCargoMerged</code> con ese valor fijo. No refleja el estado real de la cuenta bancaria.</td></tr><tr><td><code>shippingCost.payments</code></td><td><code>array&lt;Payment&gt;</code></td><td><span class="badge yes"><span class="badge-dot"></span>No</span></td><td>Campo heredado de <code>Cargo</code>. Pagos del cargo fusionados con los pagos <code>CONFIRMED</code> de la subcolección <code>Payments</code>, ordenados por fecha ascendente (los sin fecha al final).</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">verified</span><div><p><strong>Garantías</strong></p><ul><li><code>travelExpenses</code> nunca es null: <code>buildCargoMerged</code> reemplaza un null por una lista vacía.</li><li><code>shippingCost.payments</code> nunca es null: si no hay pagos de ninguna fuente, se asigna una lista vacía.</li></ul></div></div></article></div></section><section class="section" id="advertencias"><div class="section-header"><div class="section-icon amber"><span class="material-icons-round">warning</span></div><h2 class="section-title">Advertencias</h2></div><div class="data-section"><div class="alert-cards wide"><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Cargo inexistente responde 204, no 404</div><div class="alert-desc">Un consecutivo o un ID sin cargo devuelve 204 sin cuerpo. El consumidor debe distinguir 200 (encontrado) de 204 (no existe o sin <code>shippingCost</code>).</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Consecutivos duplicados devuelven el último documento</div><div class="alert-desc">La query por <code>consecutive</code> no tiene <code>limit</code> y el DAO se queda con el último documento iterado: si por error de datos hay varios cargos con el mismo consecutivo, no hay error ni aviso. <span class="applies">Aplica a <span class="tag"><code>GET /consecutive/{consecutive}</code></span></span></div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">El fallo de viáticos normalmente no se degrada</div><div class="alert-desc"><code>loadTravelExpensesSafely</code> solo captura <code>IllegalArgumentException</code>, <code>NoSuchElementException</code>, <code>InterruptedException</code> y <code>ExecutionException</code>, pero <code>getTravelExpensesByCargoId</code> envuelve sus fallos en <code>DbException</code>, que no está en esa lista: un error al leer viáticos suele terminar en 500, no en una respuesta con <code>travelExpenses</code> vacío.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Costo de lectura de los viáticos</div><div class="alert-desc">Por cada viático activo se hace una consulta adicional a su subcolección <code>TravelExpensesDetail</code> (patrón N+1), y los viáticos se leen aun cuando después la respuesta será 204 por <code>shippingCost</code> null.</div></div></div></div></div></section><section class="section" id="fuentes-de-datos"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">storage</span></div><h2 class="section-title">Fuentes de datos</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Fuente</th><th>Acceso</th><th>Filtro</th><th>Uso</th></tr></thead><tbody><tr><td>Colección <code>Cargo</code></td><td>Query sobre la colección del tenant.</td><td><code>consecutive</code> = consecutivo recibido</td><td>Cada documento resultado se deserializa como <code>Cargo</code>; el que se devuelve es el último iterado. <span class="applies">Aplica a <span class="tag"><code>GET /consecutive/{consecutive}</code></span></span></td></tr><tr><td>Colección <code>Cargo</code></td><td>Lectura directa del documento con ese ID en la colección del tenant.</td><td>Sin filtro de campo: el ID del documento es el <code>idCargo</code> recibido.</td><td>Si el documento existe se deserializa como <code>Cargo</code>; si no, el resultado es null. <span class="applies">Aplica a <span class="tag"><code>GET /{idCargo}</code></span></span></td></tr><tr><td>Colección <code>TravelExpenses</code></td><td>Query sobre la colección del tenant.</td><td><code>cargoId</code> = id del <code>Cargo</code> encontrado y <code>state</code> = <code>true</code></td><td>Cada documento se deserializa como <code>TravelExpenses</code> y se le asigna su detalle; la lista resultante va a <code>travelExpenses</code> del <code>CargoMerged</code>.</td></tr><tr><td>Subcolección <code>TravelExpensesDetail</code> de <code>TravelExpenses</code></td><td>Query sobre la subcolección del documento <code>TravelExpenses</code> con id igual al del viático, una por viático.</td><td><code>state</code> = <code>true</code></td><td>Los documentos se deserializan como <code>TravelExpensesDetail</code> y se asignan al viático.</td></tr><tr><td>CollectionGroup <code>Payments</code></td><td>Query de collectionGroup (subcolecciones llamadas <code>Payments</code> bajo cualquier documento), una por chunk de 30 ids.</td><td><code>cargoId</code> dentro de la lista de ids del chunk y <code>status</code> = <code>CONFIRMED</code></td><td>Cada documento se deserializa como <code>CargoPayment</code>, se agrupa por <code>cargoId</code> y se fusiona con los pagos de <code>shippingCost.payments</code>.</td></tr></tbody></table></div></div></section>
+
+    </main>
+
+    <footer class="footer">
+        <p><span class="footer-brand">LoggiApp</span> &mdash; Consulta de cargo &bull; v2.0.0 &bull; 2026-10-16</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        const root = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const syncThemeIcon = () => {
+            themeIcon.textContent = root.getAttribute('data-theme') === 'dark' ? 'light_mode' : 'dark_mode';
+        };
+        syncThemeIcon();
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            try { localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+            syncThemeIcon();
+            if (window.__docflowDiagrams) window.__docflowDiagrams();
+        });
+
+        /* Sección activa en el sidebar */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+        sections.forEach(s => navObserver.observe(s));
+
+        /* Animación de entrada */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.setAttribute('data-visible', 'true');
+            });
+        }, { threshold: 0.05 });
+        sections.forEach(s => animObserver.observe(s));
+
+        /* Progreso, volver arriba */
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* Sidebar móvil */
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        });
+        overlay.addEventListener('click', closeSidebar);
+        sidebar.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) closeSidebar();
+        }));
+
+        /* Copiar código */
+        document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+            const code = btn.closest('.code-block').querySelector('code').innerText;
+            const icon = btn.querySelector('.material-icons-round');
+            try {
+                await navigator.clipboard.writeText(code);
+                icon.textContent = 'check';
+                setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+            } catch (e) {}
+        }));
+    </script>
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        const nodes = [...document.querySelectorAll('pre.mermaid')];
+        nodes.forEach(n => { n.dataset.src = n.textContent; });
+
+        async function draw() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: dark ? 'dark' : 'default',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    primaryColor: dark ? '#2D2640' : '#F3F0FA',
+                    primaryBorderColor: '#7B3FCA',
+                    primaryTextColor: dark ? '#E8E5F0' : '#1A1A2E',
+                    lineColor: dark ? '#9B97B0' : '#64648C'
+                }
+            });
+            nodes.forEach(n => { n.removeAttribute('data-processed'); n.textContent = n.dataset.src; });
+            await mermaid.run({ nodes, suppressErrors: true });
+        }
+
+        window.__docflowDiagrams = draw;
+        draw();
+    </script>
+    
+
+</body>
+</html>
