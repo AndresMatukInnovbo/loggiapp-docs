@@ -1,0 +1,99 @@
+{% extends "docflow-base.html" %}
+
+{% block title %}{{ config.site_name }}{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar-label">Funcionalidades</div>
+    <ul class="sidebar-nav">
+        {% for d in docflow_docs %}
+        <li><a class="doc-link" href="{{ d.url | url }}"><span class="material-icons-round">{{ d.icon }}</span> {{ d.title }}</a></li>
+        {% else %}
+        <li class="sidebar-empty">Aún no hay documentos.</li>
+        {% endfor %}
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Integraciones</div>
+    <ul class="sidebar-nav">
+        <li><a class="doc-link" href="{{ 'integrations/monitor/' | url }}"><span class="material-icons-round">satellite_alt</span> Monitor</a></li>
+        <li><a class="doc-link" href="{{ 'integrations/rndc/' | url }}"><span class="material-icons-round">gavel</span> RNDC</a></li>
+        <li><a class="doc-link" href="{{ 'architecture/' | url }}"><span class="material-icons-round">account_tree</span> Arquitectura</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <div class="hero-content">
+            <img src="{{ 'assets/images/LoggiApp---ICON.png' | url }}" alt="LoggiApp" style="width:72px;height:72px;object-fit:contain;margin-bottom:16px;filter:brightness(0) invert(1);opacity:.9;">
+            <div class="hero-eyebrow">
+                <span class="material-icons-round" style="font-size:14px">menu_book</span>
+                Portal de documentación
+            </div>
+            <h1>LoggiApp &mdash; Documentación funcional</h1>
+            <p>Referencia técnica de cada funcionalidad de la plataforma: contrato, flujo paso a paso, modelos, advertencias y fuentes de datos.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">{{ docflow_docs | length }}</div>
+                    <div class="hero-stat-label">Documentos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section" id="funcionalidades">
+        <div class="section-header">
+            <div class="section-icon">
+                <span class="material-icons-round">checklist</span>
+            </div>
+            <h2 class="section-title">Funcionalidades documentadas</h2>
+        </div>
+        {% if docflow_docs %}
+        <div class="cards-grid stagger">
+            {% for d in docflow_docs %}
+            <a class="card doc-card" href="{{ d.url | url }}">
+                <div class="card-icon purple"><span class="material-icons-round">{{ d.icon }}</span></div>
+                <div class="card-title">{{ d.title }}</div>
+                <p class="card-text">{{ d.summary }}</p>
+                <div class="doc-card-meta">
+                    {% if d.entidad %}<span class="tag"><code>{{ d.entidad }}</code></span>{% endif %}
+                    {% if d.capacidad %}<span class="tag">{{ d.capacidad }}</span>{% endif %}
+                    {% if d.n_func %}<span class="tag">{{ d.n_func }} {{ 'funcionalidades' if d.n_func != 1 else 'funcionalidad' }}</span>{% endif %}
+                    {% if d.version %}<span class="tag">v{{ d.version }}</span>{% endif %}
+                    {% if d.confianza %}<span class="tag">{{ d.confianza }}% confianza</span>{% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="info-card">
+            <span class="material-icons-round">info</span>
+            <div><p>Agrega archivos <strong>.md</strong> en <code>docs/funcionalidades/</code> y ejecuta <code>mkdocs build</code>.</p></div>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="section" id="integraciones">
+        <div class="section-header">
+            <div class="section-icon green">
+                <span class="material-icons-round">sync_alt</span>
+            </div>
+            <h2 class="section-title">Integraciones</h2>
+        </div>
+        <div class="cards-grid cards-grid-3 stagger">
+            <a class="card doc-card" href="{{ 'integrations/monitor/' | url }}">
+                <div class="card-icon green"><span class="material-icons-round">satellite_alt</span></div>
+                <div class="card-title">Monitor</div>
+                <p class="card-text">Integración SOAP con la plataforma de monitoreo satelital.</p>
+            </a>
+            <a class="card doc-card" href="{{ 'integrations/rndc/' | url }}">
+                <div class="card-icon green"><span class="material-icons-round">gavel</span></div>
+                <div class="card-title">RNDC</div>
+                <p class="card-text">Integración con el Registro Nacional de Despachos de Carga.</p>
+            </a>
+            <a class="card doc-card" href="{{ 'architecture/' | url }}">
+                <div class="card-icon green"><span class="material-icons-round">account_tree</span></div>
+                <div class="card-title">Arquitectura</div>
+                <p class="card-text">Visión general de la arquitectura de la plataforma.</p>
+            </a>
+        </div>
+    </section>
+{% endblock %}

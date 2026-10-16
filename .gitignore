@@ -1,0 +1,4 @@
+
+# Espejo de TecLogi-Server-Java (pom-teclogi/docs/features); se genera con scripts/sync_features.py
+docs/funcionalidades/*.md
+__pycache__/

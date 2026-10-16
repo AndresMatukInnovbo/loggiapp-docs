@@ -1,0 +1,101 @@
+{% extends "docflow-base.html" %}
+
+{% block title %}{{ docflow.title }} &mdash; {{ config.site_name }}{% endblock %}
+
+{% block sidebar %}
+    <a class="back-link" href="{{ base_url }}/">
+        <span class="material-icons-round">arrow_back</span> Todas las funcionalidades
+    </a>
+    {% for g in docflow.groups %}
+    <div class="sidebar-label">{{ g.label }}</div>
+    <ul class="sidebar-nav">
+        {% for l in g.links %}
+        <li>
+            <a href="#{{ l.id }}"><span class="material-icons-round">{{ l.icon }}</span> {{ l.title }}</a>
+            {% if l.children %}
+            <ul class="sidebar-sub">
+                {% for c in l.children %}
+                <li><a href="#{{ c.id }}">{% if c.method %}<span class="method sm m-{{ c.mclass }}">{{ c.method }}</span>{% endif %}<span class="sub-label">{{ c.title }}</span></a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Documentación</div>
+    <ul class="sidebar-nav">
+        {% for d in docflow_docs %}
+        <li><a class="doc-link{% if d.src_uri == docflow.src_uri %} current{% endif %}" href="{{ d.url | url }}"><span class="material-icons-round">{{ d.icon }}</span> {{ d.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% if docflow.version %}
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-version">
+        <small>Versión del documento</small><br>
+        <span class="ver">v{{ docflow.version }}{% if docflow.fecha %} &mdash; {{ docflow.fecha }}{% endif %}</span>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="material-icons-round" style="font-size:14px">{{ docflow.icon }}</span>
+                Documentación técnica{% if docflow.capacidad %} &middot; {{ docflow.capacidad | capitalize }}{% endif %}
+            </div>
+            <h1>{{ docflow.title }}</h1>
+            {% if docflow.summary %}<p>{{ docflow.summary }}</p>{% endif %}
+            {% if docflow.entidad or docflow.fecha %}
+            <div class="meta-chips">
+                {% if docflow.entidad %}<span class="meta-chip"><span class="material-icons-round">category</span> Entidad <code>{{ docflow.entidad }}</code></span>{% endif %}
+                {% if docflow.fecha %}<span class="meta-chip"><span class="material-icons-round">event</span> Actualizada {{ docflow.fecha }}</span>{% endif %}
+            </div>
+            {% endif %}
+            <div class="hero-stats">
+                {% for s in docflow.stats %}
+                <div class="hero-stat">
+                    <div class="hero-stat-number">{{ s[0] }}</div>
+                    <div class="hero-stat-label">{{ s[1] }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {{ page.content }}
+{% endblock %}
+
+{% block footer %}<span class="footer-brand">LoggiApp</span> &mdash; {{ docflow.title }}{% if docflow.version %} &bull; v{{ docflow.version }}{% endif %}{% if docflow.fecha %} &bull; {{ docflow.fecha }}{% endif %}{% endblock %}
+
+{% block scripts %}
+    {% if docflow.has_mermaid %}
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        const nodes = [...document.querySelectorAll('pre.mermaid')];
+        nodes.forEach(n => { n.dataset.src = n.textContent; });
+
+        async function draw() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: dark ? 'dark' : 'default',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    primaryColor: dark ? '#2D2640' : '#F3F0FA',
+                    primaryBorderColor: '#7B3FCA',
+                    primaryTextColor: dark ? '#E8E5F0' : '#1A1A2E',
+                    lineColor: dark ? '#9B97B0' : '#64648C'
+                }
+            });
+            nodes.forEach(n => { n.removeAttribute('data-processed'); n.textContent = n.dataset.src; });
+            await mermaid.run({ nodes, suppressErrors: true });
+        }
+
+        window.__docflowDiagrams = draw;
+        draw();
+    </script>
+    {% endif %}
+{% endblock %}

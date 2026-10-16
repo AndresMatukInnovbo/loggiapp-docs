@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ config.site_name }}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ 'assets/images/LoggiApp---ICON.png' | url }}">
+    <link rel="stylesheet" href="{{ 'assets/styles/client.css' | url }}">
+    <link rel="stylesheet" href="{{ 'assets/styles/docflow.css' | url }}">
+    <script>
+        try {
+            if (localStorage.getItem('loggiapp-client-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="{{ base_url }}/" class="header-brand">
+            <div class="header-logo">
+                <img src="{{ 'assets/images/LoggiApp---ICON.png' | url }}" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Docs</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        {% block sidebar %}{% endblock %}
+    </aside>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>{% block footer %}<span class="footer-brand">LoggiApp</span> &mdash; Documentación técnica{% endblock %}</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        const root = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const syncThemeIcon = () => {
+            themeIcon.textContent = root.getAttribute('data-theme') === 'dark' ? 'light_mode' : 'dark_mode';
+        };
+        syncThemeIcon();
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            try { localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+            syncThemeIcon();
+            if (window.__docflowDiagrams) window.__docflowDiagrams();
+        });
+
+        /* Sección activa en el sidebar */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+        sections.forEach(s => navObserver.observe(s));
+
+        /* Animación de entrada */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.setAttribute('data-visible', 'true');
+            });
+        }, { threshold: 0.05 });
+        sections.forEach(s => animObserver.observe(s));
+
+        /* Progreso, volver arriba */
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* Sidebar móvil */
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        });
+        overlay.addEventListener('click', closeSidebar);
+        sidebar.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) closeSidebar();
+        }));
+
+        /* Copiar código */
+        document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+            const code = btn.closest('.code-block').querySelector('code').innerText;
+            const icon = btn.querySelector('.material-icons-round');
+            try {
+                await navigator.clipboard.writeText(code);
+                icon.textContent = 'check';
+                setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+            } catch (e) {}
+        }));
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

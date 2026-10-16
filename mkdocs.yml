@@ -40,6 +40,9 @@ theme:
     - content.code.annotate
     - navigation.indexes
 
+hooks:
+  - hooks/docflow.py
+
 plugins:
   - search
 
