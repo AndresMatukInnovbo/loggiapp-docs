@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de terceros &mdash; LoggiApp Integration Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/images/LoggiApp---ICON.png">
+    <link rel="stylesheet" href="../../assets/styles/client.css">
+    <link rel="stylesheet" href="../../assets/styles/docflow.css">
+    <script>
+        try {
+            if (localStorage.getItem('loggiapp-client-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="../../" class="header-brand">
+            <div class="header-logo">
+                <img src="../../assets/images/LoggiApp---ICON.png" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Docs</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        
+    <a class="back-link" href="../../">
+        <span class="material-icons-round">arrow_back</span> Todas las funcionalidades
+    </a>
+    
+    <div class="sidebar-label">Uso</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#resumen"><span class="material-icons-round">list_alt</span> Resumen</a>
+            
+        </li>
+        
+        <li>
+            <a href="#empezar-rapido"><span class="material-icons-round">rocket_launch</span> Empezar rápido</a>
+            
+        </li>
+        
+        <li>
+            <a href="#endpoints"><span class="material-icons-round">api</span> Endpoints</a>
+            
+            <ul class="sidebar-sub">
+                
+                <li><a href="#ep-get-thirdparties-listado-de-terceros"><span class="method sm m-get">GET</span><span class="sub-label">Listado de terceros</span></a></li>
+                
+            </ul>
+            
+        </li>
+        
+        <li>
+            <a href="#respuestas-comunes"><span class="material-icons-round">reply_all</span> Respuestas comunes</a>
+            
+        </li>
+        
+        <li>
+            <a href="#modelos"><span class="material-icons-round">data_object</span> Modelos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-label">Funcionamiento</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#como-funciona"><span class="material-icons-round">account_tree</span> Cómo funciona</a>
+            
+        </li>
+        
+        <li>
+            <a href="#advertencias"><span class="material-icons-round">warning</span> Advertencias</a>
+            
+        </li>
+        
+        <li>
+            <a href="#fuentes-de-datos"><span class="material-icons-round">storage</span> Fuentes de datos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Documentación</div>
+    <ul class="sidebar-nav">
+        
+        <li><a class="doc-link" href="../consulta-cargo/"><span class="material-icons-round">manage_search</span> Consulta de cargo</a></li>
+        
+        <li><a class="doc-link current" href="./"><span class="material-icons-round">manage_search</span> Consulta de terceros</a></li>
+        
+        <li><a class="doc-link" href="../listado-cargo/"><span class="material-icons-round">manage_search</span> Listado de cargos</a></li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-version">
+        <small>Versión del documento</small><br>
+        <span class="ver">v1.0.0 &mdash; 2026-10-16</span>
+    </div>
+    
+
+    </aside>
+
+    <main class="main">
+        
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="material-icons-round" style="font-size:14px">manage_search</span>
+                Documentación técnica &middot; Lectura
+            </div>
+            <h1>Consulta de terceros</h1>
+            <p>Lista los terceros (colección BranchCompany) con filtros opcionales por parent y por las banderas de reintento del Ministerio, y con paginación opcional. Un tercero es la compañía (o la persona, según el tipo de documento) que se reporta al RNDC en una operación; en un viaje puede haber varios, por ejemplo quien entrega la carga y quien la recibe.</p>
+            
+            <div class="meta-chips">
+                <span class="meta-chip"><span class="material-icons-round">category</span> Entidad <code>BranchCompany</code></span>
+                <span class="meta-chip"><span class="material-icons-round">event</span> Actualizada 2026-10-16</span>
+            </div>
+            
+            <div class="hero-stats">
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">1</div>
+                    <div class="hero-stat-label">Funcionalidad</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">80%</div>
+                    <div class="hero-stat-label">Confianza</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">v1.0.0</div>
+                    <div class="hero-stat-label">Versión</div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <section class="section" id="resumen"><div class="section-header"><div class="section-icon "><span class="material-icons-round">list_alt</span></div><h2 class="section-title">Resumen</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Funcionalidad</th><th>Qué hace</th><th>Cuándo usarla</th></tr></thead><tbody><tr><td><span class="method m-get">GET</span><code class="route">/thirdParties</code></td><td>Devuelve la lista de terceros que cumplen los filtros recibidos, con paginación opcional.</td><td>—</td></tr></tbody></table></div><div class="data-section"><div class="data-section-title"><span class="material-icons-round">block</span>Fuera de alcance</div><div class="feature-list"><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">Las sedes (direcciones) de cada tercero: las devuelve <code>GET /thirdParties/address</code>, que recibe el id de la compañía.</div></div></div><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">Crear, actualizar o eliminar terceros.</div></div></div></div></div></div></section><section class="section" id="empezar-rapido"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">rocket_launch</span></div><h2 class="section-title">Empezar rápido</h2></div><div class="data-section"><div class="conn"><div class="conn-item"><span class="conn-label">Ruta base</span><code>/Teclogi/services/company</code></div></div><div class="table-container"><table><thead><tr><th>Header</th><th>Obligatorio</th><th>Ejemplo</th><th>Descripción</th></tr></thead><tbody><tr><td><code>tokenUser</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;token&gt;</code></td><td>Token del usuario. Si está ausente, vacío o es <code>NOT_FOUND</code> (sin distinguir mayúsculas), el interceptor responde 401.</td></tr><tr><td><code>companyId</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;nit&gt;</code></td><td>NIT de la empresa (tenant). El interceptor solo lo guarda en <code>headersDto.companyId</code> si no está vacío; la consulta lo usa para elegir la base de datos del tenant.</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">key</span><div><p><code>RequestFilters</code> (<code>@PreMatching</code>) carga por reflexión la clase configurada en la propiedad <code>com.teclogi.config.web.filter</code>, que es <code>HeadersAppImpl</code>. Ese filtro valida únicamente que <code>tokenUser</code> esté presente, no vacío y distinto de <code>NOT_FOUND</code>; no valida su firma ni su vigencia. Se omite para <code>health</code> y para las rutas <code>legal-documents/{id}/public/pdf</code>.</p></div></div></div></section><section class="section" id="como-funciona"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">account_tree</span></div><h2 class="section-title">Cómo funciona</h2></div><div class="data-section"><article class="service-card" id="flujo-get-thirdparties-listado-de-terceros"><h3 class="service-title"><span class="method m-get">GET</span><code class="route">/thirdParties</code> — Listado de terceros</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CompanyServiceImpl.getThirdParties</code> arma los filtros y delega en <code>CompanyBusinessImpl.getThirdParties</code>, que consulta <code>CompanyDaoImpl.getBranchCompany</code>: una query sobre la colección <code>BranchCompany</code> con filtros de igualdad y paginación opcional. Sin documentos, o ante una excepción de la consulta, la respuesta es 204.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de GET /thirdParties</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; S["CompanyServiceImpl.getThirdParties: arma FiltersThirdParty"]
+  S --&gt; B["CompanyBusinessImpl.getThirdParties: holderId desde companyId"]
+  B --&gt; D["CompanyDaoImpl.getBranchCompany: query BranchCompany con filtros"]
+  D --&gt; P{"pageKey y pageSize distintos de 0"}
+  P -- Si --&gt; PG["orderBy document, limit y startAfter"]
+  P -- No --&gt; ALL["sin orden ni limite: todos los documentos"]
+  PG --&gt; X{"hay documentos"}
+  ALL --&gt; X
+  X -- Si --&gt; R200["200 lista de BranchCompany"]
+  X -- No --&gt; R204["204 sin cuerpo"]
+  D -. excepcion .-&gt; E1["el negocio la imprime y devuelve null"]
+  E1 --&gt; R204
+  B -. excepcion fuera del DAO .-&gt; R500["500 sin cuerpo"]</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor es el <code>holderId</code> que elige la base de datos del tenant.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CompanyServiceImpl.getThirdParties</code></div><div class="timeline-desc">Arma un <code>FiltersThirdParty</code> con <code>parent</code> (si no está vacío), <code>pageKey</code> y <code>pageSize</code> (si son distintos de 0) y las banderas <code>ministryRetry</code> y <code>ministryManualAdjustment</code> (si no son null), y llama a <code>CompanyBusinessImpl.getThirdParties</code> con <code>holderId</code> null. Si recibe una lista responde 200; si recibe null responde 204 (<code>Status.NoContent.status()</code>); si lanza una excepción la imprime y responde <code>Status.Error.status()</code> (500) sin cuerpo.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CompanyBusinessImpl.getThirdParties</code></div><div class="timeline-desc">Si <code>holderId</code> es null toma <code>headersDto.getCompanyId()</code> y llama a <code>CompanyDaoImpl.getBranchCompany</code>. Cualquier excepción de esa llamada se imprime y se descarta: el método devuelve null.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getBranchCompany</code></div><div class="timeline-desc">Obtiene la base de datos del tenant con <code>fireStoreConnection.getDb(holderId)</code> y consulta la colección <code>BranchCompany</code>, añadiendo un <code>whereEqualTo</code> por cada filtro informado: <code>parent</code>, <code>ministryRetry</code> y <code>ministryManualAdjustment</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">5</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getBranchCompany</code></div><div class="timeline-desc">Solo si <code>pageKey</code> y <code>pageSize</code> son distintos de 0 ordena por <code>document</code>: con <code>pageKey</code> 1 aplica <code>limit(pageSize)</code>; con <code>pageKey</code> mayor lee primero <code>pageSize * (pageKey - 1)</code> documentos (espera máxima de 120 s), toma el último y continúa con <code>startAfter(...).limit(pageSize)</code>. Sin paginación no hay orden ni límite.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">6</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getBranchCompany</code></div><div class="timeline-desc">Ejecuta la consulta y deserializa cada documento como <code>BranchCompany</code> (omite los nulos). Si no hay ningún documento devuelve null, nunca una lista vacía.</div></div></div></div></article><div class="data-section"><div class="data-section-title"><span class="material-icons-round">gavel</span>Reglas a respetar</div><div class="feature-list"><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">El tenant sale del header <code>companyId</code></div><div class="feature-item-desc">La consulta usa <code>headersDto.getCompanyId()</code> como <code>holderId</code>; el filtro no rechaza una petición sin <code>companyId</code>.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Paginación solo con <code>pageKey</code> y <code>pageSize</code></div><div class="feature-item-desc">Si alguno es 0 no hay orden ni límite y se devuelven todos los terceros que cumplan los filtros. No se calcula ningún total.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Los errores de la consulta se tratan como 'sin resultados'</div><div class="feature-item-desc">El negocio imprime la excepción y devuelve null, lo que el servicio traduce a 204.</div></div></div></div></div></div></section><section class="section" id="endpoints"><div class="section-header"><div class="section-icon "><span class="material-icons-round">api</span></div><h2 class="section-title">Endpoints</h2></div><div class="data-section"><article class="endpoint-card" id="ep-get-thirdparties-listado-de-terceros"><h3 class="endpoint-title"><span class="method m-get">GET</span><code class="route">/thirdParties</code> — Listado de terceros</h3><div class="endpoint-text"><p>Devuelve la lista de terceros que cumplen los filtros recibidos, con paginación opcional.</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CompanyServiceImpl.getThirdParties</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>pageKey</code></td><td>query</td><td><code>int</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td>Número de página, desde 1. Solo se pagina si <code>pageKey</code> y <code>pageSize</code> son distintos de 0.</td></tr><tr><td><code>pageSize</code></td><td>query</td><td><code>int</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td>Tamaño de página.</td></tr><tr><td><code>parent</code></td><td>query</td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td>Igual a <code>parent</code>. Se ignora si viene vacío.</td></tr><tr><td><code>ministryRetry</code></td><td>query</td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td>Igual a <code>ministryRetry</code>.</td></tr><tr><td><code>ministryManualAdjustment</code></td><td>query</td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td>Igual a <code>ministryManualAdjustment</code>.</td></tr></tbody></table></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>Hay al menos un tercero; el cuerpo es una lista (arreglo JSON) de <code>BranchCompany</code>.</td><td><a href="#modelos"><code>BranchCompany</code></a></td></tr><tr><td><span class="badge yes"><span class="badge-dot"></span>204</span></td><td>No hay terceros que cumplan los filtros, o el negocio capturó una excepción de la consulta (se imprime y se trata como sin resultados).</td><td>Sin cuerpo</td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>Excepción que el negocio no captura (la consulta al DAO sí la captura): el servicio la imprime y responde <code>Status.Error.status()</code>.</td><td>Sin cuerpo</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X GET "https://&lt;host&gt;/Teclogi/services/company/thirdParties?pageKey=1&amp;pageSize=20" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;"</code></pre></div></article></div></section><section class="section" id="respuestas-comunes"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">reply_all</span></div><h2 class="section-title">Respuestas comunes</h2></div><div class="data-section"><div class="card prose"><p>Aplican a todas las funcionalidades del tema.</p></div><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge pending"><span class="badge-dot"></span>401</span></td><td>El header <code>tokenUser</code> está ausente, vacío o es <code>NOT_FOUND</code>. El filtro aborta el request antes de ejecutar el servicio.</td><td><code>Debe enviar un tokenUser</code></td></tr></tbody></table></div></div></section><section class="section" id="modelos"><div class="section-header"><div class="section-icon "><span class="material-icons-round">data_object</span></div><h2 class="section-title">Modelos</h2></div><div class="data-section"><article class="model-card" id="modelo-branchcompany"><h3 class="model-title"><code>BranchCompany</code></h3><div class="endpoint-text"><p>Un tercero. La respuesta es un arreglo de estos objetos (sin envoltorio ni paginación).</p></div><div class="table-container"><table><thead><tr><th>Campo</th><th>Tipo</th><th>Nullable</th><th>Descripción</th></tr></thead><tbody><tr><td><code>documentType</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Tipo de documento.</td></tr><tr><td><code>document</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Número de documento. Es el campo por el que se ordena al paginar.</td></tr><tr><td><code>name</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Nombre.</td></tr><tr><td><code>parent</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Valor por el que filtra el parámetro <code>parent</code>.</td></tr><tr><td><code>consecutive</code></td><td><code>long</code></td><td><span class="badge yes"><span class="badge-dot"></span>No</span></td><td>Consecutivo.</td></tr><tr><td><code>rndcTransmited</code></td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Bandera <code>rndcTransmited</code> del tercero.</td></tr><tr><td><code>ministryRetry</code></td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Bandera de reintento al Ministerio; filtrable con el parámetro <code>ministryRetry</code>.</td></tr><tr><td><code>ministryRetryType</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Tipo del reintento al Ministerio.</td></tr><tr><td><code>ministryManualAdjustment</code></td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Bandera de ajuste manual del Ministerio; filtrable con el parámetro <code>ministryManualAdjustment</code>.</td></tr><tr><td><code>ministryManualAdjustmentReason</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Motivo del ajuste manual del Ministerio.</td></tr><tr><td><code>ministryContingency</code></td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Bandera <code>ministryContingency</code> del tercero.</td></tr><tr><td><code>ministryContingencyDate</code></td><td><code>Date</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Fecha asociada a <code>ministryContingency</code>; se serializa como texto con el patrón <code>yyyy-MM-dd HH:mm Z</code>.</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">verified</span><div><p><strong>Garantías</strong></p><ul><li>Un 200 siempre trae al menos un elemento: sin documentos el DAO devuelve null y el servicio responde 204, nunca una lista vacía.</li></ul></div></div></article></div></section><section class="section" id="advertencias"><div class="section-header"><div class="section-icon amber"><span class="material-icons-round">warning</span></div><h2 class="section-title">Advertencias</h2></div><div class="data-section"><div class="alert-cards wide"><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Sin paginación se devuelve toda la colección</div><div class="alert-desc">Si no se envían <code>pageKey</code> y <code>pageSize</code> (o alguno es 0), la query no tiene límite y trae todos los terceros que cumplan los filtros.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">204 no distingue vacío de error</div><div class="alert-desc">Tanto la ausencia de terceros como una excepción al consultar <code>BranchCompany</code> terminan en 204 sin cuerpo; el error solo queda en la salida estándar del servidor.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">La respuesta no trae total ni paginación</div><div class="alert-desc">Es un arreglo directo de <code>BranchCompany</code>, a diferencia de <code>listado-cargo</code>, cuya respuesta incluye <code>pagination</code>. El consumidor debe pedir páginas hasta recibir 204.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Las páginas posteriores leen las anteriores</div><div class="alert-desc">Con <code>pageKey</code> mayor que 1 el DAO primero lee <code>pageSize * (pageKey - 1)</code> documentos para tomar el último; el costo crece con el número de página.</div></div></div></div></div></section><section class="section" id="fuentes-de-datos"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">storage</span></div><h2 class="section-title">Fuentes de datos</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Fuente</th><th>Acceso</th><th>Filtro</th><th>Uso</th></tr></thead><tbody><tr><td>Colección <code>BranchCompany</code></td><td>Query sobre la colección del tenant; con paginación ordena por <code>document</code> y usa <code>limit</code> y <code>startAfter</code>.</td><td>Igualdad, cada uno solo si se informó: <code>parent</code>, <code>ministryRetry</code> y <code>ministryManualAdjustment</code>.</td><td>Cada documento se deserializa como <code>BranchCompany</code> y forma el arreglo de la respuesta.</td></tr></tbody></table></div></div></section>
+
+    </main>
+
+    <footer class="footer">
+        <p><span class="footer-brand">LoggiApp</span> &mdash; Consulta de terceros &bull; v1.0.0 &bull; 2026-10-16</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        const root = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const syncThemeIcon = () => {
+            themeIcon.textContent = root.getAttribute('data-theme') === 'dark' ? 'light_mode' : 'dark_mode';
+        };
+        syncThemeIcon();
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            try { localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+            syncThemeIcon();
+            if (window.__docflowDiagrams) window.__docflowDiagrams();
+        });
+
+        /* Sección activa en el sidebar */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+        sections.forEach(s => navObserver.observe(s));
+
+        /* Animación de entrada */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.setAttribute('data-visible', 'true');
+            });
+        }, { threshold: 0.05 });
+        sections.forEach(s => animObserver.observe(s));
+
+        /* Progreso, volver arriba */
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* Sidebar móvil */
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        });
+        overlay.addEventListener('click', closeSidebar);
+        sidebar.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) closeSidebar();
+        }));
+
+        /* Copiar código */
+        document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+            const code = btn.closest('.code-block').querySelector('code').innerText;
+            const icon = btn.querySelector('.material-icons-round');
+            try {
+                await navigator.clipboard.writeText(code);
+                icon.textContent = 'check';
+                setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+            } catch (e) {}
+        }));
+    </script>
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        const nodes = [...document.querySelectorAll('pre.mermaid')];
+        nodes.forEach(n => { n.dataset.src = n.textContent; });
+
+        async function draw() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: dark ? 'dark' : 'default',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    primaryColor: dark ? '#2D2640' : '#F3F0FA',
+                    primaryBorderColor: '#7B3FCA',
+                    primaryTextColor: dark ? '#E8E5F0' : '#1A1A2E',
+                    lineColor: dark ? '#9B97B0' : '#64648C'
+                }
+            });
+            nodes.forEach(n => { n.removeAttribute('data-processed'); n.textContent = n.dataset.src; });
+            await mermaid.run({ nodes, suppressErrors: true });
+        }
+
+        window.__docflowDiagrams = draw;
+        draw();
+    </script>
+    
+
+</body>
+</html>
