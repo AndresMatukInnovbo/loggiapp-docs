@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de centros de costo &mdash; LoggiApp Integration Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/images/LoggiApp---ICON.png">
+    <link rel="stylesheet" href="../../assets/styles/client.css">
+    <link rel="stylesheet" href="../../assets/styles/docflow.css">
+    <script>
+        try {
+            if (localStorage.getItem('loggiapp-client-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <a href="../../" class="header-brand">
+            <div class="header-logo">
+                <img src="../../assets/images/LoggiApp---ICON.png" alt="LoggiApp" style="width:28px;height:28px;object-fit:contain;">
+            </div>
+            <div class="header-title">
+                Loggi<span>App</span>
+                <span class="header-badge">Docs</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span class="material-icons-round" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        
+    <a class="back-link" href="../../">
+        <span class="material-icons-round">arrow_back</span> Todas las funcionalidades
+    </a>
+    
+    <div class="sidebar-label">Uso</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#resumen"><span class="material-icons-round">list_alt</span> Resumen</a>
+            
+        </li>
+        
+        <li>
+            <a href="#empezar-rapido"><span class="material-icons-round">rocket_launch</span> Empezar rápido</a>
+            
+        </li>
+        
+        <li>
+            <a href="#endpoints"><span class="material-icons-round">api</span> Endpoints</a>
+            
+            <ul class="sidebar-sub">
+                
+                <li><a href="#ep-get-nit-cost-centers-consultar-centros-de-costo"><span class="method sm m-get">GET</span><span class="sub-label">Consultar centros de costo</span></a></li>
+                
+                <li><a href="#ep-post-nit-cost-centers-crear-o-actualizar-un-centro-de-costo"><span class="method sm m-post">POST</span><span class="sub-label">Crear o actualizar un centro de costo</span></a></li>
+                
+                <li><a href="#ep-delete-nit-cost-centers-costcenterid-eliminar-un-centro-de-costo"><span class="method sm m-delete">DELETE</span><span class="sub-label">Eliminar un centro de costo</span></a></li>
+                
+            </ul>
+            
+        </li>
+        
+        <li>
+            <a href="#respuestas-comunes"><span class="material-icons-round">reply_all</span> Respuestas comunes</a>
+            
+        </li>
+        
+        <li>
+            <a href="#modelos"><span class="material-icons-round">data_object</span> Modelos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-label">Funcionamiento</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#como-funciona"><span class="material-icons-round">account_tree</span> Cómo funciona</a>
+            
+        </li>
+        
+        <li>
+            <a href="#advertencias"><span class="material-icons-round">warning</span> Advertencias</a>
+            
+        </li>
+        
+        <li>
+            <a href="#fuentes-de-datos"><span class="material-icons-round">storage</span> Fuentes de datos</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-label">Referencia</div>
+    <ul class="sidebar-nav">
+        
+        <li>
+            <a href="#glosario"><span class="material-icons-round">menu_book</span> Glosario</a>
+            
+        </li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Documentación</div>
+    <ul class="sidebar-nav">
+        
+        <li><a class="doc-link" href="../consulta-cargo/"><span class="material-icons-round">manage_search</span> Consulta de cargo</a></li>
+        
+        <li><a class="doc-link" href="../consulta-tercero/"><span class="material-icons-round">manage_search</span> Consulta de terceros</a></li>
+        
+        <li><a class="doc-link current" href="./"><span class="material-icons-round">edit_note</span> Gestión de centros de costo</a></li>
+        
+        <li><a class="doc-link" href="../listado-cargo/"><span class="material-icons-round">manage_search</span> Listado de cargos</a></li>
+        
+    </ul>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-version">
+        <small>Versión del documento</small><br>
+        <span class="ver">v1.0.0 &mdash; 2026-10-29</span>
+    </div>
+    
+
+    </aside>
+
+    <main class="main">
+        
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="material-icons-round" style="font-size:14px">edit_note</span>
+                Documentación técnica &middot; Escritura
+            </div>
+            <h1>Gestión de centros de costo</h1>
+            <p>Consulta, crea o actualiza y elimina los centros de costo que un cliente (nit) tiene con una transportadora (transportCompanyId). Cada transportadora tiene su propia lista, guardada como un documento por centro de costo en Company/{nit}/Companies/{transportCompanyId}/CostCenter; las tres operaciones responden la lista resultante.</p>
+            
+            <div class="meta-chips">
+                <span class="meta-chip"><span class="material-icons-round">category</span> Entidad <code>CostCenter</code></span>
+                <span class="meta-chip"><span class="material-icons-round">event</span> Actualizada 2026-10-29</span>
+            </div>
+            
+            <div class="hero-stats">
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">3</div>
+                    <div class="hero-stat-label">Funcionalidades</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">77%</div>
+                    <div class="hero-stat-label">Confianza</div>
+                </div>
+                
+                <div class="hero-stat">
+                    <div class="hero-stat-number">v1.0.0</div>
+                    <div class="hero-stat-label">Versión</div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <section class="section" id="resumen"><div class="section-header"><div class="section-icon "><span class="material-icons-round">list_alt</span></div><h2 class="section-title">Resumen</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Funcionalidad</th><th>Qué hace</th><th>Cuándo usarla</th></tr></thead><tbody><tr><td><span class="method m-get">GET</span><code class="route">/{nit}/cost-centers</code></td><td>Devuelve todos los centros de costo que el cliente tiene con una transportadora.</td><td>—</td></tr><tr><td><span class="method m-post">POST</span><code class="route">/{nit}/cost-centers</code></td><td>Crea o actualiza un centro de costo del cliente para una transportadora y devuelve la lista completa resultante.</td><td>Con <code>id</code> en el cuerpo crea o actualiza el documento con ese id (el id de Siigo). Sin <code>id</code> el servidor le asigna uno del consecutivo del tenant (centros de costo creados a mano para Business Central).</td></tr><tr><td><span class="method m-delete">DELETE</span><code class="route">/{nit}/cost-centers/{costCenterId}</code></td><td>Elimina físicamente un centro de costo del cliente para una transportadora y devuelve la lista restante.</td><td>—</td></tr></tbody></table></div><div class="data-section"><div class="data-section-title"><span class="material-icons-round">block</span>Fuera de alcance</div><div class="feature-list"><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">La migración temporal <code>POST /company/cost-centers/migrate-transport-overrides</code>, que siembra la subcolección por transportadora a partir de los centros de costo actuales del cliente.</div></div></div><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">La lista heredada del campo <code>costCenter</code> del documento raíz <code>Company/{nit}</code> y los métodos de dos argumentos que la manejan.</div></div></div><div class="feature-item out"><span class="material-icons-round">cancel</span><div class="feature-item-info"><div class="feature-item-name">La asignación de un centro de costo a un cargo (<code>/cargo/{cargoId}/cost-centers</code>) y el catálogo de Siigo (<code>/accounting/SIIGO/cost-centers</code>).</div></div></div></div></div></div></section><section class="section" id="empezar-rapido"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">rocket_launch</span></div><h2 class="section-title">Empezar rápido</h2></div><div class="data-section"><div class="conn"><div class="conn-item"><span class="conn-label">Ruta base</span><code>/Teclogi/services/company</code></div></div><div class="table-container"><table><thead><tr><th>Header</th><th>Obligatorio</th><th>Ejemplo</th><th>Descripción</th></tr></thead><tbody><tr><td><code>tokenUser</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;token&gt;</code></td><td>Token del usuario. Si está ausente, vacío o es <code>NOT_FOUND</code> (sin distinguir mayúsculas), el interceptor responde 401.</td></tr><tr><td><code>companyId</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td><code>&lt;nit&gt;</code></td><td>NIT de la empresa (tenant). El interceptor solo lo guarda en <code>headersDto.companyId</code> si no está vacío; las tres operaciones lo usan para elegir la base de datos del tenant, y el POST también para el consecutivo.</td></tr><tr><td><code>Content-Type</code></td><td><span class="badge pending"><span class="badge-dot"></span>No</span></td><td><code>application/json</code></td><td>Los tres métodos declaran <code>@Consumes("application/json")</code>; el POST envía un <code>CostCenter</code> en JSON.</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">key</span><div><p><code>RequestFilters</code> (<code>@PreMatching</code>) carga por reflexión la clase configurada en la propiedad <code>com.teclogi.config.web.filter</code>, que es <code>HeadersAppImpl</code>. Ese filtro valida únicamente que <code>tokenUser</code> esté presente, no vacío y distinto de <code>NOT_FOUND</code>; no valida su firma ni su vigencia. Se omite para <code>health</code> y para las rutas <code>legal-documents/{id}/public/pdf</code>.</p></div></div></div></section><section class="section" id="como-funciona"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">account_tree</span></div><h2 class="section-title">Cómo funciona</h2></div><div class="data-section"><article class="service-card" id="flujo-get-nit-cost-centers-consultar-centros-de-costo"><h3 class="service-title"><span class="method m-get">GET</span><code class="route">/{nit}/cost-centers</code> — Consultar centros de costo</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CompanyServiceImpl.getCostCenters</code> valida <code>nit</code> y <code>transportCompanyId</code> y delega en <code>CompanyBusinessImpl.getCostCenters</code>, que llama directamente a <code>CompanyDaoImpl.getCostCenters</code>: lee todos los documentos de <code>Company/{nit}/Companies/{transportCompanyId}/CostCenter</code>.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de GET /{nit}/cost-centers</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; S{"CompanyServiceImpl.getCostCenters: nit y transportCompanyId informados"}
+  S -- No --&gt; R400["400 parametros nulos o vacios"]
+  S -- Si --&gt; B["CompanyBusinessImpl.getCostCenters"]
+  B --&gt; D["CompanyDaoImpl.getCostCenters: lee Company/nit/Companies/transportCompanyId/CostCenter"]
+  D --&gt; R200["200 lista de CostCenter, vacia si no hay documentos"]
+  D -. excepcion .-&gt; R500["500 Error interno: mensaje"]</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor elige la base de datos del tenant.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CompanyServiceImpl.getCostCenters</code></div><div class="timeline-desc">Si <code>nit</code> o <code>transportCompanyId</code> están vacíos responde 400 con <code>GENERIC_ERROR_PARAMS</code>. Si no, llama a <code>CompanyBusinessImpl.getCostCenters</code> y responde 200 con la lista; ante cualquier excepción la registra y responde 500 con <code>Error interno:</code> + su mensaje.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CompanyBusinessImpl.getCostCenters</code></div><div class="timeline-desc">Delega sin lógica propia en <code>CompanyDaoImpl.getCostCenters</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getCostCenters</code></div><div class="timeline-desc">Si <code>nit</code> o <code>transportCompanyId</code> están vacíos devuelve una lista vacía. Si no, lee todos los documentos de la subcolección <code>CostCenter</code> bajo <code>Company/{nit}/Companies/{transportCompanyId}</code> en la base del tenant (<code>headersDto.getCompanyId()</code>), deserializa cada uno como <code>CostCenter</code> y omite los nulos. Ante una excepción la registra y la relanza.</div></div></div></div></article><article class="service-card" id="flujo-post-nit-cost-centers-crear-o-actualizar-un-centro-de-costo"><h3 class="service-title"><span class="method m-post">POST</span><code class="route">/{nit}/cost-centers</code> — Crear o actualizar un centro de costo</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CompanyServiceImpl.assignCostCenter</code> valida los parámetros y el cuerpo; <code>CompanyBusinessImpl.assignCostCenter</code> escribe con <code>CompanyDaoImpl.assignCostCenter</code> (que, si el cuerpo no trae <code>id</code>, lo toma de <code>CargoDaoImpl.consecutive</code>) y luego relee la lista con <code>CompanyDaoImpl.getCostCenters</code>.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de POST /{nit}/cost-centers</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; S{"CompanyServiceImpl.assignCostCenter: nit, cuerpo y transportCompanyId informados"}
+  S -- No --&gt; R400["400 parametros nulos o vacios"]
+  S -- Si --&gt; B["CompanyBusinessImpl.assignCostCenter"]
+  B --&gt; D{"CompanyDaoImpl.assignCostCenter: id del cuerpo es null"}
+  D -- Si --&gt; C["CargoDaoImpl.consecutive: transaccion sobre Consecutives/CostCenter"]
+  C --&gt; W["set merge del documento id en .../CostCenter"]
+  D -- No --&gt; W
+  W --&gt; G["CompanyDaoImpl.getCostCenters: relee la subcoleccion"]
+  G --&gt; R200["200 lista completa de CostCenter"]
+  W -. excepcion .-&gt; E1["DbException Error asignando centro de costo"]
+  E1 --&gt; R500a["500 Error interno: Error asignando centro de costo"]
+  G -. excepcion .-&gt; R500b["500 Error interno: mensaje"]</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor elige la base de datos del tenant.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CompanyServiceImpl.assignCostCenter</code></div><div class="timeline-desc">Si <code>nit</code> o <code>transportCompanyId</code> están vacíos, o el cuerpo es null, responde 400 con <code>GENERIC_ERROR_PARAMS</code>. Si no, llama a <code>CompanyBusinessImpl.assignCostCenter</code> y responde 200 con la lista. Cualquier excepción (incluida la <code>DbException</code> del DAO) cae en el <code>catch</code> genérico: se registra y responde 500 con <code>Error interno:</code> + su mensaje.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CompanyBusinessImpl.assignCostCenter</code></div><div class="timeline-desc">Llama a <code>CompanyDaoImpl.assignCostCenter</code> y después devuelve <code>CompanyDaoImpl.getCostCenters(nit, transportCompanyId)</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.assignCostCenter</code></div><div class="timeline-desc">Si el cuerpo es null lanza <code>DbException</code>. Si <code>id</code> es null, lo obtiene de <code>CargoDaoImpl.consecutive</code> con la tabla <code>CostCenter</code> y el tenant <code>headersDto.getCompanyId()</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">5</span></div><div class="timeline-content"><div class="step-component"><code>CargoDaoImpl.consecutive</code></div><div class="timeline-desc">En una transacción sobre el documento <code>Consecutives/CostCenter</code>: si no existe lo crea con <code>consecutive</code> = 0 y devuelve 0; si existe incrementa <code>consecutive</code> en 1 y devuelve el nuevo valor.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">6</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.assignCostCenter</code></div><div class="timeline-desc">Escribe el <code>CostCenter</code> en el documento <code>String.valueOf(id)</code> de <code>Company/{nit}/Companies/{transportCompanyId}/CostCenter</code> con <code>set(costCenter, SetOptions.merge())</code>. Solo toca ese documento: no reescribe el resto de la lista ni el campo <code>costCenter</code> del documento raíz del cliente. Cualquier excepción se registra y se relanza como <code>DbException</code> con <code>Error asignando centro de costo</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">7</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getCostCenters</code></div><div class="timeline-desc">Relee todos los documentos de la misma subcolección <code>CostCenter</code> y los devuelve como lista (ver F1, paso 4).</div></div></div></div></article><article class="service-card" id="flujo-delete-nit-cost-centers-costcenterid-eliminar-un-centro-de-costo"><h3 class="service-title"><span class="method m-delete">DELETE</span><code class="route">/{nit}/cost-centers/{costCenterId}</code> — Eliminar un centro de costo</h3><div class="card prose"><p>El filtro valida <code>tokenUser</code> y guarda <code>companyId</code>. <code>CompanyServiceImpl.deleteCostCenter</code> valida los parámetros; <code>CompanyBusinessImpl.deleteCostCenter</code> borra con <code>CompanyDaoImpl.deleteCostCenter</code> (que primero comprueba que el documento exista) y luego relee la lista con <code>CompanyDaoImpl.getCostCenters</code>.</p></div><h4 class="subsection-title"><span class="material-icons-round">account_tree</span>Recorrido de DELETE /{nit}/cost-centers/{costCenterId}</h4><div class="diagram"><pre class="mermaid">flowchart TD
+  A["Request"] --&gt; H{"tokenUser presente y distinto de NOT_FOUND"}
+  H -- No --&gt; R401["401 Debe enviar un tokenUser"]
+  H -- Si --&gt; S{"CompanyServiceImpl.deleteCostCenter: nit y transportCompanyId informados"}
+  S -- No --&gt; R400["400 parametros nulos o vacios"]
+  S -- Si --&gt; B["CompanyBusinessImpl.deleteCostCenter"]
+  B --&gt; D{"CompanyDaoImpl.deleteCostCenter: existe el documento costCenterId"}
+  D -- No --&gt; NF["javax.ws.rs.NotFoundException"]
+  NF --&gt; R500nf["500 Centro de costos no encontrado"]
+  D -- Si --&gt; DEL["delete fisico del documento"]
+  DEL --&gt; G["CompanyDaoImpl.getCostCenters: relee la subcoleccion"]
+  G --&gt; R200["200 lista restante de CostCenter"]
+  DEL -. excepcion .-&gt; R500["500 Error al eliminar centro de costo"]</pre></div><h4 class="subsection-title"><span class="material-icons-round">format_list_numbered</span>Paso a paso</h4><div class="timeline"><div class="timeline-item"><div class="timeline-dot"><span class="step-num">1</span></div><div class="timeline-content"><div class="step-component"><code>HeadersAppImpl.filter</code></div><div class="timeline-desc">Valida <code>tokenUser</code> (si falla aborta con 401) y, si <code>companyId</code> no está vacío, lo guarda en <code>headersDto.companyId</code> (request-scoped). Ese valor elige la base de datos del tenant.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">2</span></div><div class="timeline-content"><div class="step-component"><code>CompanyServiceImpl.deleteCostCenter</code></div><div class="timeline-desc">Si <code>nit</code> o <code>transportCompanyId</code> están vacíos responde 400 con <code>GENERIC_ERROR_PARAMS</code>. Si no, llama a <code>CompanyBusinessImpl.deleteCostCenter</code> y responde 200 con la lista. Captura <code>com.teclogi.dto.exceptions.NotFoundException</code> (404), <code>DbException</code> y <code>CompanyDBException</code> (500 con su mensaje) y cualquier otra excepción (500 con su mensaje, registrándola).</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">3</span></div><div class="timeline-content"><div class="step-component"><code>CompanyBusinessImpl.deleteCostCenter</code></div><div class="timeline-desc">Llama a <code>CompanyDaoImpl.deleteCostCenter</code> y después devuelve <code>CompanyDaoImpl.getCostCenters(nit, transportCompanyId)</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">4</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.deleteCostCenter</code></div><div class="timeline-desc">Lee el documento <code>String.valueOf(costCenterId)</code> de <code>Company/{nit}/Companies/{transportCompanyId}/CostCenter</code>. Si no existe lanza <code>javax.ws.rs.NotFoundException</code> con <code>Centro de costos no encontrado</code> (y la relanza tal cual); como no es la <code>NotFoundException</code> que captura el servicio, termina en el <code>catch</code> genérico y responde 500.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">5</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.deleteCostCenter</code></div><div class="timeline-desc">Si existe lo borra físicamente con <code>delete()</code>. No renumera los ids restantes. Cualquier otra excepción se registra y se relanza como <code>DbException</code> con <code>Error al eliminar centro de costo</code>.</div></div></div><div class="timeline-item"><div class="timeline-dot"><span class="step-num">6</span></div><div class="timeline-content"><div class="step-component"><code>CompanyDaoImpl.getCostCenters</code></div><div class="timeline-desc">Relee todos los documentos de la misma subcolección <code>CostCenter</code> y los devuelve como lista (ver F1, paso 4).</div></div></div></div></article><div class="data-section"><div class="data-section-title"><span class="material-icons-round">gavel</span>Reglas a respetar</div><div class="feature-list"><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Los centros de costo nunca se comparten entre transportadoras</div><div class="feature-item-desc">El id de un centro de costo pertenece a la cuenta Siigo de cada transportadora, por eso cada una tiene su propia subcolección y <code>transportCompanyId</code> es obligatorio en las tres operaciones.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">El id del centro de costo es el id del documento</div><div class="feature-item-desc">Un POST con un <code>id</code> que ya existe actualiza ese documento (merge) en vez de crear otro. El DELETE no renumera los ids restantes: son los de Siigo y renumerarlos apuntaría la facturación a otro centro de costo.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">Escrituras de un solo documento</div><div class="feature-item-desc">El POST y el DELETE solo tocan el documento del centro de costo afectado; no reescriben la lista ni el campo heredado <code>costCenter</code> del documento raíz <code>Company/{nit}</code>.</div></div></div><div class="feature-item "><span class="material-icons-round">rule</span><div class="feature-item-info"><div class="feature-item-name">El tenant sale del header <code>companyId</code></div><div class="feature-item-desc">La ruta de Firestore y el consecutivo se resuelven sobre <code>headersDto.getCompanyId()</code>; el filtro no rechaza una petición sin <code>companyId</code>.</div></div></div></div></div></div></section><section class="section" id="endpoints"><div class="section-header"><div class="section-icon "><span class="material-icons-round">api</span></div><h2 class="section-title">Endpoints</h2></div><div class="data-section"><article class="endpoint-card" id="ep-get-nit-cost-centers-consultar-centros-de-costo"><h3 class="endpoint-title"><span class="method m-get">GET</span><code class="route">/{nit}/cost-centers</code> — Consultar centros de costo</h3><div class="endpoint-text"><p>Devuelve todos los centros de costo que el cliente tiene con una transportadora.</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CompanyServiceImpl.getCostCenters</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>nit</code></td><td>path</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>NIT del cliente: id del documento en <code>Company</code>.</td></tr><tr><td><code>transportCompanyId</code></td><td>query</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>Id de la transportadora: id del documento en la subcolección <code>Companies</code> del cliente. Si falta o está vacío responde 400.</td></tr></tbody></table></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>Lista de los centros de costo del cliente para esa transportadora. Si no hay ninguno configurado, arreglo vacío <code>[]</code>.</td><td><a href="#modelos"><code>List&lt;CostCenter&gt;</code></a></td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>Excepción al leer la subcolección <code>CostCenter</code>.</td><td><a href="#modelos"><code>BasicResponse</code></a>: <code>message</code> = <code>Error interno:</code> + mensaje de la excepción.</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X GET "https://&lt;host&gt;/Teclogi/services/company/&lt;nit-cliente&gt;/cost-centers?transportCompanyId=&lt;id-transportadora&gt;" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;"</code></pre></div><div class="code-block"><div class="code-head"><span>json</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>[
+  { "id": 12, "code": "CC-01", "name": "Operación Bogotá", "active": true }
+]</code></pre></div></article><article class="endpoint-card" id="ep-post-nit-cost-centers-crear-o-actualizar-un-centro-de-costo"><h3 class="endpoint-title"><span class="method m-post">POST</span><code class="route">/{nit}/cost-centers</code> — Crear o actualizar un centro de costo</h3><div class="endpoint-text"><p>Crea o actualiza un centro de costo del cliente para una transportadora y devuelve la lista completa resultante. Con <code>id</code> en el cuerpo crea o actualiza el documento con ese id (el id de Siigo). Sin <code>id</code> el servidor le asigna uno del consecutivo del tenant (centros de costo creados a mano para Business Central).</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CompanyServiceImpl.assignCostCenter</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>nit</code></td><td>path</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>NIT del cliente: id del documento en <code>Company</code>.</td></tr><tr><td><code>transportCompanyId</code></td><td>query</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>Id de la transportadora: id del documento en la subcolección <code>Companies</code> del cliente. Si falta o está vacío responde 400.</td></tr></tbody></table></div><h4 class="subsection-title">Cuerpo de la solicitud</h4><div class="endpoint-text"><p>Obligatorio: si llega null responde 400. <code>id</code> es opcional; el resto de campos se guarda tal cual llega. — modelo <a href="#modelos"><code>CostCenter</code></a></p></div><div class="code-block"><div class="code-head"><span>json</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>{ "id": 12, "code": "CC-01", "name": "Operación Bogotá", "active": true }</code></pre></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>El centro de costo se guardó. El cuerpo es la lista completa de centros de costo del cliente para esa transportadora, leída después de escribir.</td><td><a href="#modelos"><code>List&lt;CostCenter&gt;</code></a></td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>Falló la escritura (o la obtención del consecutivo) o la relectura de la lista.</td><td><a href="#modelos"><code>BasicResponse</code></a>: <code>message</code> = <code>Error interno: Error asignando centro de costo</code> cuando falla la escritura; <code>Error interno:</code> + mensaje de la excepción cuando falla la relectura.</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X POST "https://&lt;host&gt;/Teclogi/services/company/&lt;nit-cliente&gt;/cost-centers?transportCompanyId=&lt;id-transportadora&gt;" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{ "code": "CC-01", "name": "Operación Bogotá", "active": true }'</code></pre></div></article><article class="endpoint-card" id="ep-delete-nit-cost-centers-costcenterid-eliminar-un-centro-de-costo"><h3 class="endpoint-title"><span class="method m-delete">DELETE</span><code class="route">/{nit}/cost-centers/{costCenterId}</code> — Eliminar un centro de costo</h3><div class="endpoint-text"><p>Elimina físicamente un centro de costo del cliente para una transportadora y devuelve la lista restante.</p></div><div class="impl-row"><span class="material-icons-round">code</span><span>Implementación</span><code>CompanyServiceImpl.deleteCostCenter</code></div><h4 class="subsection-title">Parámetros</h4><div class="table-container"><table><thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Req.</th><th>Descripción</th></tr></thead><tbody><tr><td><code>nit</code></td><td>path</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>NIT del cliente: id del documento en <code>Company</code>.</td></tr><tr><td><code>costCenterId</code></td><td>path</td><td><code>int</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>Id del centro de costo: id del documento en la subcolección <code>CostCenter</code>.</td></tr><tr><td><code>transportCompanyId</code></td><td>query</td><td><code>String</code></td><td><span class="badge yes"><span class="badge-dot"></span>Sí</span></td><td>Id de la transportadora: id del documento en la subcolección <code>Companies</code> del cliente. Si falta o está vacío responde 400.</td></tr></tbody></table></div><h4 class="subsection-title">Respuestas</h4><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge yes"><span class="badge-dot"></span>200</span></td><td>El centro de costo se eliminó. El cuerpo es la lista de centros de costo restantes del cliente para esa transportadora.</td><td><a href="#modelos"><code>List&lt;CostCenter&gt;</code></a></td></tr><tr><td><span class="badge no"><span class="badge-dot"></span>500</span></td><td>El centro de costo no existe, o falló la lectura, el borrado o la relectura de la lista.</td><td><a href="#modelos"><code>BasicResponse</code></a>: <code>message</code> = <code>Centro de costos no encontrado</code> si el documento no existe; <code>Error al eliminar centro de costo</code> si falla el borrado; el mensaje de la excepción en otro caso. Sin prefijo <code>Error interno:</code>.</td></tr></tbody></table></div><div class="endpoint-text"><p>Además devuelve las <a href="#respuestas-comunes">respuestas comunes</a>.</p></div><h4 class="subsection-title">Ejemplo</h4><div class="code-block"><div class="code-head"><span>bash</span><button class="copy-btn" type="button" aria-label="Copiar"><span class="material-icons-round">content_copy</span></button></div><pre><code>curl -X DELETE "https://&lt;host&gt;/Teclogi/services/company/&lt;nit-cliente&gt;/cost-centers/12?transportCompanyId=&lt;id-transportadora&gt;" \
+  -H "tokenUser: &lt;token&gt;" \
+  -H "companyId: &lt;nit&gt;"</code></pre></div></article></div></section><section class="section" id="respuestas-comunes"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">reply_all</span></div><h2 class="section-title">Respuestas comunes</h2></div><div class="data-section"><div class="card prose"><p>Aplican a todas las funcionalidades del tema.</p></div><div class="table-container"><table><thead><tr><th>Código</th><th>Cuándo</th><th>Cuerpo</th></tr></thead><tbody><tr><td><span class="badge pending"><span class="badge-dot"></span>400</span></td><td><code>nit</code> o <code>transportCompanyId</code> vacíos (y, en el POST, cuerpo null). Se valida antes de tocar la base de datos.</td><td><a href="#modelos"><code>BasicResponse</code></a>: <code>message</code> = <code>Uno o mas parametros de la solicitud son nulos o vacios</code></td></tr><tr><td><span class="badge pending"><span class="badge-dot"></span>401</span></td><td>El header <code>tokenUser</code> está ausente, vacío o es <code>NOT_FOUND</code>. El filtro aborta el request antes de ejecutar el servicio.</td><td><code>Debe enviar un tokenUser</code></td></tr></tbody></table></div></div></section><section class="section" id="modelos"><div class="section-header"><div class="section-icon "><span class="material-icons-round">data_object</span></div><h2 class="section-title">Modelos</h2></div><div class="data-section"><article class="model-card" id="modelo-costcenter"><h3 class="model-title"><code>CostCenter</code></h3><div class="endpoint-text"><p>Un centro de costo. Es a la vez el cuerpo del POST y cada elemento de la lista que devuelven las tres operaciones (un arreglo directo, sin envoltorio ni paginación).</p></div><div class="table-container"><table><thead><tr><th>Campo</th><th>Tipo</th><th>Nullable</th><th>Descripción</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>Long</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Id del centro de costo y también id del documento en Firestore. En los de Siigo es el id de Siigo de la transportadora; si el POST llega sin él, lo asigna el consecutivo. En la respuesta siempre viene informado para documentos escritos por este flujo.</td></tr><tr><td><code>code</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Código del centro de costo.</td></tr><tr><td><code>name</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Nombre del centro de costo.</td></tr><tr><td><code>active</code></td><td><code>Boolean</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Bandera de activo. Ninguna de las tres operaciones filtra por ella.</td></tr></tbody></table></div><div class="info-card"><span class="material-icons-round">verified</span><div><p><strong>Garantías</strong></p><ul><li>El 200 siempre trae un arreglo, nunca null: sin centros de costo es <code>[]</code>.</li><li>La lista incluye centros de costo activos e inactivos: no hay filtro por <code>active</code>.</li><li>El orden de la lista es el que devuelve Firestore al leer la subcolección; el código no aplica <code>orderBy</code>.</li></ul></div></div></article><article class="model-card" id="modelo-basicresponse"><h3 class="model-title"><code>BasicResponse</code></h3><div class="endpoint-text"><p>Cuerpo de las respuestas de error de este tema.</p></div><div class="table-container"><table><thead><tr><th>Campo</th><th>Tipo</th><th>Nullable</th><th>Descripción</th></tr></thead><tbody><tr><td><code>message</code></td><td><code>String</code></td><td><span class="badge pending"><span class="badge-dot"></span>Sí</span></td><td>Texto del error.</td></tr></tbody></table></div></article></div></section><section class="section" id="advertencias"><div class="section-header"><div class="section-icon amber"><span class="material-icons-round">warning</span></div><h2 class="section-title">Advertencias</h2></div><div class="data-section"><div class="alert-cards wide"><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">El DELETE de un centro de costo inexistente responde 500, no 404</div><div class="alert-desc">El DAO lanza <code>javax.ws.rs.NotFoundException</code>, pero el servicio captura <code>com.teclogi.dto.exceptions.NotFoundException</code>, una clase distinta. El consumidor debe identificar el caso por el <code>message</code> <code>Centro de costos no encontrado</code>; para devolver 404 hay que alinear la excepción en el DAO o en el servicio.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">El borrado es físico</div><div class="alert-desc">El DELETE elimina el documento con <code>delete()</code>; no hay soft delete ni copia de respaldo, y el flujo no comprueba si algún cargo sigue usando ese centro de costo.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">No se valida que el cliente ni la transportadora existan</div><div class="alert-desc">Ninguna de las tres operaciones comprueba <code>Company/{nit}</code> ni <code>Companies/{transportCompanyId}</code>: el GET de un par inexistente responde <code>[]</code> y el POST crea la subcolección bajo esos ids igualmente. Un <code>transportCompanyId</code> mal escrito deja el centro de costo en una ruta que nadie lee.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">Los ids del consecutivo arrancan en 0 y son por tenant</div><div class="alert-desc">Si <code>Consecutives/CostCenter</code> no existe, el primer centro de costo creado sin <code>id</code> recibe <code>0</code>. El consecutivo es uno por tenant, no por cliente ni por transportadora, y puede coincidir con un id de Siigo ya usado en la misma subcolección: en ese caso el POST lo sobrescribe por merge.</div></div></div><div class="alert-card warn"><div class="alert-icon"><span class="material-icons-round">warning_amber</span></div><div><div class="alert-title">La lista no se filtra por <code>active</code></div><div class="alert-desc">Las tres respuestas incluyen los centros de costo inactivos; si la pantalla solo debe mostrar los activos, el filtro lo hace el consumidor.</div></div></div></div></div></section><section class="section" id="fuentes-de-datos"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">storage</span></div><h2 class="section-title">Fuentes de datos</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Fuente</th><th>Acceso</th><th>Filtro</th><th>Uso</th></tr></thead><tbody><tr><td>Subcolección <code>CostCenter</code> en <code>Company/{nit}/Companies/{transportCompanyId}/CostCenter</code></td><td>Lectura de todos los documentos de la subcolección (F1, y relectura en F2 y F3); escritura <code>set</code> con <code>SetOptions.merge()</code> del documento <code>String.valueOf(id)</code> (F2); lectura y <code>delete()</code> del documento <code>String.valueOf(costCenterId)</code> (F3). Base de datos del tenant <code>headersDto.getCompanyId()</code>.</td><td>Ninguno al listar; por id de documento al escribir y al borrar.</td><td>Cada documento se deserializa como <code>CostCenter</code> y forma el arreglo de la respuesta de las tres operaciones.</td></tr><tr><td>Documento <code>Consecutives/CostCenter</code></td><td>Lectura y escritura dentro de una transacción de Firestore sobre el campo <code>consecutive</code>.</td><td>Por id de documento <code>CostCenter</code>.</td><td>Da el <code>id</code> de un centro de costo creado sin <code>id</code> en el cuerpo del POST. <span class="applies">Aplica a <span class="tag"><code>POST /{nit}/cost-centers</code></span></span></td></tr></tbody></table></div></div></section><section class="section" id="glosario"><div class="section-header"><div class="section-icon green"><span class="material-icons-round">menu_book</span></div><h2 class="section-title">Glosario</h2></div><div class="data-section"><div class="table-container"><table><thead><tr><th>Término</th><th>Definición</th></tr></thead><tbody><tr><td>nit (path)</td><td>El NIT del cliente dueño de los centros de costo, no el del tenant: el tenant viaja en el header <code>companyId</code>.</td></tr><tr><td>transportCompanyId</td><td>La transportadora con la que el cliente tiene esos centros de costo; es el id del documento en la subcolección <code>Companies</code> del cliente.</td></tr></tbody></table></div></div></section>
+
+    </main>
+
+    <footer class="footer">
+        <p><span class="footer-brand">LoggiApp</span> &mdash; Gestión de centros de costo &bull; v1.0.0 &bull; 2026-10-29</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <span class="material-icons-round">keyboard_arrow_up</span>
+    </button>
+
+    <script>
+        const root = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const syncThemeIcon = () => {
+            themeIcon.textContent = root.getAttribute('data-theme') === 'dark' ? 'light_mode' : 'dark_mode';
+        };
+        syncThemeIcon();
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? '' : 'dark');
+            try { localStorage.setItem('loggiapp-client-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+            syncThemeIcon();
+            if (window.__docflowDiagrams) window.__docflowDiagrams();
+        });
+
+        /* Sección activa en el sidebar */
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+        sections.forEach(s => navObserver.observe(s));
+
+        /* Animación de entrada */
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.setAttribute('data-visible', 'true');
+            });
+        }, { threshold: 0.05 });
+        sections.forEach(s => animObserver.observe(s));
+
+        /* Progreso, volver arriba */
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* Sidebar móvil */
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        });
+        overlay.addEventListener('click', closeSidebar);
+        sidebar.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) closeSidebar();
+        }));
+
+        /* Copiar código */
+        document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+            const code = btn.closest('.code-block').querySelector('code').innerText;
+            const icon = btn.querySelector('.material-icons-round');
+            try {
+                await navigator.clipboard.writeText(code);
+                icon.textContent = 'check';
+                setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+            } catch (e) {}
+        }));
+    </script>
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        const nodes = [...document.querySelectorAll('pre.mermaid')];
+        nodes.forEach(n => { n.dataset.src = n.textContent; });
+
+        async function draw() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: dark ? 'dark' : 'default',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    primaryColor: dark ? '#2D2640' : '#F3F0FA',
+                    primaryBorderColor: '#7B3FCA',
+                    primaryTextColor: dark ? '#E8E5F0' : '#1A1A2E',
+                    lineColor: dark ? '#9B97B0' : '#64648C'
+                }
+            });
+            nodes.forEach(n => { n.removeAttribute('data-processed'); n.textContent = n.dataset.src; });
+            await mermaid.run({ nodes, suppressErrors: true });
+        }
+
+        window.__docflowDiagrams = draw;
+        draw();
+    </script>
+    
+
+</body>
+</html>
